@@ -1,0 +1,13 @@
+*.elf
+Debug/Cube.d
+*.eep
+*.hex
+Debug/Cube.lss
+*.map
+Release/makedep.mk
+*.o
+Release/main.d
+*.srec
+Release/Cube.lss
+*.d
+Debug/makedep.mk
