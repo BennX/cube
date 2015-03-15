@@ -151,6 +151,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Input.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Input.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.cpp">
       <SubType>compile</SubType>
     </Compile>

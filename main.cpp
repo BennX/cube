@@ -16,16 +16,23 @@
 #include "USART.h"
 #include "Random.h" //progmem random generator
 #include "Temperatur.h"
-//Cube cube;
+#include "Input.h"
 
+//global objects to access in interupts
+//Cube cube;
+Input input;
+
+void initInterrupt();
 int main()
 {
     USART::init();//setup the usart0
+    initInterrupt();
+
     //Test LED
     DDRB |= (1 << DDB3); //PB3
 
     char buff[20] = {0};
-		
+
     Display::init();
     Display::set_cursor(0, 0);
     Display::write_string("Cube V2");
@@ -40,15 +47,11 @@ int main()
     uint8_t i = 0;
     while(true)
     {
-        Display::changeDisplayLight(i);
+        Display::changeDisplayLight(input.getIncDelta()*2);
         i++;
         if(i == 255)
             i = 0;
         _delay_ms(20);
-        if(rnd() < 30)
-            USART::transmit_s("I am watching you!\n");
-        else
-            USART::transmit_s("Hello World!\n");
 
         //_delay_ms(500);
         PORTB ^= (1 << PB3); //toggle the testled
@@ -61,5 +64,37 @@ int main()
             Display::write_string(buff);
             Display::write_data('C');
         }
+
+        itoa(input.getIncDelta(), buff, 10);
+        Display::set_cursor(2, 10);
+        Display::write_string(buff);
+
+        if(input.isPressed())
+        {
+            Display::set_cursor(2, 0);
+            Display::write_string("Pressed!");
+        }
+        else
+        {
+            Display::set_cursor(2, 0);
+            Display::write_string("        ");
+        }
     }
+}
+
+void initInterrupt()
+{
+    TCCR2A = 0x00;
+    TCCR2A |= (1 << WGM21); //CTC mode
+    TCCR2B = 0x00;
+    TCCR2B |= (1 << CS22); // 64 prescaler
+    TIMSK2 |= (1 << OCIE2A); //enable compare interrupt
+    //some compare counter ~ 1ms
+    OCR2A = (uint8_t)(F_CPU / 64.0 * 1e-3 - 0.5);
+    sei();
+}
+
+ISR(TIMER2_COMPA_vect)
+{
+    input.update();
 }

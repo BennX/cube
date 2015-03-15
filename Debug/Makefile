@@ -37,6 +37,7 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../Input.cpp \
 ../main.cpp \
 ../Cube.cpp
 
@@ -48,18 +49,22 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+Input.o \
 main.o \
 Cube.o
 
 OBJS_AS_ARGS +=  \
+Input.o \
 main.o \
 Cube.o
 
 C_DEPS +=  \
+Input.d \
 main.d \
 Cube.d
 
 C_DEPS_AS_ARGS +=  \
+Input.d \
 main.d \
 Cube.d
 
@@ -77,6 +82,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

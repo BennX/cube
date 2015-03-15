@@ -73,7 +73,8 @@ private:
 
 inline void Display::changeDisplayLight(const uint8_t &value)
 {
-    OCR0B = value;
+    if(value > 0)
+        OCR0B = value;
 }
 
 inline void Display::init()
@@ -113,7 +114,7 @@ inline void Display::init()
     write_instruction(INSTRUCTION_DISPLAY_ON);
     write_instruction(INSTRUCTION_CLEAR_DISPLAY);
     write_instruction(INSTRUCTION_ENTRY_MODE);
-    //somehow needed to ensure 
+    //somehow needed to ensure
     _delay_ms(1);
 }
 
@@ -124,6 +125,7 @@ inline void Display::clear()
 
 inline void Display::write(const unsigned char &data)
 {
+    cli();
     char port_buffer = LCD_PORT;
 
     LCD_PORT |= (1 << PIN_RW);//pull high and readmode
@@ -154,6 +156,7 @@ inline void Display::write(const unsigned char &data)
     _delay_us(20);
 
     LCD_PORT = port_buffer;//should pull the enable 0
+    sei();
     return;
 }
 
