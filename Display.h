@@ -61,7 +61,7 @@ public:
     static inline void changeDisplayLight(const uint8_t &value);
     static inline void clear();
 protected:
-    static inline void write_instruction(const unsigned char &data);
+    static void write_instruction(const unsigned char &data);
     static inline void write(const unsigned char &data);
 private:
     Display() {};
@@ -71,13 +71,13 @@ private:
 }; //Display
 
 
-inline void Display::changeDisplayLight(const uint8_t &value)
+void Display::changeDisplayLight(const uint8_t &value)
 {
     if(value > 0)
         OCR0B = value;
 }
 
-inline void Display::init()
+void Display::init()
 {
     //display timer init
     //set OC0B as output
@@ -118,12 +118,12 @@ inline void Display::init()
     _delay_ms(1);
 }
 
-inline void Display::clear()
+void Display::clear()
 {
     write_instruction(INSTRUCTION_CLEAR_DISPLAY);
 }
 
-inline void Display::write(const unsigned char &data)
+void Display::write(const unsigned char &data)
 {
     cli();
     char port_buffer = LCD_PORT;
@@ -160,7 +160,7 @@ inline void Display::write(const unsigned char &data)
     return;
 }
 
-inline void Display::write_instruction(const unsigned char &instruction)
+void Display::write_instruction(const unsigned char &instruction)
 {
     //RS low = instruction
     LCD_PORT &= ~(1 << PIN_RS);
@@ -175,14 +175,14 @@ void Display::write_data(const unsigned char &data)
 }
 
 
-inline void Display::set_cursor(const uint8_t &row,
+void Display::set_cursor(const uint8_t &row,
                                 const uint8_t &column)
 {
     write_instruction(CHARACTER_BUFFER_BASE_ADDRESS + row * CHARACTERS_PER_ROW +
                       column);
 }
 
-inline void Display::write_string(const char *string)
+void Display::write_string(const char *string)
 {
     LCD_PORT |= (1 << PIN_RS);
     while (*string)
