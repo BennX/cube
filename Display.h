@@ -32,6 +32,7 @@
 #define INSTRUCTION_FOLLOWER_CONTROL		0b01101100
 #define INSTRUCTION_CONTRAST_SET			0b01111111
 #define INSTRUCTION_DISPLAY_ON				0b00001100
+#define INSTRUCTION_DISPLAY_OFF				0b00001000
 #define INSTRUCTION_ENTRY_MODE 				0b00000110
 
 #include <avr/io.h>
@@ -45,40 +46,40 @@ public:
     /**
      * Just need to be called once!
      */
-    static inline void init();
+    static void init();
     /**
     * Write a single Char
     */
-    static inline void write_data(const unsigned char &data);
-    static inline void set_cursor(const uint8_t &row, const uint8_t &column);
+    static void write_data(const unsigned char &data);
+    static void set_cursor(const uint8_t &row, const uint8_t &column);
     /**
      * Used to write a char array to the current position.
      */
-    static inline void write_string(const char *string);
+    static void write_string(const char *string);
     /**
     * @param value 0...255 PWM Value
     */
     static inline void changeDisplayLight(const uint8_t &value);
-    static inline void clear();
+    static void clear();
+    static void off();
+    static void on();
+    static bool isActive();
 protected:
     static void write_instruction(const unsigned char &data);
     static inline void write(const unsigned char &data);
 private:
+    static bool active;
     Display() {};
     Display( const Display &c );
     Display &operator=( const Display &c );
 
 }; //Display
+bool Display::active = false;
 
-
-void Display::changeDisplayLight(const uint8_t &value)
-{
-    if(value > 0)
-        OCR0B = value;
-}
 
 void Display::init()
 {
+    active = true;
     //display timer init
     //set OC0B as output
     DDRB |= (1 << DDB4);
@@ -118,9 +119,32 @@ void Display::init()
     _delay_ms(1);
 }
 
+void Display::changeDisplayLight(const uint8_t &value)
+{
+    if(value > 0)
+        OCR0B = value;
+}
+
 void Display::clear()
 {
     write_instruction(INSTRUCTION_CLEAR_DISPLAY);
+}
+
+void Display::off()
+{
+    write_instruction(INSTRUCTION_DISPLAY_OFF);
+    active = false;
+}
+
+void Display::on()
+{
+    write_instruction(INSTRUCTION_DISPLAY_ON);
+    active = true;
+}
+
+bool Display::isActive()
+{
+    return active;
 }
 
 void Display::write(const unsigned char &data)
@@ -176,7 +200,7 @@ void Display::write_data(const unsigned char &data)
 
 
 void Display::set_cursor(const uint8_t &row,
-                                const uint8_t &column)
+                         const uint8_t &column)
 {
     write_instruction(CHARACTER_BUFFER_BASE_ADDRESS + row * CHARACTERS_PER_ROW +
                       column);

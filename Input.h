@@ -21,6 +21,14 @@
 #define PHASE1 !(INC_PIN & (1<<INC_PHASE2_PIN))
 #define PHASE2 !(INC_PIN & (1<<INC_PHASE1_PIN))
 
+#define BUTTON_PIN PINC
+#define BUTTON_DDR DDRC
+#define BUTTON_PORT PORTC
+#define BUTTON0 PINC2
+#define BUTTON1 PINC3
+#define BUTTON2 PINC4
+#define BUTTON3 PINC5
+
 class Input
 {
 //variables
@@ -37,6 +45,7 @@ public:
     ~Input();
 
     void update();
+    bool isPressed(const uint8_t &i);
     bool isPressed();
     int8_t getIncDelta();
 

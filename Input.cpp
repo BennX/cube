@@ -10,6 +10,13 @@
 // default constructor
 Input::Input() : enc_delta(0), last(0)
 {
+    // Button input
+    BUTTON_DDR &= ~((1 << BUTTON0) | (1 << BUTTON1) | (1 << BUTTON2) |
+                    (1 << BUTTON3));
+    //enable pullup
+    BUTTON_PORT |= ((1 << BUTTON0) | (1 << BUTTON1) | (1 << BUTTON2) |
+                    (1 << BUTTON3));
+
     //make the INC as inputs
     INC_DDR &= ~((1 << INC_PHASE1_PIN) | (1 << INC_PHASE2_PIN) |
                  (1 << INC_TASER_PIN));
@@ -53,6 +60,30 @@ void Input::update()
 bool Input::isPressed()
 {
     return !(INC_PIN & (1 << INC_TASER_PIN)) ? true : false;
+}
+
+bool Input::isPressed(const uint8_t &i)
+{
+    switch(i)
+    {
+        case 0:
+            if(!(BUTTON_PIN & 1 << BUTTON0))
+                return true;
+            break;
+        case 1:
+            if(!(BUTTON_PIN & 1 << BUTTON1))
+                return true;
+            break;
+        case 2:
+            if(!(BUTTON_PIN & 1 << BUTTON2))
+                return true;
+            break;
+        case 3:
+            if(!(BUTTON_PIN & 1 << BUTTON3))
+                return true;
+            break;
+    }
+    return false;
 }
 
 int8_t Input::getIncDelta()
