@@ -121,9 +121,9 @@ void initCubeRoutine()
 {
     //16 Bit timer!
     TCCR1A |= (1 << WGM12); // CTC on OCR1A
-    TCCR1B |= (1 << CS11) | (1 << CS11); //64 prescaler
+    TCCR1B |= (1 << CS11); //kein prescaler
     TIMSK1 |= (1 << OCIE1A); //compare interupt on A
-    OCR1A = 43;//~8Khz F_CPU/64*1/8000
+    OCR1A = 0x0ACD;//2765  = 8khz
 }
 
 ISR(TIMER2_COMPA_vect)
