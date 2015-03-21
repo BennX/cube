@@ -24,7 +24,7 @@ class SPI
 {
 public:
     static inline void init();
-    static inline void transmit(const unsigned char &data);
+    static inline void transmit(char data);
 
 private:
     SPI();
@@ -37,16 +37,16 @@ inline void SPI::init()
 {
     //init the SPI
     //make the pins a output mosi and sck
-    DDR_SPI = (1 << DD_MOSI) | (1 << DD_SCK);
+    DDR_SPI |= (1 << DD_MOSI) | (1 << DD_SCK);
     //1<<spe = enable spi, 1<<mstr = master, leave the SPR1 and SPR0 0 so the prescaler will be 2;
-    SPCR = (1 << SPE) | (1 << MSTR);
+    SPCR |= (1 << SPE) | (1 << MSTR);
     //1<<SPI2X = Frequenz/2 speed
     //wenn SPI2X gesetzt ist verdoppelt sich die geschwindigkeit von SPCR
     // ist anderes register aös SPCR!
-    SPSR  = (1 << SPI2X);
+    SPSR  |= (1 << SPI2X);
 }
 
-inline void SPI::transmit(const unsigned char &data)
+inline void SPI::transmit(char data)
 {
     SPDR = data; //data register
     while(!(SPSR & (1 << SPIF)))

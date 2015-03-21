@@ -38,7 +38,6 @@
 #include <avr/io.h>
 #define F_CPU 22118400
 #include <util/delay.h>
-
 class Display
 {
 public:
@@ -59,7 +58,7 @@ public:
     /**
     * @param value 0...255 PWM Value
     */
-    static inline void changeDisplayLight(const uint8_t &value);
+    static inline void setDisplayLight(const uint8_t &value);
     static void clear();
     static void off();
     static void on();
@@ -119,7 +118,7 @@ void Display::init()
     _delay_ms(1);
 }
 
-void Display::changeDisplayLight(const uint8_t &value)
+void Display::setDisplayLight(const uint8_t &value)
 {
     if(value > 0)
         OCR0B = value;
