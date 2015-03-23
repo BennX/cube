@@ -9,9 +9,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
-//#include <avr/pgmspace.h>
-#include "SPI.h"
-//#include "Cube.h"
+
+#include "Cube.h"
 #include "Display.h"
 #include "USART.h"
 #include "Random.h" //progmem random generator
@@ -19,21 +18,23 @@
 #include "Input.h"
 
 //global objects to access in interupts
-
-//Cube cube();
+Cube cube; //also calls SPI::init()!
 Input input;
 
+//declare some functions here
 void initInterrupt();
 void spitest();
 void initCubeRoutine();
+
 int main()
 {
     Display::init();
-    SPI::init();
     USART::init();//setup the usart0
-
+    cli();
     initInterrupt();
     initCubeRoutine();
+    sei();
+
     //Test LED
     DDRB |= (1 << DDB3); //PB3
 
@@ -44,16 +45,49 @@ int main()
     Display::set_cursor(2, 0);
     Display::write_string("Guess it's works");
     Display::setDisplayLight(20);
-    _delay_ms(10);
+    _delay_ms(1000);
     spitest();
+    Display::clear();
     uint8_t i = 0;
+
+    char buff[20] = {0};
     while(true)
     {
-        //Display::write_string("Cube V2");
+        Display::setDisplayLight(input.getIncDelta() * 2);
+        i++;
+        if(i == 255)
+            i = 0;
+        _delay_ms(20);
+
+        //_delay_ms(500);
         PORTB ^= (1 << PB3); //toggle the testled
-        _delay_ms(100);
+        if(i == 125)
+        {
+            Temperatur::get(buff);
+            Display::set_cursor(0, 0);
+            Display::write_string("Temperatur: ");
+            Display::set_cursor(1, 0);
+            Display::write_string(buff);
+            Display::write_data('C');
+        }
+
+        itoa(input.getIncDelta(), buff, 10);
+        Display::set_cursor(2, 10);
+        Display::write_string(buff);
+
+        if(input.isPressed())
+        {
+            Display::set_cursor(2, 0);
+            Display::write_string("Pressed!");
+        }
+        else
+        {
+            Display::set_cursor(2, 0);
+            Display::write_string("        ");
+        }
     }
 }
+
 #define DDR_TO_STORAGE DDRC
 #define TO_STORAGE_PORT PORTC
 #define TO_STORAGE_PIN DDC6 //data direction C6
@@ -64,16 +98,15 @@ int main()
 
 void spitest()
 {
-    Display::set_cursor(0, 0);
     //enabel output on ss and latch pins
     DDR_TO_STORAGE |= (1 << TO_STORAGE_PIN);
     DDR_DISABLE_LINE |= (1 << DISABLE_LINE_PIN);
     //SPI::init();
     for(uint8_t i = 0; i < 10; i++)
     {
-        SPI::transmit(0b11111111);
+        SPI::transmit(0b00000000);
     }
-    SPI::transmit(0b00000000); //enable last
+    SPI::transmit(0b00000001); //enable last
     TO_STORAGE_PORT |= (1 << TO_STORAGE_PIN); //1 clock to storage
     TO_STORAGE_PORT &= ~(1 << TO_STORAGE_PIN); //1 clock to storage
     DISABLE_LINE_PORT &= ~(1 << DISABLE_LINE_PIN); //set low to enable the register
@@ -90,7 +123,6 @@ void initInterrupt()
     //some compare counter ~ 1ms
     //OCR2A = (uint8_t)(F_CPU / 256.0 * 1e-3 - 0.5);
     OCR2A = 84; // 1ms
-    sei();
 }
 
 void initCubeRoutine()
@@ -109,5 +141,5 @@ ISR(TIMER2_COMPA_vect)
 
 ISR(TIMER1_COMPA_vect)
 {
-    //cube.render();
+    cube.render();
 }

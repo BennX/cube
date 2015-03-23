@@ -29,10 +29,6 @@ struct RGB
 
 class Cube
 {
-    //variables
-public:
-    Cube();
-
 protected:
     uint8_t colors[5][MAX_COLOR][10];
     RGB cur_colors[5][5][5];
@@ -42,8 +38,8 @@ protected:
 
     //functions
 public:
+    Cube();
     ~Cube();
-
     inline RGB setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
                       const uint8_t &r, const uint8_t &g, const uint8_t &b);
     inline RGB setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
@@ -57,15 +53,15 @@ public:
 
 private:
     //no copy!
-    Cube( const Cube &c );
-    Cube &operator=( const Cube &c );
+    Cube( const Cube &c ) = delete;
+    Cube &operator=( const Cube &c ) = delete;
 }; //Cube
 
-inline void Cube::render()
+void Cube::render()
 {
-    DISABLE_LINE_PORT |= 1 << DISABLE_LINE_PIN; //set high to disable the register
+    DISABLE_LINE_PORT |= (1 << DISABLE_LINE_PIN); //set high to disable the register
     //reverse shift out
-    for(uint8_t i = 9; i >= 0; i--)
+    for(int8_t i = 9; i >= 0; i--)
     {
         SPI::transmit(colors[level][cur_color_counter][i]);
     }
@@ -87,8 +83,8 @@ inline void Cube::render()
     DISABLE_LINE_PORT &= ~(1 << DISABLE_LINE_PIN); //set low to enable the register
 }
 
-inline RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
-                        const RGB &color)
+RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
+                 const RGB &color)
 {
     return setRGB(x, y, z, color.r, color.g, color.b);
 }
@@ -96,8 +92,8 @@ inline RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
 /************************************************************************/
 /* Take care it has no bounds checking!                                 */
 /************************************************************************/
-inline RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
-                        const uint8_t &r, const uint8_t &g, const uint8_t &b)
+RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
+                 const uint8_t &r, const uint8_t &g, const uint8_t &b)
 {
     RGB ret = cur_colors[x][y][z];//save old value to return
     //change value to new one
@@ -148,22 +144,22 @@ inline RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
     return ret;
 }
 
-inline uint8_t Cube::getR(const uint8_t &x, const uint8_t &y, const uint8_t &z)
+uint8_t Cube::getR(const uint8_t &x, const uint8_t &y, const uint8_t &z)
 {
     return cur_colors[x][y][z].r;
 }
 
-inline uint8_t  Cube::getG(const uint8_t &x, const uint8_t &y, const uint8_t &z)
+uint8_t  Cube::getG(const uint8_t &x, const uint8_t &y, const uint8_t &z)
 {
     return cur_colors[x][y][z].g;
 }
 
-inline uint8_t  Cube::getB(const uint8_t &x, const uint8_t &y, const uint8_t &z)
+uint8_t  Cube::getB(const uint8_t &x, const uint8_t &y, const uint8_t &z)
 {
     return cur_colors[x][y][z].b;
 }
 
-inline RGB  Cube::getRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z)
+RGB  Cube::getRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z)
 {
     return cur_colors[x][y][z];
 }

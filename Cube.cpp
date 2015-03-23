@@ -12,12 +12,12 @@ Cube::Cube(): level(0), cur_color_counter(0)
     SPI::init();//init the spi
     for(uint8_t i = 0; i < MAX_COLOR; i++)
     {
-        //set the default register for the level
-        colors[0][i][0] = (1 << 7);
-        colors[1][i][0] = (1 << 6);
-        colors[2][i][0] = (1 << 5);
-        colors[3][i][0] = (1 << 4);
-        colors[4][i][0] = (1 << 3);
+        //maxbe reverse
+        colors[0][i][0] = 0x00;//
+        colors[1][i][0] = 0x01;//
+        colors[2][i][0] = 0x02;//
+        colors[3][i][0] = 0x03;//
+        colors[4][i][0] = 0x04;//
     }
     //set all 0 with a string function
     //memset(cur_colors, 0, 5*5*5*sizeof(RGB));

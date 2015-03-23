@@ -38,6 +38,9 @@
 #include <avr/io.h>
 #define F_CPU 22118400
 #include <util/delay.h>
+/**
+ * No interupt while write operation!
+ */
 class Display
 {
 public:

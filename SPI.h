@@ -24,7 +24,7 @@ class SPI
 {
 public:
     static inline void init();
-    static inline void transmit(char data);
+    static inline void transmit(const unsigned char& data);
 
 private:
     SPI();
@@ -35,7 +35,8 @@ private:
 
 inline void SPI::init()
 {
-    //init the SPI
+    //set SS pin to output befor so it is handled as usual output
+    DDRB |= (1 << DDB4);
     //make the pins a output mosi and sck
     DDR_SPI |= (1 << DD_MOSI) | (1 << DD_SCK);
     //1<<spe = enable spi, 1<<mstr = master, leave the SPR1 and SPR0 0 so the prescaler will be 2;
@@ -46,7 +47,7 @@ inline void SPI::init()
     SPSR  |= (1 << SPI2X);
 }
 
-inline void SPI::transmit(char data)
+inline void SPI::transmit(const unsigned char& data)
 {
     SPDR = data; //data register
     while(!(SPSR & (1 << SPIF)))
