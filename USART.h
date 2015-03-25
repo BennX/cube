@@ -1,10 +1,9 @@
 /*
 * USART.h
-*
+* Simple Static USART
 * Created: 26.01.2015 11:39:13
 * Author: Benjamin
 */
-
 
 #ifndef __USART_H__
 #define __USART_H__
