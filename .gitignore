@@ -11,3 +11,4 @@ Release/main.d
 Release/Cube.lss
 *.d
 Debug/makedep.mk
+*.pub
