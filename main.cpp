@@ -34,7 +34,7 @@ int main()
     initInterrupt();
     initCubeRoutine();
     sei();
-
+	cube.setRGB(0,0,0,15,15,15);
     //Test LED
     DDRB |= (1 << DDB3); //PB3
 
