@@ -19,12 +19,11 @@
 #define DD_MOSI DDB5
 #define DD_SCK DDB7
 #define DD_SS DDB4
-
 class SPI
 {
 public:
     static inline void init();
-    static inline void transmit(const unsigned char& data);
+    static inline void transmit(const unsigned char &data);
 
 private:
     SPI();
@@ -47,7 +46,7 @@ inline void SPI::init()
     SPSR  |= (1 << SPI2X);
 }
 
-inline void SPI::transmit(const unsigned char& data)
+inline void SPI::transmit(const unsigned char &data)
 {
     SPDR = data; //data register
     while(!(SPSR & (1 << SPIF)))

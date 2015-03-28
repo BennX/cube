@@ -32,4 +32,9 @@ uint8_t rnd()
 
     return rnd;
 };
-#endif 
+
+uint8_t rnd(const uint8_t &max)
+{
+    return rnd() % max;
+}
+#endif

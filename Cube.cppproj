@@ -151,6 +151,18 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Animation\Animation.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Animation\FadeAnimation.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Animation\RainAnimation.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cpp_util.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Input.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -181,6 +193,9 @@
     <Compile Include="USART.h">
       <SubType>compile</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Animation" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

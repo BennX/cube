@@ -48,7 +48,7 @@ public:
     inline uint8_t getG(const uint8_t &x, const uint8_t &y, const uint8_t &z);
     inline uint8_t getB(const uint8_t &x, const uint8_t &y, const uint8_t &z);
     inline RGB getRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z);
-
+    void off();
     inline void render();
 
 private:
@@ -65,15 +65,15 @@ void Cube::render()
     {
         SPI::transmit(colors[level][cur_color_counter][i]);
     }
-    level++;
-    //reset and increase color counter
-    if(level > 4)
+
+    cur_color_counter++;
+    if(cur_color_counter >= MAX_COLOR)
     {
-        level = 0;
-        cur_color_counter++;
-        if(cur_color_counter >= MAX_COLOR)
+        cur_color_counter = 0;
+        level++;
+        if(level > 4)
         {
-            cur_color_counter = 0;
+            level = 0;
         }
     }
 
