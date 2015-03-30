@@ -88,12 +88,15 @@ int main()
 
         if(freeRam() != cur_free_ram)
         {
+            cur_free_ram = freeRam();
+            Display::set_cursor(0, 0);
+            Display::write_string("            ");
             Display::set_cursor(0, 0);
             Display::write_string("Free RAM");
             itoa(freeRam(), buff, 10);
             Display::set_cursor(1, 0);
             Display::write_string(buff);
-            Display::write_string("MB");
+            Display::write_string("Byte");
         }
         delta = ms() - start;
     }

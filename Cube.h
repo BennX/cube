@@ -102,7 +102,7 @@ RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
     cur_colors[x][y][z].b = b;
 
     //update colors
-    uint8_t pos = x * 3 + y * 15 + 5;
+    uint8_t pos = x * 3 + z * 15 + 5;
     //+0
     uint8_t rbyte = pos / 8;
     uint8_t rbit = pos % 8;
@@ -117,28 +117,28 @@ RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
     {
         if(i < r)
         {
-            colors[z][i][rbyte] |= 1 << rbit; //set all to 1 till r
+            colors[y][i][rbyte] |= 1 << rbit; //set all to 1 till r
         }
         else
         {
             //bitwise not = ~ ! (invert with &)
-            colors[z][i][rbyte] &= ~(1 << rbit);//set all other to 0
+            colors[y][i][rbyte] &= ~(1 << rbit);//set all other to 0
         }
         if(i < g)
         {
-            colors[z][i][gbyte] |= 1 << gbit; //set all to 1 till r
+            colors[y][i][gbyte] |= 1 << gbit; //set all to 1 till r
         }
         else
         {
-            colors[z][i][gbyte] &= ~(1 << gbit);//set all other to 0
+            colors[y][i][gbyte] &= ~(1 << gbit);//set all other to 0
         }
         if(i < b)
         {
-            colors[z][i][bbyte] |= 1 << bbit; //set all to 1 till r
+            colors[y][i][bbyte] |= 1 << bbit; //set all to 1 till r
         }
         else
         {
-            colors[z][i][bbyte] &= ~(1 << bbit);//set all other to 0
+            colors[y][i][bbyte] &= ~(1 << bbit);//set all other to 0
         }
     }
     return ret;

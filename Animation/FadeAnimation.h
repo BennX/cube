@@ -3,7 +3,7 @@
 #include "Animation.h"
 #include "../Cube.h"
 #include "../Random.h"
-#define UPDATE_TIME 1000
+#define UPDATE_TIME 0
 class FadeAnimation : public Animation
 {
 private:

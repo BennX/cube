@@ -4,7 +4,7 @@
 //the maximum of active raindrops
 #define MAX_RAINDROPS 20
 #define SPAWN_RATE 20 //its percent so 20% chance to spawn a not active raindrop
-#define UPDATE_TIME_RAINDROP 500 //in ms
+#define UPDATE_TIME_RAINDROP 750 //in ms
 
 
 class RainAnimation : public Animation
@@ -42,16 +42,16 @@ void RainAnimation::update(const short &delta)
         {
             if (raindrops[i].active)
             {
-                if (raindrops[i].z > 0 && raindrops[i].active)
+                if (raindrops[i].y > 0 && raindrops[i].active)
                 {
                     //reset old spot
                     cube->setRGB(raindrops[i].x, raindrops[i].y, raindrops[i].z, 0, 0, 0);
                     //update to new spot
-                    raindrops[i].z--;
+                    raindrops[i].y--;
                     cube->setRGB(raindrops[i].x, raindrops[i].y, raindrops[i].z, raindrops[i].r,
                                  raindrops[i].g, raindrops[i].b);
                 }
-                else if (raindrops[i].z == 0 && raindrops[i].active)
+                else if (raindrops[i].y == 0 && raindrops[i].active)
                 {
                     //if position is on the bottom shut the led down
                     raindrops[i].active = false;
@@ -64,8 +64,8 @@ void RainAnimation::update(const short &delta)
                 if (rnd() % 100 > SPAWN_RATE)
                 {
                     raindrops[i].x = rnd() % 5;
-                    raindrops[i].y = rnd() % 5;
-                    raindrops[i].z = 4;
+                    raindrops[i].y = 4;
+                    raindrops[i].z = rnd() % 5;
                     raindrops[i].r = rnd() % MAX_COLOR;
                     raindrops[i].g = rnd() % MAX_COLOR;
                     raindrops[i].b = rnd() % MAX_COLOR;
