@@ -88,5 +88,7 @@ bool Input::isPressed(const uint8_t &i)
 
 int8_t Input::getIncDelta()
 {
-    return this->enc_delta;
+    uint8_t ret = this->enc_delta;
+    this->enc_delta = 0;
+    return ret;
 }

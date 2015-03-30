@@ -2,7 +2,7 @@
 
 #include "Animation.h"
 #include "../Cube.h"
-#include "../Random.h"
+#include "../Util/Random.h"
 #define UPDATE_TIME 0
 class FadeAnimation : public Animation
 {
@@ -11,7 +11,8 @@ private:
     uint8_t counter, r, g, b;
     short timer;
 public:
-    FadeAnimation(Cube *c): cube(c), counter(0), r(rnd()), g(rnd()), b(rnd()), timer(0) {};
+    FadeAnimation(Cube *c): cube(c), counter(0), r(rnd()), g(rnd()), b(rnd()),
+        timer(0) {};
     ~FadeAnimation() {};
     void update(const short &delta);
 };

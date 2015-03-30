@@ -33,14 +33,18 @@ LINKER_SCRIPT_DEP:=
 
 # Every subdirectory with source files must be described here
 SUBDIRS :=  \
-../Animation
+../Animation \
+../Menu \
+../Util
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../Input.cpp \
 ../main.cpp \
-../Cube.cpp
+../Cube.cpp \
+../Menu/Menu.cpp \
+../Util/cpp_util.c
 
 
 PREPROCESSING_SRCS += 
@@ -52,22 +56,30 @@ ASM_SRCS +=
 OBJS +=  \
 Input.o \
 main.o \
-Cube.o
+Cube.o \
+Menu/Menu.o \
+Util/cpp_util.o
 
 OBJS_AS_ARGS +=  \
 Input.o \
 main.o \
-Cube.o
+Cube.o \
+Menu/Menu.o \
+Util/cpp_util.o
 
 C_DEPS +=  \
 Input.d \
 main.d \
-Cube.d
+Cube.d \
+Menu/Menu.d \
+Util/cpp_util.d
 
 C_DEPS_AS_ARGS +=  \
 Input.d \
 main.d \
-Cube.d
+Cube.d \
+Menu/Menu.d \
+Util/cpp_util.d
 
 OUTPUT_FILE_PATH +=Cube.elf
 
@@ -90,10 +102,28 @@ LINKER_SCRIPT_DEP+=
 
 
 
+
+
+
+
 ./%.o: .././%.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Menu/%.o: ../Menu/%.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Util/%.o: ../Util/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DF_CPU 22118400 -DDEBUG  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega1284p -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 

@@ -1,12 +1,13 @@
+#pragma once
 #include "Animation.h"
 #include "../Cube.h"
-#include "../Random.h"
+#include "../Util/Random.h"
 //the maximum of active raindrops
 #define MAX_RAINDROPS 20
 #define SPAWN_RATE 20 //its percent so 20% chance to spawn a not active raindrop
 #define UPDATE_TIME_RAINDROP 750 //in ms
 
-
+#include "../Display.h"
 class RainAnimation : public Animation
 {
 private:

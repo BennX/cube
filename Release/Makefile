@@ -33,14 +33,21 @@ LINKER_SCRIPT_DEP:=
 
 # Every subdirectory with source files must be described here
 SUBDIRS :=  \
-../Animation
+../Animation \
+../Menu \
+../Util
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../Animation/Ball.cpp \
+../Display.cpp \
 ../Input.cpp \
 ../main.cpp \
-../Cube.cpp
+../Cube.cpp \
+../Menu/Menu.cpp \
+../Util/cpp_util.cpp \
+../Util/Random.cpp
 
 
 PREPROCESSING_SRCS += 
@@ -50,24 +57,44 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+Animation/Ball.o \
+Display.o \
 Input.o \
 main.o \
-Cube.o
+Cube.o \
+Menu/Menu.o \
+Util/cpp_util.o \
+Util/Random.o
 
 OBJS_AS_ARGS +=  \
+Animation/Ball.o \
+Display.o \
 Input.o \
 main.o \
-Cube.o
+Cube.o \
+Menu/Menu.o \
+Util/cpp_util.o \
+Util/Random.o
 
 C_DEPS +=  \
+Animation/Ball.d \
+Display.d \
 Input.d \
 main.d \
-Cube.d
+Cube.d \
+Menu/Menu.d \
+Util/cpp_util.d \
+Util/Random.d
 
 C_DEPS_AS_ARGS +=  \
+Animation/Ball.d \
+Display.d \
 Input.d \
 main.d \
-Cube.d
+Cube.d \
+Menu/Menu.d \
+Util/cpp_util.d \
+Util/Random.d
 
 OUTPUT_FILE_PATH +=Cube.elf
 
@@ -90,7 +117,38 @@ LINKER_SCRIPT_DEP+=
 
 
 
+
+
+
+
+
+
+
+
+
+
+Animation/%.o: ../Animation/%.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 ./%.o: .././%.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Menu/%.o: ../Menu/%.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Util/%.o: ../Util/%.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

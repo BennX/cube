@@ -1,15 +1,10 @@
 /*
- * cpp_util.h
- * Including new and deelte operators
- * and also include guards for templates and so on
- * @see http://www.avrfreaks.net/forum/avr-c-micro-how?name=PNphpBB2&file=viewtopic&t=59453
- * Created: 28.03.2015 14:03:05
+ * cpp_util.c
+ *
+ * Created: 30.03.2015 18:48:39
  *  Author: Benjamin
  */
-
-
-void *operator new(size_t size);
-void operator delete(void *ptr);
+#include "cpp_util.h"
 
 void *operator new(size_t size)
 {
@@ -19,6 +14,13 @@ void *operator new(size_t size)
 void operator delete(void *ptr)
 {
     free(ptr);
+}
+
+int freeRam ()
+{
+    extern int __heap_start, *__brkval;
+    int v;
+    return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
 }
 
 /**
@@ -33,6 +35,13 @@ __extension__ typedef int __guard __attribute__((mode (__DI__)));
 extern "C" int __cxa_guard_acquire(__guard *);
 extern "C" void __cxa_guard_release (__guard *);
 extern "C" void __cxa_guard_abort (__guard *);
+
+
+/**
+ * And last thing, if you use pure virtual functions you must define another function:
+ */
+extern "C" void __cxa_pure_virtual(void);
+void __cxa_pure_virtual(void) {};
 
 /**
  * Please be sure to define these functions exactly as I showed,
@@ -49,17 +58,3 @@ void __cxa_guard_release (__guard *g)
     *(char *)g = 1;
 };
 void __cxa_guard_abort (__guard *) {};
-
-/**
- * And last thing, if you use pure virtual functions you must define another function:
- */
-extern "C" void __cxa_pure_virtual(void);
-void __cxa_pure_virtual(void) {};
-
-//returns free ram if not O3!
-int freeRam ()
-{
-    extern int __heap_start, *__brkval;
-    int v;
-    return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
-}

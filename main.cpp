@@ -9,16 +9,18 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <avr/pgmspace.h>
 
 #include "Cube.h"
 #include "Display.h"
 #include "USART.h"
-#include "Random.h" //progmem random generator
 #include "Temperatur.h"
 #include "Input.h"
 #include "Animation/FadeAnimation.h"
 #include "Animation/RainAnimation.h"
-#include "cpp_util.h"
+#include "Animation/Ball.h"
+#include "Util/cpp_util.h"
+#include "Menu/Menu.h"
 
 //global objects to access in interupts
 Cube cube; //also calls SPI::init()!
@@ -31,12 +33,12 @@ long long ms();
 
 int main()
 {
-    //first test animation
-    Animation *anim = new RainAnimation(&cube);
-
     Display::init();
     USART::init();//setup the usart0
 
+    Menu menu;
+    //first test animation
+    Animation *anim = new Ball(&cube, &input);
     initCubeRoutine();
     sei();
 
@@ -44,15 +46,17 @@ int main()
     DDRB |= (1 << DDB3); //PB3
 
     Display::set_cursor(0, 0);
-    Display::write_string("Cube V2");
+    Display::write_string_P(PSTR("Cube V2"));
     Display::set_cursor(1, 0);
-    Display::write_string("I AM HERE!");
+    Display::write_string_P(PSTR("I AM HERE!"));
     Display::set_cursor(2, 0);
-    Display::write_string("Guess it's works");
-    Display::setDisplayLight(20);
+    Display::write_string_P(PSTR("Guess it's works"));
+
     _delay_ms(1000);
     Display::clear();
+    menu.update();
 
+    _delay_ms(1000);
     char buff[20] = {0};
     short start = 0, delta = 0;
     int cur_free_ram = 0;
@@ -63,6 +67,7 @@ int main()
         start = ms();
         anim->update(delta);
         reset_timer += delta;
+        /*
         if(input.isPressed() & reset_timer > 200)
         {
             reset_timer = 0;
@@ -85,6 +90,7 @@ int main()
                 cube.off();
             }
         }
+        */
 
         if(freeRam() != cur_free_ram)
         {
@@ -92,7 +98,7 @@ int main()
             Display::set_cursor(0, 0);
             Display::write_string("            ");
             Display::set_cursor(0, 0);
-            Display::write_string("Free RAM");
+            Display::write_string_P(PSTR("Free RAM"));
             itoa(freeRam(), buff, 10);
             Display::set_cursor(1, 0);
             Display::write_string(buff);
