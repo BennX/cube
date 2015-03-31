@@ -5,6 +5,10 @@
  *  Author: Benjamin
  */
 #include "Random.h"
+
+static uint8_t y8 = 13;
+static uint8_t cur_shift = 0, request_count = 0;
+
 uint8_t rnd()
 {
     //shift the shifting numbers

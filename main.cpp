@@ -36,7 +36,7 @@ int main()
     Display::init();
     USART::init();//setup the usart0
 
-    Menu menu;
+    Menu menu(&input);
     //first test animation
     Animation *anim = new Ball(&cube, &input);
     initCubeRoutine();
@@ -67,43 +67,7 @@ int main()
         start = ms();
         anim->update(delta);
         reset_timer += delta;
-        /*
-        if(input.isPressed() & reset_timer > 200)
-        {
-            reset_timer = 0;
-            Display::set_cursor(2, 0);
-            Display::write_string("pres");
-            if(toggle)
-            {
-                Animation *a = anim;
-                anim = new FadeAnimation(&cube);
-                delete a;
-                toggle = false;
-                cube.off();
-            }
-            else
-            {
-                Animation *b = anim;
-                anim = new RainAnimation(&cube);
-                delete b;
-                toggle = true;
-                cube.off();
-            }
-        }
-        */
-
-        if(freeRam() != cur_free_ram)
-        {
-            cur_free_ram = freeRam();
-            Display::set_cursor(0, 0);
-            Display::write_string("            ");
-            Display::set_cursor(0, 0);
-            Display::write_string_P(PSTR("Free RAM"));
-            itoa(freeRam(), buff, 10);
-            Display::set_cursor(1, 0);
-            Display::write_string(buff);
-            Display::write_string("Byte");
-        }
+        menu.update();
         delta = ms() - start;
     }
 }

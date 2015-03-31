@@ -11,7 +11,7 @@
 #include <math.h>
 // default constructor
 Ball::Ball(Cube *c, Input *i): cube(c), pos_x(1), pos_y(1), pos_z(1), extend(0),
-    toggle(true), input(i), update_time(UPDATE_TIME)
+    toggle(true), input(i), update_time(BALL_UPDATE_TIME)
 {
     color.r = rnd(MAX_COLOR);
     color.g = rnd(MAX_COLOR);
@@ -25,7 +25,6 @@ Ball::~Ball()
 
 void Ball::update(const short &delta)
 {
-
     if(extend >= BALL_SIZE)
     {
         toggle = false;
@@ -39,10 +38,6 @@ void Ball::update(const short &delta)
         color.g = rnd(MAX_COLOR);
         color.b = rnd(MAX_COLOR);
     }
-
-    int8_t u = input->getIncDelta();
-    if(update_time + u * 25.0 > UPDATE_TIME)
-        update_time += u * 25.0;
 
     if(toggle)
     {

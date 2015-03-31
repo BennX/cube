@@ -52,7 +52,7 @@ inline void USART::init()
     UCSR0A |= (1 << U2X0)
 #else
     UCSR0A &= ~(1 << U2X0);
-#endif;
+#endif
 
     // Enable receiver and transmitter //für empfangsinterupt fehlt noch (1<< RXCIE0)
     UCSR0B |= (1 << RXEN0) | (1 << TXEN0);
