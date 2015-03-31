@@ -10,7 +10,7 @@
 #include "../Util/Random.h"
 #include <math.h>
 // default constructor
-Ball::Ball(Cube *c, Input *i): cube(c), pos_x(1), pos_y(1), pos_z(1), extend(0),
+Ball::Ball(Cube *c, Input *i): cube(c), pos_x(1), pos_y(1), pos_z(1), extend(0.0f),
     toggle(true), input(i), update_time(BALL_UPDATE_TIME)
 {
     color.r = rnd(MAX_COLOR);

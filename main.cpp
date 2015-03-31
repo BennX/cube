@@ -54,7 +54,6 @@ int main()
 
     _delay_ms(1000);
     Display::clear();
-    menu.update();
 
     _delay_ms(1000);
     char buff[20] = {0};
@@ -67,7 +66,7 @@ int main()
         start = ms();
         anim->update(delta);
         reset_timer += delta;
-        menu.update();
+        menu.update(delta);
         delta = ms() - start;
     }
 }

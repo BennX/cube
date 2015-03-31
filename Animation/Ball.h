@@ -24,9 +24,9 @@ protected:
 private:
     Cube *cube;
     Input *input;
-	
+
     RGB color;
-	
+
     uint8_t pos_x, pos_y, pos_z;
     bool toggle;
     float extend;
