@@ -12,8 +12,8 @@
 #include "Animation.h"
 #include "../Cube.h"
 #include "../Input.h"
-#define UPDATE_TIME 100.0
-#define BALL_SIZE 5.0
+#define UPDATE_TIME 100.0f
+#define BALL_SIZE 5.0f
 class Ball : public Animation
 {
 public:
@@ -28,8 +28,8 @@ private:
     uint8_t pos_x, pos_y, pos_z;
     bool toggle;
     float extend;
-	float update_time;
-
+    float update_time;
+	char buffer[10];
     void mov();
     Ball( const Ball &c );
     Ball &operator=( const Ball &c );

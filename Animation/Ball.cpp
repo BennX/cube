@@ -25,6 +25,21 @@ Ball::~Ball()
 
 void Ball::update(const short &delta)
 {
+
+    if(extend >= BALL_SIZE)
+    {
+        toggle = false;
+    }
+
+    if(extend <= 0)
+    {
+        toggle = true;
+        mov();
+        color.r = rnd(MAX_COLOR);
+        color.g = rnd(MAX_COLOR);
+        color.b = rnd(MAX_COLOR);
+    }
+
     int8_t u = input->getIncDelta();
     if(update_time + u * 25.0 > UPDATE_TIME)
         update_time += u * 25.0;
@@ -37,6 +52,7 @@ void Ball::update(const short &delta)
     {
         extend -= delta / update_time;
     }
+
     for (uint8_t x = 0; x < 5; x++)
     {
         for (uint8_t y = 0; y < 5; y++)
@@ -54,22 +70,6 @@ void Ball::update(const short &delta)
                 }
             }
         }
-    }
-    if(extend > BALL_SIZE || extend < 0)
-    {
-        if(toggle)
-        {
-            toggle = false;
-        }
-        else
-        {
-            toggle = true;
-            mov();
-        }
-
-        color.r = rnd(MAX_COLOR);
-        color.g = rnd(MAX_COLOR);
-        color.b = rnd(MAX_COLOR);
     }
 }
 void Ball::mov()
