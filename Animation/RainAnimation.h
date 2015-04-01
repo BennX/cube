@@ -7,7 +7,6 @@
 #define SPAWN_RATE 20 //its percent so 20% chance to spawn a not active raindrop
 #define UPDATE_TIME_RAINDROP 750 //in ms
 
-#include "../Display.h"
 class RainAnimation : public Animation
 {
 private:
@@ -18,11 +17,11 @@ private:
     };
 
     Cube *cube;
-    unsigned long time_taken;
+    uint16_t time_taken;
     RainDrop raindrops[MAX_RAINDROPS];
 public:
     RainAnimation(Cube *c);
-    void update(const short &delta);
+    void update(const uint16_t &delta);
 };
 
 RainAnimation::RainAnimation(Cube *c) : cube(c), time_taken(0)
@@ -33,13 +32,13 @@ RainAnimation::RainAnimation(Cube *c) : cube(c), time_taken(0)
     }
 }
 
-void RainAnimation::update(const short &delta)
+void RainAnimation::update(const uint16_t &delta)
 {
     time_taken += delta;
     if(time_taken > UPDATE_TIME_RAINDROP)
     {
         time_taken = 0;
-        for (int i = 0; i < MAX_RAINDROPS; i++)
+        for (uint8_t i = 0; i < MAX_RAINDROPS; i++)
         {
             if (raindrops[i].active)
             {
@@ -62,7 +61,7 @@ void RainAnimation::update(const short &delta)
             else
             {
                 //if not active generate a new spot to start;
-                if (rnd() % 100 > SPAWN_RATE)
+                if (rnd(100) > SPAWN_RATE)
                 {
                     raindrops[i].x = rnd() % 5;
                     raindrops[i].y = 4;
@@ -78,5 +77,4 @@ void RainAnimation::update(const short &delta)
             }
         }
     }
-
 }

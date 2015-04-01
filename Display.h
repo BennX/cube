@@ -67,17 +67,14 @@ public:
     static void clear();
     static void off();
     static void on();
-    static bool isActive();
 protected:
     static void write_instruction(const unsigned char &data);
     static inline void write(const unsigned char &data);
 private:
-    static bool active;
     Display() {};
     Display( const Display &c );
     Display &operator=( const Display &c );
 
 }; //Display
-
 
 #endif //__DISPLAY_H__

@@ -40,6 +40,7 @@ SUBDIRS :=  \
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../Animation/Animator.cpp \
 ../Animation/Ball.cpp \
 ../Display.cpp \
 ../Input.cpp \
@@ -57,6 +58,7 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+Animation/Animator.o \
 Animation/Ball.o \
 Display.o \
 Input.o \
@@ -67,6 +69,7 @@ Util/cpp_util.o \
 Util/Random.o
 
 OBJS_AS_ARGS +=  \
+Animation/Animator.o \
 Animation/Ball.o \
 Display.o \
 Input.o \
@@ -77,6 +80,7 @@ Util/cpp_util.o \
 Util/Random.o
 
 C_DEPS +=  \
+Animation/Animator.d \
 Animation/Ball.d \
 Display.d \
 Input.d \
@@ -87,6 +91,7 @@ Util/cpp_util.d \
 Util/Random.d
 
 C_DEPS_AS_ARGS +=  \
+Animation/Animator.d \
 Animation/Ball.d \
 Display.d \
 Input.d \
@@ -110,6 +115,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

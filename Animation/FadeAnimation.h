@@ -14,10 +14,10 @@ public:
     FadeAnimation(Cube *c): cube(c), counter(0), r(rnd()), g(rnd()), b(rnd()),
         timer(0) {};
     ~FadeAnimation() {};
-    void update(const short &delta);
+    void update(const uint16_t &delta);
 };
 
-void FadeAnimation::update(const short &delta)
+void FadeAnimation::update(const uint16_t &delta)
 {
     timer += delta;
     if(timer > UPDATE_TIME)

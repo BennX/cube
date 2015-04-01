@@ -16,6 +16,7 @@
 #include "USART.h"
 #include "Temperatur.h"
 #include "Input.h"
+#include "Animation/Animator.h"
 #include "Animation/FadeAnimation.h"
 #include "Animation/RainAnimation.h"
 #include "Animation/Ball.h"
@@ -36,9 +37,13 @@ int main()
     Display::init();
     USART::init();//setup the usart0
 
-    Menu menu(&input);
+    Animator animator;
+    animator.addAnimation(new FadeAnimation(&cube));
+    animator.addAnimation(new RainAnimation(&cube));
+    animator.addAnimation(new Ball(&cube));
+    Menu menu(&input, &animator);
     //first test animation
-    Animation *anim = new Ball(&cube, &input);
+    Animation *anim = new Ball(&cube);
     initCubeRoutine();
     sei();
 
@@ -54,18 +59,12 @@ int main()
 
     _delay_ms(1000);
     Display::clear();
-
     _delay_ms(1000);
-    char buff[20] = {0};
-    short start = 0, delta = 0;
-    int cur_free_ram = 0;
-    bool toggle = true;
-    uint8_t reset_timer = 0;
+    uint16_t start = 1, delta = 0;
     while(true)
     {
         start = ms();
-        anim->update(delta);
-        reset_timer += delta;
+        animator.update(delta);
         menu.update(delta);
         delta = ms() - start;
     }
@@ -98,6 +97,8 @@ long long ms()
 uint8_t counter = 0;
 ISR(TIMER1_COMPA_vect)
 {
+    cube.render();
+	
     counter++;
     if(counter & 0x04)
     {
@@ -105,5 +106,4 @@ ISR(TIMER1_COMPA_vect)
         millis++;
         input.update();
     }
-    cube.render();
 }

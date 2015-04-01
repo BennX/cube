@@ -10,8 +10,8 @@
 #include "../Util/Random.h"
 #include <math.h>
 // default constructor
-Ball::Ball(Cube *c, Input *i): cube(c), pos_x(1), pos_y(1), pos_z(1), extend(0.0f),
-    toggle(true), input(i), update_time(BALL_UPDATE_TIME)
+Ball::Ball(Cube *c): cube(c), pos_x(1), pos_y(1), pos_z(1), extend(0.0f),
+    toggle(true), update_time(BALL_UPDATE_TIME), passed_time(0)
 {
     color.r = rnd(MAX_COLOR);
     color.g = rnd(MAX_COLOR);
@@ -23,30 +23,21 @@ Ball::~Ball()
 {
 } //~Ball
 
-void Ball::update(const short &delta)
+void Ball::update(const uint16_t &delta)
 {
-    if(extend >= BALL_SIZE)
-    {
-        toggle = false;
-    }
+    passed_time += delta;
+
+    extend = BALL_SIZE * (-pow(passed_time / update_time - 1, 2) + 1);
 
     if(extend <= 0)
     {
-        toggle = true;
+        passed_time = 0;
         mov();
         color.r = rnd(MAX_COLOR);
         color.g = rnd(MAX_COLOR);
         color.b = rnd(MAX_COLOR);
     }
 
-    if(toggle)
-    {
-        extend += delta / update_time;
-    }
-    else
-    {
-        extend -= delta / update_time;
-    }
 
     for (uint8_t x = 0; x < 5; x++)
     {

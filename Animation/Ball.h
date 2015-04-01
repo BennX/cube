@@ -11,26 +11,24 @@
 
 #include "Animation.h"
 #include "../Cube.h"
-#include "../Input.h"
-#define BALL_UPDATE_TIME 500.0f
-#define BALL_SIZE 6.0f
+#define BALL_UPDATE_TIME 4000.0f
+#define BALL_SIZE 4.0f
 class Ball : public Animation
 {
 public:
-    Ball(Cube *c, Input *i);
+    Ball(Cube *c);
     ~Ball();
-    void update(const short &delta);
+    void update(const uint16_t &delta);
 protected:
 private:
     Cube *cube;
-    Input *input;
-
     RGB color;
 
     uint8_t pos_x, pos_y, pos_z;
     bool toggle;
     float extend;
     float update_time;
+    uint16_t passed_time;
 
     void mov();
     Ball( const Ball &c );

@@ -13,13 +13,15 @@
 #include "../Util/LinkedList.h"
 #include "../Display.h"
 #include "../Input.h"
+#include "../Animation/Animator.h"
 const char entry1[] PROGMEM = "test\n";
 #define CLICK_DELAY 1000
+#define DISPLAY_LIGHT_OF_TIMER 8000
 class Menu
 {
 //functions
 public:
-    Menu(Input *i);
+    Menu(Input *i, Animator *a);
     ~Menu();
     void update(const short &delta);
 
@@ -27,11 +29,14 @@ private:
     Menu( const Menu &c );
     Menu &operator=( const Menu &c );
     Input *input;
+    Animator *animator;
 
     bool changed;
     int8_t cur_pos;
     uint16_t clicktimer;
-	bool clicked;
+	uint16_t display_light_timer;
+	bool displayIsOn;
+    bool clicked;
 }; //Menu
 
 #endif //__MENU_H__

@@ -7,6 +7,7 @@
 
 
 #include "Input.h"
+#include <avr/interrupt.h>
 // default constructor
 Input::Input() : enc_delta(0), last(0)
 {
@@ -88,7 +89,11 @@ bool Input::isPressed(const uint8_t &i)
 
 int8_t Input::getIncDelta()
 {
-    int8_t delta = this->enc_delta;
-    this->enc_delta = 0;
-    return delta / 2;
+    //reading doublestep encoder
+    int8_t val;
+    cli();
+    val = enc_delta;
+    enc_delta = val & 1;
+    sei();
+    return val >> 1;
 }

@@ -6,10 +6,9 @@
  */
 #include "Display.h"
 #include <avr/pgmspace.h>
-bool Display::active = false;
+
 void Display::init()
 {
-    active = true;
     //display timer init
     //set OC0B as output
     DDRB |= (1 << DDB4);
@@ -51,7 +50,7 @@ void Display::init()
 
 void Display::setDisplayLight(const uint8_t &value)
 {
-    if(value > 0)
+    if(value >= 0)
         OCR0B = value;
 }
 
@@ -64,19 +63,13 @@ void Display::clear()
 void Display::off()
 {
     write_instruction(INSTRUCTION_DISPLAY_OFF);
-    active = false;
 }
 
 void Display::on()
 {
     write_instruction(INSTRUCTION_DISPLAY_ON);
-    active = true;
 }
 
-bool Display::isActive()
-{
-    return active;
-}
 
 void Display::write(const unsigned char &data)
 {

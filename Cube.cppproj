@@ -154,6 +154,12 @@
     <Compile Include="Animation\Animation.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Animation\Animator.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Animation\Animator.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Animation\Ball.cpp">
       <SubType>compile</SubType>
     </Compile>
