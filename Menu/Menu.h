@@ -15,8 +15,11 @@
 #include "../Input.h"
 #include "../Animation/Animator.h"
 const char entry1[] PROGMEM = "test\n";
+
 #define CLICK_DELAY 1000
 #define DISPLAY_LIGHT_OF_TIMER 8000
+#define DISPLAY_FADE_OUT_TIME 2000.0
+#define DISPLAY_FADE_ON_TIME 2000.0
 class Menu
 {
 //functions
@@ -37,6 +40,7 @@ private:
 	uint16_t display_light_timer;
 	bool displayIsOn;
     bool clicked;
+	bool fadeOn, fading;
 }; //Menu
 
 #endif //__MENU_H__

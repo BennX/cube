@@ -5,7 +5,7 @@
 //the maximum of active raindrops
 #define MAX_RAINDROPS 20
 #define SPAWN_RATE 20 //its percent so 20% chance to spawn a not active raindrop
-#define UPDATE_TIME_RAINDROP 750 //in ms
+#define UPDATE_TIME_RAINDROP 200 //in ms
 
 class RainAnimation : public Animation
 {

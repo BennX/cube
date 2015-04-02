@@ -11,8 +11,8 @@
 
 #include "Animation.h"
 #include "../Cube.h"
-#define BALL_UPDATE_TIME 4000.0f
-#define BALL_SIZE 4.0f
+#define BALL_UPDATE_TIME 2000.0f
+#define BALL_SIZE 4.5f
 class Ball : public Animation
 {
 public:

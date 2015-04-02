@@ -60,7 +60,9 @@ int main()
     _delay_ms(1000);
     Display::clear();
     _delay_ms(1000);
-    uint16_t start = 1, delta = 0;
+
+    long long start = 1;
+    uint16_t delta = 0;
     while(true)
     {
         start = ms();
@@ -100,7 +102,7 @@ ISR(TIMER1_COMPA_vect)
     cube.render();
 	
     counter++;
-    if(counter & 0x04)
+    if(counter % 8 == 0) // & 8 geht nicht!
     {
         // 1khz routine here no need to clean counter
         millis++;

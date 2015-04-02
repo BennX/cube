@@ -12,7 +12,8 @@
 #define MIN( a, b ) (a < b) ? a : b
 // default constructor
 Menu::Menu(Input *i, Animator *a) : changed(true), cur_pos(0), input(i),
-    animator(a), clicked(false), display_light_timer(0), displayIsOn(true)
+    animator(a), clicked(false), display_light_timer(0), displayIsOn(true),
+    fading(false), fadeOn(true)
 {
 } //Menu
 
@@ -23,6 +24,7 @@ Menu::~Menu()
 
 void Menu::update(const short &delta)
 {
+    display_light_timer += delta;
     if(changed)
     {
         Display::clear();
@@ -34,25 +36,45 @@ void Menu::update(const short &delta)
         Display::write_string_P(PSTR("Rain"));
         Display::set_cursor(2, 1);
         Display::write_string_P(PSTR("Ball"));
-        changed = false;
-        Display::setDisplayLight(255);
         Display::on();
+        changed = false;
         displayIsOn = true;
-        display_light_timer = 0;
+        if(!fading)
+        {
+            display_light_timer = 0;
+            fading = true;
+        }
+    }
+    //fade on
+    if(DISPLAY_FADE_ON_TIME - display_light_timer > 0 && displayIsOn && fadeOn)
+    {
+        Display::setDisplayLight(255.0 / DISPLAY_FADE_ON_TIME * display_light_timer);
+    }
+    else if(displayIsOn && fadeOn)
+    {
+        Display::setDisplayLight(255);
+        fadeOn = false;
+        fading = false;
     }
 
-    display_light_timer += delta;
-    if(display_light_timer > DISPLAY_LIGHT_OF_TIMER && displayIsOn)
+    //fade off
+    if((display_light_timer > DISPLAY_LIGHT_OF_TIMER) && displayIsOn)
     {
-        if(255.0 / (display_light_timer - DISPLAY_LIGHT_OF_TIMER)  < 1)
+        if(255.0 / DISPLAY_FADE_OUT_TIME * (DISPLAY_FADE_OUT_TIME -
+                                            (display_light_timer -
+                                             DISPLAY_LIGHT_OF_TIMER))  < 1)
         {
             Display::setDisplayLight(0);
             Display::off();
             displayIsOn = false;
+            fadeOn = true; // enable on fade
         }
         else
         {
-            Display::setDisplayLight(255.0 / (display_light_timer - DISPLAY_LIGHT_OF_TIMER));
+            Display::setDisplayLight(255.0 / DISPLAY_FADE_OUT_TIME *
+                                     (DISPLAY_FADE_OUT_TIME -
+                                      (display_light_timer -
+                                       DISPLAY_LIGHT_OF_TIMER)));
         }
     }
 
