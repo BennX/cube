@@ -34,6 +34,7 @@ LINKER_SCRIPT_DEP:=
 # Every subdirectory with source files must be described here
 SUBDIRS :=  \
 ../Animation \
+../Animation/FontAnimation \
 ../Menu \
 ../Util
 
@@ -42,6 +43,8 @@ SUBDIRS :=  \
 C_SRCS +=  \
 ../Animation/Animator.cpp \
 ../Animation/Ball.cpp \
+../Animation/FontAnimation/Font.cpp \
+../Animation/FontAnimation/FontAnimation.cpp \
 ../Display.cpp \
 ../Input.cpp \
 ../main.cpp \
@@ -60,6 +63,8 @@ ASM_SRCS +=
 OBJS +=  \
 Animation/Animator.o \
 Animation/Ball.o \
+Animation/FontAnimation/Font.o \
+Animation/FontAnimation/FontAnimation.o \
 Display.o \
 Input.o \
 main.o \
@@ -71,6 +76,8 @@ Util/Random.o
 OBJS_AS_ARGS +=  \
 Animation/Animator.o \
 Animation/Ball.o \
+Animation/FontAnimation/Font.o \
+Animation/FontAnimation/FontAnimation.o \
 Display.o \
 Input.o \
 main.o \
@@ -82,6 +89,8 @@ Util/Random.o
 C_DEPS +=  \
 Animation/Animator.d \
 Animation/Ball.d \
+Animation/FontAnimation/Font.d \
+Animation/FontAnimation/FontAnimation.d \
 Display.d \
 Input.d \
 main.d \
@@ -93,6 +102,8 @@ Util/Random.d
 C_DEPS_AS_ARGS +=  \
 Animation/Animator.d \
 Animation/Ball.d \
+Animation/FontAnimation/Font.d \
+Animation/FontAnimation/FontAnimation.d \
 Display.d \
 Input.d \
 main.d \
@@ -134,7 +145,18 @@ LINKER_SCRIPT_DEP+=
 
 
 
+
+
+
+
 Animation/%.o: ../Animation/%.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Animation/FontAnimation/%.o: ../Animation/FontAnimation/%.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

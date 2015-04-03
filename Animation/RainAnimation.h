@@ -19,6 +19,7 @@ private:
     Cube *cube;
     uint16_t time_taken;
     RainDrop raindrops[MAX_RAINDROPS];
+
 public:
     RainAnimation(Cube *c);
     void update(const uint16_t &delta);

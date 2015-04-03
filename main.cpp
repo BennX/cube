@@ -19,6 +19,8 @@
 #include "Animation/Animator.h"
 #include "Animation/FadeAnimation.h"
 #include "Animation/RainAnimation.h"
+#include "Animation/FontAnimation/FontAnimation.h"
+
 #include "Animation/Ball.h"
 #include "Util/cpp_util.h"
 #include "Menu/Menu.h"
@@ -41,6 +43,7 @@ int main()
     animator.addAnimation(new FadeAnimation(&cube));
     animator.addAnimation(new RainAnimation(&cube));
     animator.addAnimation(new Ball(&cube));
+    animator.addAnimation(new FontAnimation(&cube));
     Menu menu(&input, &animator);
     //first test animation
     Animation *anim = new Ball(&cube);
@@ -100,7 +103,7 @@ uint8_t counter = 0;
 ISR(TIMER1_COMPA_vect)
 {
     cube.render();
-	
+
     counter++;
     if(counter % 8 == 0) // & 8 geht nicht!
     {
