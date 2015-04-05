@@ -38,36 +38,33 @@ int main()
 {
     Display::init();
     USART::init();//setup the usart0
-
+    Display::out_p(0, 0) << PSTR("initialization");
+//init of the effects
     Animator animator;
-    animator.addAnimation(new FadeAnimation(&cube));
-    animator.addAnimation(new RainAnimation(&cube));
-    animator.addAnimation(new Ball(&cube));
-    animator.addAnimation(new FontAnimation(&cube));
+    FadeAnimation fade(&cube);
+    RainAnimation rain(&cube);
+    Ball ball(&cube);
+    FontAnimation font(&cube);
+
+    animator.addAnimation(&fade);
+    animator.addAnimation(&rain);
+    animator.addAnimation(&ball);
+    animator.addAnimation(&font);
+    Display::out_p(1, 0) <<  PSTR("Animation done");
+    //push the menu entrys
     Menu menu(&input, &animator);
-	//push the menu entrys
-	menu.addEntry(PSTR("Fade"));
-	menu.addEntry(PSTR("Rain"));
-	menu.addEntry(PSTR("Ball"));
-	menu.addEntry(PSTR("Font"));
-	menu.addEntry(PSTR("TEST0"));
-	menu.addEntry(PSTR("TEST1"));
+    menu.addEntry(&fade);
+    menu.addEntry(&rain);
+    menu.addEntry(&ball);
+    menu.addEntry(&font);
+    Display::out_p(2, 0) << PSTR("Menu done");
     initCubeRoutine();
     sei();
 
     //Test LED
     DDRB |= (1 << DDB3); //PB3
-
-    Display::set_cursor(0, 0);
-    Display::write_string_P(PSTR("Cube V2"));
-    Display::set_cursor(1, 0);
-    Display::write_string_P(PSTR("I AM HERE!"));
-    Display::set_cursor(2, 0);
-    Display::write_string_P(PSTR("Guess it's works"));
-
     _delay_ms(1000);
     Display::clear();
-    _delay_ms(1000);
 
     long long start = 1;
     uint16_t delta = 0;

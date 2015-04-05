@@ -10,17 +10,26 @@
 #define __FONTANIMATION_H__
 #include <avr/io.h>
 #include "../Animation.h"
+#include "../../Menu/MenuEntry.h"
+
 #include "Font.h"
 #include "../../Cube.h"
 
 #define TO_SHOW_STRING  "KRISTINA\n"
 #define LETTER_UPDATE_TIME 750
-class FontAnimation : public Animation
+class FontAnimation : public Animation, public MenuEntry
 {
 public:
     FontAnimation(Cube *c);
     ~FontAnimation();
     void update(const uint16_t &delta);
+    //menu stuff
+    void updateEntry(const uint16_t &delta, Input &i, Menu &m);
+    PGM_P name()
+    {
+        return PSTR("Font");
+    };
+    bool subMenu();
 private:
     Font font;
     Cube *cube;

@@ -53,3 +53,12 @@ void FontAnimation::update(const uint16_t &delta)
         color.b = rnd(MAX_COLOR);
     }
 }
+
+void FontAnimation::updateEntry(const uint16_t &delta, Input &i,
+                                Menu &m)
+{
+}
+bool FontAnimation::subMenu()
+{
+    return false;
+}

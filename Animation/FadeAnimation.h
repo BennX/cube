@@ -3,19 +3,36 @@
 #include "Animation.h"
 #include "../Cube.h"
 #include "../Util/Random.h"
+#include "../Menu/MenuEntry.h"
+#include <avr/io.h>
 #define COLOR_STAY_TIME 5000
 #define FADE_DELAY 250
-class FadeAnimation : public Animation
+#define SPEED_CHANGE_SPEED 500
+#define CLICK_DELAY_FADE 1000
+class FadeAnimation : public Animation, public MenuEntry
 {
 private:
     Cube *cube;
     uint8_t counter, r, g, b;
-    short timer;
+	int8_t m_curMenuPos;
+    uint16_t timer, m_speed, m_clickdelay;
+    bool m_speedSelected, m_menuChanged, m_clicked;
 public:
     FadeAnimation(Cube *c): cube(c), counter(0), r(rnd()), g(rnd()),
-        b(rnd()), timer(0) {};
+        b(rnd()), timer(0), m_curMenuPos(0), m_speed(COLOR_STAY_TIME),
+        m_speedSelected(false), m_menuChanged(true), m_clickdelay(0),
+        m_clicked(true) {};
     ~FadeAnimation() {};
+
+    //animation
     void update(const uint16_t &delta);
+    //menu entry
+    void updateEntry(const uint16_t &delta, Input &i, Menu &m);
+    PGM_P name()
+    {
+        return PSTR("Fade");
+    };
+    bool subMenu();
 };
 
 void FadeAnimation::update(const uint16_t &delta)
@@ -25,7 +42,7 @@ void FadeAnimation::update(const uint16_t &delta)
     if(counter > MAX_COLOR)
     {
         timer += delta;
-        if(timer > COLOR_STAY_TIME)
+        if(timer > m_speed)
         {
             r = rnd(MAX_COLOR);
             g = rnd(MAX_COLOR);
@@ -74,4 +91,74 @@ void FadeAnimation::update(const uint16_t &delta)
         }
     }
     //_delay_ms(50);
+}
+
+void FadeAnimation::updateEntry(const uint16_t &delta, Input &i,
+                                Menu &m)
+{
+    if(m_clicked)
+    {
+        m_clickdelay += delta;
+        if(m_clickdelay > CLICK_DELAY_FADE)
+        {
+            m_clicked = false;
+            m_clickdelay = 0;
+        }
+    }
+
+    if(m_menuChanged)
+    {
+        Display::clear();
+        Display::out_p(0, 0) << PSTR("Fade Animation");
+        Display::out_p(1, 1) << PSTR("Speed: ");
+        Display::out << (float)(m_speed / 1000.0);
+        Display::out_p << PSTR("s");
+        Display::out_p(2, 1) << PSTR("Start");
+        Display::out_p(1 + m_curMenuPos, 0)  << PSTR(">");
+        m_menuChanged = false;
+    }
+
+    if(!m_clicked)
+    {
+        if(i.isPressed() && m_curMenuPos == 0)
+        {
+            m_speedSelected = !m_speedSelected;
+            m_clicked = true;
+        }
+        else if (i.isPressed() && m_curMenuPos == 1)
+        {
+            m.start(0);
+            m.leaveSubmenu();
+            m_menuChanged = true;
+            m_clicked = true;
+        }
+    }
+
+    int8_t enc = i.getIncDelta();
+    if(enc != 0 && m_speedSelected)
+    {
+        m_speed += enc * SPEED_CHANGE_SPEED;
+        if(m_speed < 0)
+            m_speed = 0;
+        m_menuChanged = true;
+    }
+
+    else if(enc != 0)
+    {
+        m_curMenuPos += enc;
+        if(m_curMenuPos < 0)
+        {
+            m_curMenuPos = 0;
+        }
+        else if(m_curMenuPos > 1)
+        {
+            m_curMenuPos = 1;
+        }
+        m_menuChanged = true;
+    }
+}
+
+bool FadeAnimation::subMenu()
+{
+    return true;
 }

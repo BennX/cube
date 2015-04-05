@@ -36,9 +36,12 @@
 #define INSTRUCTION_ENTRY_MODE 				0b00000110
 
 #include <avr/io.h>
+#include <stdio.h>
+#include <stdlib.h>
 #define F_CPU 22118400
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <avr/pgmspace.h>
 /**
  * No interupt while write operation!
  */
@@ -67,23 +70,109 @@ public:
     static void clear();
     static void off();
     static void on();
-
+    static bool isActive();
     static struct out
     {
+        /**
+         * Only use this for PSTR strings!!!!!
+         */
         out &operator<<(const char *string)
         {
             Display::write_string(string);
             return *this;
         };
+
+        out &operator<<(const int &i)
+        {
+            char buf[10];
+            itoa(i, buf, 10);
+            Display::write_string(buf);
+            return *this;
+        }
+
+        out &operator<<(const float &f)
+        {
+            char buf[10];
+            sprintf(buf, "%.2f", f);
+            Display::write_string(buf);
+            return *this;
+        }
+
+        out &operator <<(const bool &b)
+        {
+            if(b)
+                Display::write_string_P(PSTR("true"));
+            else
+                Display::write_string_P(PSTR("false"));
+            return *this;
+        }
+
+        out &operator<<(const char string)
+        {
+            Display::write_data(string);
+            return *this;
+        };
+
         out &operator ()(const uint8_t &row, const uint8_t &colum)
         {
             Display::set_cursor(row, colum);
         };
+
     } out;
+
+    static struct out_p
+    {
+        /**
+         * Override for pstr
+         */
+        out_p &operator<<(const char *string)
+        {
+            Display::write_string_P(string);
+            return *this;
+        };
+
+        out_p &operator ()(const uint8_t &row, const uint8_t &colum)
+        {
+            Display::set_cursor(row, colum);
+            return *this;
+        };
+
+        out_p &operator<<(const int &i)
+        {
+            char buf[10];
+            itoa(i, buf, 10);
+            Display::write_string(buf);
+            return *this;
+        }
+
+        out_p &operator<<(const float &f)
+        {
+            char buf[10];
+            sprintf(buf, "%.2f", f);
+            Display::write_string(buf);
+            return *this;
+        }
+
+        out_p &operator <<(const bool &b)
+        {
+            if(b)
+                Display::write_string_P(PSTR("true"));
+            else
+                Display::write_string_P(PSTR("false"));
+            return *this;
+        }
+
+        out_p &operator<<(const char string)
+        {
+            Display::write_data(string);
+            return *this;
+        };
+    } out_p;
 
 protected:
     static void write_instruction(const unsigned char &data);
     static inline void write(const unsigned char &data);
+    static bool m_active;
 private:
     Display() {};
     Display( const Display &c );

@@ -10,15 +10,24 @@
 #define __BALL_H__
 
 #include "Animation.h"
+#include "../Menu/MenuEntry.h"
 #include "../Cube.h"
 #define BALL_UPDATE_TIME 2000.0f
 #define BALL_SIZE 4.5f
-class Ball : public Animation
+class Ball : public Animation, public MenuEntry
 {
 public:
     Ball(Cube *c);
     ~Ball();
     void update(const uint16_t &delta);
+
+    //menu stuff
+    void updateEntry(const uint16_t &delta, Input &i, Menu &m);
+    PGM_P name()
+    {
+        return PSTR("Ball");
+    };
+    bool subMenu();
 protected:
 private:
     Cube *cube;

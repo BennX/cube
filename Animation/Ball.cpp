@@ -100,3 +100,13 @@ void Ball::mov()
             break;
     }
 }
+
+void Ball::updateEntry(const uint16_t &delta,Input &i, Menu &m)
+{
+
+}
+
+bool Ball::subMenu()
+{
+    return false;
+}

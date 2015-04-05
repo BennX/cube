@@ -2,12 +2,13 @@
 #include "Animation.h"
 #include "../Cube.h"
 #include "../Util/Random.h"
+#include "../Menu/MenuEntry.h"
 //the maximum of active raindrops
 #define MAX_RAINDROPS 20
 #define SPAWN_RATE 20 //its percent so 20% chance to spawn a not active raindrop
 #define UPDATE_TIME_RAINDROP 200 //in ms
 
-class RainAnimation : public Animation
+class RainAnimation : public Animation, public MenuEntry
 {
 private:
     struct RainDrop
@@ -23,6 +24,14 @@ private:
 public:
     RainAnimation(Cube *c);
     void update(const uint16_t &delta);
+    //menu stuff
+    void updateEntry(const uint16_t &delta, Input &i,
+                     Menu &m);
+    PGM_P name()
+    {
+        return PSTR("Rain");
+    };
+    bool subMenu();
 };
 
 RainAnimation::RainAnimation(Cube *c) : cube(c), time_taken(0)
@@ -79,3 +88,10 @@ void RainAnimation::update(const uint16_t &delta)
         }
     }
 }
+
+void RainAnimation::updateEntry(const uint16_t &delta, Input &i, Menu &m) {};
+
+bool RainAnimation::subMenu()
+{
+    return false;
+};

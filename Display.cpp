@@ -6,6 +6,7 @@
  */
 #include "Display.h"
 #include <avr/pgmspace.h>
+bool Display::m_active = false;
 
 void Display::init()
 {
@@ -46,6 +47,7 @@ void Display::init()
     write_instruction(INSTRUCTION_ENTRY_MODE);
     //somehow needed to ensure
     _delay_ms(1);
+    m_active = true;
 }
 
 void Display::setDisplayLight(const uint8_t &value)
@@ -63,11 +65,18 @@ void Display::clear()
 void Display::off()
 {
     write_instruction(INSTRUCTION_DISPLAY_OFF);
+    m_active = false;
 }
 
 void Display::on()
 {
     write_instruction(INSTRUCTION_DISPLAY_ON);
+    m_active = true;
+}
+
+bool Display::isActive()
+{
+    return m_active;
 }
 
 
