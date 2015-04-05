@@ -45,8 +45,13 @@ int main()
     animator.addAnimation(new Ball(&cube));
     animator.addAnimation(new FontAnimation(&cube));
     Menu menu(&input, &animator);
-    //first test animation
-    Animation *anim = new Ball(&cube);
+	//push the menu entrys
+	menu.addEntry(PSTR("Fade"));
+	menu.addEntry(PSTR("Rain"));
+	menu.addEntry(PSTR("Ball"));
+	menu.addEntry(PSTR("Font"));
+	menu.addEntry(PSTR("TEST0"));
+	menu.addEntry(PSTR("TEST1"));
     initCubeRoutine();
     sei();
 

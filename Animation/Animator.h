@@ -14,7 +14,6 @@
 #include "Animation.h"
 class Animator
 {
-//functions
 public:
     Animator();
     ~Animator();

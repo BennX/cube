@@ -67,6 +67,20 @@ public:
     static void clear();
     static void off();
     static void on();
+
+    static struct out
+    {
+        out &operator<<(const char *string)
+        {
+            Display::write_string(string);
+            return *this;
+        };
+        out &operator ()(const uint8_t &row, const uint8_t &colum)
+        {
+            Display::set_cursor(row, colum);
+        };
+    } out;
+
 protected:
     static void write_instruction(const unsigned char &data);
     static inline void write(const unsigned char &data);
@@ -74,7 +88,6 @@ private:
     Display() {};
     Display( const Display &c );
     Display &operator=( const Display &c );
-
 }; //Display
 
 #endif //__DISPLAY_H__

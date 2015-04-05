@@ -22,20 +22,58 @@ Menu::~Menu()
 {
 } //~Menu
 
+void Menu::addEntry(PGM_P progmem_ptr)
+{
+    m_list.add(progmem_ptr);
+}
+
 void Menu::update(const short &delta)
 {
     display_light_timer += delta;
     if(changed)
     {
         Display::clear();
-        Display::set_cursor(cur_pos, 0);
-        Display::write_string_P(PSTR(">"));
-        Display::set_cursor(0, 1);
-        Display::write_string_P(PSTR("Fade"));
-        Display::set_cursor(1, 1);
-        Display::write_string_P(PSTR("Rain"));
-        Display::set_cursor(2, 1);
-        Display::write_string_P(PSTR("Ball"));
+
+        if(cur_pos <= 1)
+        {
+            //Draw if pos = 0
+            for (uint8_t i = 0; i < 3 && i < m_list.size(); i++)
+            {
+                Display::set_cursor(i, 1);
+                Display::write_string_P(m_list[i]);
+            }
+            Display::set_cursor(cur_pos, 0);
+            Display::write_string_P(PSTR(">"));
+        }
+        else if(cur_pos == m_list.size())
+        {
+            //draw if last pos of list
+            for (uint8_t i = 0; i < 3; i++)
+            {
+                Display::set_cursor(i, 1);
+                Display::write_string_P(m_list[m_list.size() - (2 - i)]);
+            }
+            Display::set_cursor(2, 0);
+            Display::write_string_P(PSTR(">"));
+        }
+        else
+        {
+            //else draw -1 0 +1 of pos
+            for (uint8_t i = 0; i < 3; i++)
+            {
+                Display::set_cursor(i, 1);
+                Display::write_string_P(m_list[(cur_pos - 1) + i]);
+            }
+            Display::set_cursor(1, 0);
+            Display::write_string_P(PSTR(">"));
+        }
+
+        char buf[10];
+        int ram = freeRam();
+        itoa(ram, buf, 10);
+        Display::out(0, 7) << buf;
+        Display::write_string("b");
+
         Display::on();
         changed = false;
         displayIsOn = true;
@@ -46,7 +84,7 @@ void Menu::update(const short &delta)
         }
     }
     //fade on
-    if(DISPLAY_FADE_ON_TIME - display_light_timer > 0 && displayIsOn && fadeOn)
+    if(displayIsOn && fadeOn && DISPLAY_FADE_ON_TIME - display_light_timer > 0)
     {
         Display::setDisplayLight(255.0 / DISPLAY_FADE_ON_TIME * display_light_timer);
     }
@@ -58,7 +96,7 @@ void Menu::update(const short &delta)
     }
 
     //fade off
-    if((display_light_timer > DISPLAY_LIGHT_OF_TIMER) && displayIsOn)
+    if(displayIsOn && (display_light_timer > DISPLAY_LIGHT_OF_TIMER))
     {
         if(255.0 / DISPLAY_FADE_OUT_TIME * (DISPLAY_FADE_OUT_TIME -
                                             (display_light_timer -
@@ -85,10 +123,9 @@ void Menu::update(const short &delta)
         cur_pos += enc;
         if(cur_pos <= 0)
             cur_pos = 0;
-        else if (cur_pos >= 2)
-            cur_pos = 2;
+        else if (cur_pos >= m_list.size())
+            cur_pos = m_list.size();
         //redraw next round
-
         changed = true;
     }
 
@@ -102,7 +139,7 @@ void Menu::update(const short &delta)
         }
     }
     //now check if click
-    if(!clicked && input->isPressed())
+    if(!clicked && input->isPressed() && cur_pos < m_list.size())
     {
         animator->operator[](cur_pos);
     }

@@ -14,7 +14,6 @@
 #include "../Display.h"
 #include "../Input.h"
 #include "../Animation/Animator.h"
-const char entry1[] PROGMEM = "test\n";
 
 #define CLICK_DELAY 1000
 #define DISPLAY_LIGHT_OF_TIMER 8000
@@ -26,6 +25,7 @@ class Menu
 public:
     Menu(Input *i, Animator *a);
     ~Menu();
+    void addEntry(PGM_P progmem_ptr);
     void update(const short &delta);
 
 private:
@@ -34,13 +34,18 @@ private:
     Input *input;
     Animator *animator;
 
+    LinkedList<PGM_P> m_list;
+
     bool changed;
     int8_t cur_pos;
+
     uint16_t clicktimer;
-	uint16_t display_light_timer;
-	bool displayIsOn;
+    uint16_t display_light_timer;
+
+    bool displayIsOn;
     bool clicked;
-	bool fadeOn, fading;
+    bool fadeOn, fading;
+
 }; //Menu
 
 #endif //__MENU_H__
