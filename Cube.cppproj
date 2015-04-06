@@ -184,6 +184,12 @@
     <Compile Include="Animation\RainAnimation.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Animation\SingleColor.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Animation\SingleColor.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Display.cpp">
       <SubType>compile</SubType>
     </Compile>

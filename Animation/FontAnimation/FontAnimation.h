@@ -20,7 +20,7 @@
 class FontAnimation : public Animation, public MenuEntry
 {
 public:
-    FontAnimation(Cube *c);
+    FontAnimation(Cube *c, const uint8_t &id);
     ~FontAnimation();
     void update(const uint16_t &delta);
     //menu stuff

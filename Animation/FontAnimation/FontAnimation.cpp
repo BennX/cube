@@ -11,7 +11,8 @@
 #include "../../Display.h"
 #include <string.h>
 // default constructor
-FontAnimation::FontAnimation(Cube *c): cube(c), cur_letter(TO_SHOW_STRING)
+FontAnimation::FontAnimation(Cube *c, const uint8_t &id): Animation(id), cube(c),
+    cur_letter(TO_SHOW_STRING)
 {
     color.r = rnd(MAX_COLOR);
     color.g = rnd(MAX_COLOR);

@@ -68,9 +68,12 @@ void Menu::update(const short &delta)
                 Display::set_cursor(1, 0);
                 Display::write_string_P(PSTR(">"));
             }
-
-            Display::out(0, 7) << freeRam();
+#ifdef DEBUG
+            Display::out_p(0, 7) << PSTR("Free RAM");
+            Display::out(1, 7) << freeRam();
             Display::out << "b";
+            Display::out(2, 7) << delta;
+#endif
 
             Display::on();
             changed = false;

@@ -45,6 +45,7 @@ C_SRCS +=  \
 ../Animation/Ball.cpp \
 ../Animation/FontAnimation/Font.cpp \
 ../Animation/FontAnimation/FontAnimation.cpp \
+../Animation/SingleColor.cpp \
 ../Display.cpp \
 ../Input.cpp \
 ../main.cpp \
@@ -65,6 +66,7 @@ Animation/Animator.o \
 Animation/Ball.o \
 Animation/FontAnimation/Font.o \
 Animation/FontAnimation/FontAnimation.o \
+Animation/SingleColor.o \
 Display.o \
 Input.o \
 main.o \
@@ -78,6 +80,7 @@ Animation/Animator.o \
 Animation/Ball.o \
 Animation/FontAnimation/Font.o \
 Animation/FontAnimation/FontAnimation.o \
+Animation/SingleColor.o \
 Display.o \
 Input.o \
 main.o \
@@ -91,6 +94,7 @@ Animation/Animator.d \
 Animation/Ball.d \
 Animation/FontAnimation/Font.d \
 Animation/FontAnimation/FontAnimation.d \
+Animation/SingleColor.d \
 Display.d \
 Input.d \
 main.d \
@@ -104,6 +108,7 @@ Animation/Animator.d \
 Animation/Ball.d \
 Animation/FontAnimation/Font.d \
 Animation/FontAnimation/FontAnimation.d \
+Animation/SingleColor.d \
 Display.d \
 Input.d \
 main.d \
@@ -126,6 +131,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

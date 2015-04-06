@@ -22,7 +22,7 @@ private:
     RainDrop raindrops[MAX_RAINDROPS];
 
 public:
-    RainAnimation(Cube *c);
+    RainAnimation(Cube *c, const uint8_t &id);
     void update(const uint16_t &delta);
     //menu stuff
     void updateEntry(const uint16_t &delta, Input &i,
@@ -34,7 +34,8 @@ public:
     bool subMenu();
 };
 
-RainAnimation::RainAnimation(Cube *c) : cube(c), time_taken(0)
+RainAnimation::RainAnimation(Cube *c, const uint8_t &id) : Animation(id),
+    cube(c), time_taken(0)
 {
     for (int i = 0; i < MAX_RAINDROPS; i++)
     {

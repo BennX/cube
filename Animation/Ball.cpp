@@ -10,8 +10,10 @@
 #include "../Util/Random.h"
 #include <math.h>
 // default constructor
-Ball::Ball(Cube *c): cube(c), pos_x(1), pos_y(1), pos_z(1), extend(0.0f),
-    toggle(true), update_time(BALL_UPDATE_TIME), passed_time(0)
+Ball::Ball(Cube *c, const uint8_t &id): Animation(id), cube(c), pos_x(1),
+    pos_y(1), pos_z(1), extend(0.0f), toggle(true), update_time(BALL_UPDATE_TIME),
+    passed_time(0), m_changed(true), m_curMenuPos(0), m_speedSelected(false),
+    m_clicked(true)
 {
     color.r = rnd(MAX_COLOR);
     color.g = rnd(MAX_COLOR);
@@ -101,12 +103,69 @@ void Ball::mov()
     }
 }
 
-void Ball::updateEntry(const uint16_t &delta,Input &i, Menu &m)
+void Ball::updateEntry(const uint16_t &delta, Input &i, Menu &m)
 {
+    if(m_clicked)
+    {
+        m_clickdelay += delta;
+        if(m_clickdelay > CLICK_DELAY_BALL)
+        {
+            m_clicked = false;
+            m_clickdelay = 0;
+        }
+    }
 
+    if(m_changed)
+    {
+        Display::clear();
+        Display::out_p(0, 0) << PSTR("Ball Animation");
+        Display::out_p(1, 1) << PSTR("Speed: ") << update_time;
+        Display::out_p(2, 1) << PSTR("Start");
+        Display::out_p(m_curMenuPos + 1, 0) << PSTR(">");
+        m_changed = false;
+    }
+
+    if(!m_clicked)
+    {
+        if(i.isPressed() && m_curMenuPos == 0)
+        {
+            m_speedSelected = !m_speedSelected;
+            m_clicked = true;
+        }
+        else if (i.isPressed() && m_curMenuPos == 1)
+        {
+            m.start(m_ID);
+            m.leaveSubmenu();
+            m_changed = true;
+            m_clicked = true;
+        }
+    }
+
+    int8_t enc = i.getIncDelta();
+    if(enc != 0 && m_speedSelected)
+    {
+        update_time += enc * BALL_SPEED_CHANGE_SPEED;
+        if(update_time < BALL_MIN_UPDATE_TIME)
+            update_time = BALL_MIN_UPDATE_TIME;
+        m_changed = true;
+    }
+
+    else if(enc != 0)
+    {
+        m_curMenuPos += enc;
+        if(m_curMenuPos < 0)
+        {
+            m_curMenuPos = 0;
+        }
+        else if(m_curMenuPos > 1)
+        {
+            m_curMenuPos = 1;
+        }
+        m_changed = true;
+    }
 }
 
 bool Ball::subMenu()
 {
-    return false;
+    return true;
 }

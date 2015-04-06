@@ -90,10 +90,10 @@ public:
             return *this;
         }
 
-        out &operator<<(const float &f)
+        out &operator<<(const double &d)
         {
             char buf[10];
-            sprintf(buf, "%.2f", f);
+            sprintf(buf, "%.2f", d);
             Display::write_string(buf);
             return *this;
         }
@@ -145,10 +145,10 @@ public:
             return *this;
         }
 
-        out_p &operator<<(const float &f)
+        out_p &operator<<(const double &d)
         {
             char buf[10];
-            sprintf(buf, "%.2f", f);
+            sprintf(buf, "%.2f", d);
             Display::write_string(buf);
             return *this;
         }

@@ -16,11 +16,12 @@
 #include "USART.h"
 #include "Temperatur.h"
 #include "Input.h"
+
 #include "Animation/Animator.h"
 #include "Animation/FadeAnimation.h"
 #include "Animation/RainAnimation.h"
 #include "Animation/FontAnimation/FontAnimation.h"
-
+#include "Animation/SingleColor.h"
 #include "Animation/Ball.h"
 #include "Util/cpp_util.h"
 #include "Menu/Menu.h"
@@ -39,17 +40,20 @@ int main()
     Display::init();
     USART::init();//setup the usart0
     Display::out_p(0, 0) << PSTR("initialization");
-//init of the effects
+//init of the effects	//id at the end
     Animator animator;
-    FadeAnimation fade(&cube);
-    RainAnimation rain(&cube);
-    Ball ball(&cube);
-    FontAnimation font(&cube);
+    FadeAnimation fade(&cube, 0);
+    RainAnimation rain(&cube, 1);
+    Ball ball(&cube, 2);
+    FontAnimation font(&cube, 3);
+    SingleColor color(&cube, 4);
 
     animator.addAnimation(&fade);
     animator.addAnimation(&rain);
     animator.addAnimation(&ball);
     animator.addAnimation(&font);
+    animator.addAnimation(&color);
+
     Display::out_p(1, 0) <<  PSTR("Animation done");
     //push the menu entrys
     Menu menu(&input, &animator);
@@ -57,6 +61,7 @@ int main()
     menu.addEntry(&rain);
     menu.addEntry(&ball);
     menu.addEntry(&font);
+    menu.addEntry(&color);
     Display::out_p(2, 0) << PSTR("Menu done");
     initCubeRoutine();
     sei();
@@ -92,7 +97,11 @@ void initCubeRoutine()
     TCCR1A = 0x00; // CTC on OCR1A
     TCCR1B |= (1 << CS00) | (1 << WGM12); //kein prescaler
     TIMSK1 |= (1 << OCIE1A); //compare interupt on A
-    OCR1A = 0x0ACD;//2765  = 8khz
+    //OCR1A = 0x0ACD;//2765  = 8khz
+    OCR1A = 2212; // 10khz
+    //OCR1A = 1843;// 12khz
+    //OCR1A = 1580; // 14khz
+    //OCR1A = 1382; // 16khz
 }
 
 long long millis = 0;
@@ -107,7 +116,7 @@ ISR(TIMER1_COMPA_vect)
     cube.render();
 
     counter++;
-    if(counter % 8 == 0) // & 8 geht nicht!
+    if(counter % 16 == 0) // & 8 geht nicht!
     {
         // 1khz routine here no need to clean counter
         millis++;
