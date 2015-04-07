@@ -35,21 +35,43 @@
 #define INSTRUCTION_DISPLAY_OFF				0b00001000
 #define INSTRUCTION_CURSOR_ON				0b00001010
 #define INSTRUCTION_CURSOR_OFF				0b00001000
-
 #define INSTRUCTION_ENTRY_MODE 				0b00000110
 
-#include <avr/io.h>
-#include <stdio.h>
-#include <stdlib.h>
 #define F_CPU 22118400
-#include <util/delay.h>
-#include <avr/interrupt.h>
-#include <avr/pgmspace.h>
-/**
- * No interupt while write operation!
- */
+#include <avr/io.h>
 class Display
 {
+private:
+    /**
+     * Define structs for operators to out stuff
+     */
+    struct Out
+    {
+        Out &operator<<(const char *string);
+        Out &operator<<(const int &i);
+        Out &operator<<(const unsigned int &i);
+        Out &operator<<(const double &d);
+        Out &operator<<(const bool &b);
+        Out &operator<<(const char string);
+        Out &operator()(const uint8_t &row, const uint8_t &colum);
+    };
+    /**
+     * Out for progmem strings
+     */
+    struct Out_p
+    {
+        /**
+         * write a progmem string to display.
+         */
+        Out_p &operator<<(const char *string);
+        Out_p &operator<<(const int &i);
+        Out_p &operator<<(const unsigned int &i);
+        Out_p &operator<<(const double &d);
+        Out_p &operator<<(const bool &b);
+        Out_p &operator<<(const char string);
+        Out_p &operator()(const uint8_t &row, const uint8_t &colum);
+    };
+
 public:
     ~Display();
     /**
@@ -74,119 +96,9 @@ public:
     static void off();
     static void on();
     static bool isActive();
-    static struct out
-    {
-        /**
-         * Only use this for PSTR strings!!!!!
-         */
-        out &operator<<(const char *string)
-        {
-            Display::write_string(string);
-            return *this;
-        };
-
-        out &operator<<(const int &i)
-        {
-            char buf[10];
-            itoa(i, buf, 10);
-            Display::write_string(buf);
-            return *this;
-        }
-
-        out &operator<<(const unsigned int &i)
-        {
-            char buf[10];
-            itoa(i, buf, 10);
-            Display::write_string(buf);
-            return *this;
-        }
-
-        out &operator<<(const double &d)
-        {
-            char buf[10];
-            sprintf(buf, "%.2f", d);
-            Display::write_string(buf);
-            return *this;
-        }
-
-        out &operator <<(const bool &b)
-        {
-            if(b)
-                Display::write_string_P(PSTR("true"));
-            else
-                Display::write_string_P(PSTR("false"));
-            return *this;
-        }
-
-        out &operator<<(const char string)
-        {
-            Display::write_data(string);
-            return *this;
-        };
-
-        out &operator ()(const uint8_t &row, const uint8_t &colum)
-        {
-            Display::set_cursor(row, colum);
-        };
-
-    } out;
-
-    static struct out_p
-    {
-        /**
-         * Override for pstr
-         */
-        out_p &operator<<(const char *string)
-        {
-            Display::write_string_P(string);
-            return *this;
-        };
-
-        out_p &operator ()(const uint8_t &row, const uint8_t &colum)
-        {
-            Display::set_cursor(row, colum);
-            return *this;
-        };
-
-        out_p &operator<<(const int &i)
-        {
-            char buf[10];
-            itoa(i, buf, 10);
-            Display::write_string(buf);
-            return *this;
-        }
-
-        out_p &operator<<(const unsigned int &i)
-        {
-            char buf[10];
-            itoa(i, buf, 10);
-            Display::write_string(buf);
-            return *this;
-        }
-
-        out_p &operator<<(const double &d)
-        {
-            char buf[10];
-            sprintf(buf, "%.2f", d);
-            Display::write_string(buf);
-            return *this;
-        }
-
-        out_p &operator <<(const bool &b)
-        {
-            if(b)
-                Display::write_string_P(PSTR("true"));
-            else
-                Display::write_string_P(PSTR("false"));
-            return *this;
-        }
-
-        out_p &operator<<(const char string)
-        {
-            Display::write_data(string);
-            return *this;
-        };
-    } out_p;
+    //the out shifter
+    static Out out;
+    static Out_p out_p;
 
 protected:
     static void write_instruction(const unsigned char &data);

@@ -6,7 +6,14 @@
  */
 #include "Display.h"
 #include <avr/pgmspace.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <util/delay.h>
+#include <avr/interrupt.h>
+//init static membervariables
 bool Display::m_active = false;
+Display::Out Display::out;
+Display::Out_p Display::out_p;
 
 void Display::init()
 {
@@ -59,7 +66,7 @@ void Display::setDisplayLight(const uint8_t &value)
 void Display::clear()
 {
     write_instruction(INSTRUCTION_CLEAR_DISPLAY);
-    _delay_ms(1); //else it crashes
+    _delay_us(500); //else it crashes
 }
 
 void Display::off()
@@ -78,7 +85,6 @@ bool Display::isActive()
 {
     return m_active;
 }
-
 
 void Display::write(const unsigned char &data)
 {
@@ -162,3 +168,110 @@ void Display::write_string_P(const char *string)
         write(c);
     }
 }
+
+/**
+ * Regular out
+ */
+Display::Out &Display::Out::operator<<(const char *string)
+{
+    Display::write_string(string);
+    return *this;
+}
+
+Display::Out &Display::Out::operator<<(const int &i)
+{
+    char buf[10];
+    itoa(i, buf, 10);
+    Display::write_string(buf);
+    return *this;
+}
+
+Display::Out &Display::Out::operator<<(const unsigned int &i)
+{
+    char buf[10];
+    itoa(i, buf, 10);
+    Display::write_string(buf);
+    return *this;
+}
+
+Display::Out &Display::Out::operator<<(const double &d)
+{
+    char buf[10];
+    sprintf(buf, "%.2f", d);
+    Display::write_string(buf);
+    return *this;
+}
+
+Display::Out &Display::Out::operator<<(const bool &b)
+{
+    if(b)
+        Display::write_string_P(PSTR("true"));
+    else
+        Display::write_string_P(PSTR("false"));
+    return *this;
+}
+
+Display::Out &Display::Out::operator<<(const char string)
+{
+    Display::write_data(string);
+    return *this;
+}
+
+Display::Out &Display::Out::operator()(const uint8_t &row, const uint8_t &colum)
+{
+    Display::set_cursor(row, colum);
+}
+
+/**
+ * PSTR
+ */
+Display::Out_p &Display::Out_p::operator<<(const char *string)
+{
+    Display::write_string_P(string);
+    return *this;
+}
+
+Display::Out_p &Display::Out_p::operator<<(const int &i)
+{
+    char buf[10];
+    itoa(i, buf, 10);
+    Display::write_string(buf);
+    return *this;
+}
+
+Display::Out_p &Display::Out_p::operator<<(const unsigned int &i)
+{
+    char buf[10];
+    itoa(i, buf, 10);
+    Display::write_string(buf);
+    return *this;
+}
+
+Display::Out_p &Display::Out_p::operator<<(const double &d)
+{
+    char buf[10];
+    sprintf(buf, "%.2f", d);
+    Display::write_string(buf);
+    return *this;
+}
+
+Display::Out_p &Display::Out_p::operator<<(const bool &b)
+{
+    if(b)
+        Display::write_string_P(PSTR("true"));
+    else
+        Display::write_string_P(PSTR("false"));
+    return *this;
+}
+Display::Out_p &Display::Out_p::operator<<(const char string)
+{
+    Display::write_data(string);
+    return *this;
+};
+
+Display::Out_p &Display::Out_p::operator()(const uint8_t &row,
+        const uint8_t &colum)
+{
+    Display::set_cursor(row, colum);
+    return *this;
+};

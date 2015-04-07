@@ -54,7 +54,7 @@ int main()
     animator.addAnimation(&font);
     animator.addAnimation(&color);
 
-    Display::out_p(1, 0) <<  PSTR("Animation done");
+    Display::out_p(1, 0) << PSTR("Animation done");
     //push the menu entrys
     Menu menu(&input, &animator);
     menu.addEntry(&fade);

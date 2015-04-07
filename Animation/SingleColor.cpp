@@ -69,7 +69,8 @@ void SingleColor::updateEntry(const uint16_t &delta, Input &i, Menu &m)
                 Display::out_p(1, 1) << p_strings::gruen << m_color.g * 100.0 /
                                      (MAX_COLOR - 1) <<
                                      p_strings::procent;
-                Display::out_p(2, 1) << p_strings::blau << m_color.b * 100.0 / (MAX_COLOR - 1) <<
+                Display::out_p(2, 1) << p_strings::blau << m_color.b * 100.0 /
+                                     (MAX_COLOR - 1) <<
                                      p_strings::procent;
                 Display::out_p(1, 0) << p_strings::right_arrow;
                 break;
@@ -77,7 +78,8 @@ void SingleColor::updateEntry(const uint16_t &delta, Input &i, Menu &m)
                 Display::out_p(0, 1) << p_strings::gruen << m_color.g * 100.0 /
                                      (MAX_COLOR - 1) <<
                                      p_strings::procent;
-                Display::out_p(1, 1) << p_strings::blau << m_color.b * 100.0 / (MAX_COLOR - 1) <<
+                Display::out_p(1, 1) << p_strings::blau << m_color.b * 100.0 /
+                                     (MAX_COLOR - 1) <<
                                      p_strings::procent;
                 Display::out_p(2, 1) << p_strings::start;
                 Display::out_p(1, 0) << p_strings::right_arrow;
@@ -86,7 +88,8 @@ void SingleColor::updateEntry(const uint16_t &delta, Input &i, Menu &m)
                 Display::out_p(0, 1) << p_strings::gruen << m_color.g * 100.0 /
                                      (MAX_COLOR - 1) <<
                                      p_strings::procent;
-                Display::out_p(1, 1) << p_strings::blau << m_color.b * 100.0 / (MAX_COLOR - 1) <<
+                Display::out_p(1, 1) << p_strings::blau << m_color.b * 100.0 /
+                                     (MAX_COLOR - 1) <<
                                      p_strings::procent;
                 Display::out_p(2, 1) << p_strings::start;
                 Display::out_p(2, 0) << p_strings::right_arrow;

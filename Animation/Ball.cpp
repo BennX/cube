@@ -10,6 +10,8 @@
 #include "../Util/Random.h"
 #include "../Util/PStrings.h"
 #include <math.h>
+
+
 // default constructor
 Ball::Ball(Cube *c, const uint8_t &id): Animation(id), cube(c), pos_x(1),
     pos_y(1), pos_z(1), extend(0.0f), toggle(true), update_time(BALL_UPDATE_TIME),
