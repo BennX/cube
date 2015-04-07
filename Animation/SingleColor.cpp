@@ -7,7 +7,7 @@
 
 
 #include "SingleColor.h"
-
+#include "../Util/PStrings.h"
 // default constructor
 SingleColor::SingleColor(Cube *c, const uint8_t &id): Animation(id), cube(c),
     m_changed(true), m_curMenuPos(0), m_selected(0), m_somethingSelected(false),
@@ -56,40 +56,40 @@ void SingleColor::updateEntry(const uint16_t &delta, Input &i, Menu &m)
         {
             case 0:
                 Display::out_p(0, 0) << PSTR("Single Color");
-                Display::out_p(1, 1) << PSTR("Rot: ") << m_color.r * 100.0 / (MAX_COLOR - 1) <<
-                                     PSTR("%");
-                Display::out_p(2, 1) << PSTR("Gruen: ") << m_color.g * 100.0 /
+                Display::out_p(1, 1) << p_strings::rot << m_color.r * 100.0 / (MAX_COLOR - 1) <<
+                                     p_strings::procent;
+                Display::out_p(2, 1) << p_strings::gruen << m_color.g * 100.0 /
                                      (MAX_COLOR - 1) <<
-                                     PSTR("%");
-                Display::out_p(1, 0) << PSTR(">");
+                                     p_strings::procent;
+                Display::out_p(1, 0) << p_strings::right_arrow;
                 break;
             case 1:
-                Display::out_p(0, 1) << PSTR("Rot: ") << m_color.r * 100.0 / (MAX_COLOR - 1) <<
-                                     PSTR("%");
-                Display::out_p(1, 1) << PSTR("Gruen: ") << m_color.g * 100.0 /
+                Display::out_p(0, 1) << p_strings::rot << m_color.r * 100.0 / (MAX_COLOR - 1) <<
+                                     p_strings::procent;
+                Display::out_p(1, 1) << p_strings::gruen << m_color.g * 100.0 /
                                      (MAX_COLOR - 1) <<
-                                     PSTR("%");
-                Display::out_p(2, 1) << PSTR("Blau: ") << m_color.b * 100.0 / (MAX_COLOR - 1) <<
-                                     PSTR("%");
-                Display::out_p(1, 0) << PSTR(">");
+                                     p_strings::procent;
+                Display::out_p(2, 1) << p_strings::blau << m_color.b * 100.0 / (MAX_COLOR - 1) <<
+                                     p_strings::procent;
+                Display::out_p(1, 0) << p_strings::right_arrow;
                 break;
             case 2:
-                Display::out_p(0, 1) << PSTR("Gruen: ") << m_color.g * 100.0 /
+                Display::out_p(0, 1) << p_strings::gruen << m_color.g * 100.0 /
                                      (MAX_COLOR - 1) <<
-                                     PSTR("%");
-                Display::out_p(1, 1) << PSTR("Blau: ") << m_color.b * 100.0 / (MAX_COLOR - 1) <<
-                                     PSTR("%");
-                Display::out_p(2, 1) << PSTR("Start");
-                Display::out_p(1, 0) << PSTR(">");
+                                     p_strings::procent;
+                Display::out_p(1, 1) << p_strings::blau << m_color.b * 100.0 / (MAX_COLOR - 1) <<
+                                     p_strings::procent;
+                Display::out_p(2, 1) << p_strings::start;
+                Display::out_p(1, 0) << p_strings::right_arrow;
                 break;
             case 3:
-                Display::out_p(0, 1) << PSTR("Gruen: ") << m_color.g * 100.0 /
+                Display::out_p(0, 1) << p_strings::gruen << m_color.g * 100.0 /
                                      (MAX_COLOR - 1) <<
-                                     PSTR("%");
-                Display::out_p(1, 1) << PSTR("Blau: ") << m_color.b * 100.0 / (MAX_COLOR - 1) <<
-                                     PSTR("%");
-                Display::out_p(2, 1) << PSTR("Start");
-                Display::out_p(2, 0) << PSTR(">");
+                                     p_strings::procent;
+                Display::out_p(1, 1) << p_strings::blau << m_color.b * 100.0 / (MAX_COLOR - 1) <<
+                                     p_strings::procent;
+                Display::out_p(2, 1) << p_strings::start;
+                Display::out_p(2, 0) << p_strings::right_arrow;
                 break;
         }
         m_menuChanged = false;

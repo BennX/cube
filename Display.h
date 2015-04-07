@@ -33,6 +33,9 @@
 #define INSTRUCTION_CONTRAST_SET			0b01111111
 #define INSTRUCTION_DISPLAY_ON				0b00001100
 #define INSTRUCTION_DISPLAY_OFF				0b00001000
+#define INSTRUCTION_CURSOR_ON				0b00001010
+#define INSTRUCTION_CURSOR_OFF				0b00001000
+
 #define INSTRUCTION_ENTRY_MODE 				0b00000110
 
 #include <avr/io.h>
@@ -90,6 +93,14 @@ public:
             return *this;
         }
 
+        out &operator<<(const unsigned int &i)
+        {
+            char buf[10];
+            itoa(i, buf, 10);
+            Display::write_string(buf);
+            return *this;
+        }
+
         out &operator<<(const double &d)
         {
             char buf[10];
@@ -138,6 +149,14 @@ public:
         };
 
         out_p &operator<<(const int &i)
+        {
+            char buf[10];
+            itoa(i, buf, 10);
+            Display::write_string(buf);
+            return *this;
+        }
+
+        out_p &operator<<(const unsigned int &i)
         {
             char buf[10];
             itoa(i, buf, 10);

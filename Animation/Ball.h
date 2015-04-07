@@ -44,7 +44,7 @@ private:
 
 //menu stuff;
     bool m_changed, m_speedSelected, m_clicked;
-    uint8_t m_curMenuPos;
+    int8_t m_curMenuPos;
     uint16_t m_clickdelay;
 
     void mov();

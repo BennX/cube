@@ -71,9 +71,9 @@ int main()
     _delay_ms(1000);
     Display::clear();
 
-    long long start = 1;
-    uint16_t delta = 0;
-    while(true)
+    long long start = 1; //long long since ms is a long long
+    uint16_t delta = 0; // delta value always positiv
+    while(true) //loop start
     {
         start = ms();
         animator.update(delta);

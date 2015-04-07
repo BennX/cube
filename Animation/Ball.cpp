@@ -8,6 +8,7 @@
 
 #include "Ball.h"
 #include "../Util/Random.h"
+#include "../Util/PStrings.h"
 #include <math.h>
 // default constructor
 Ball::Ball(Cube *c, const uint8_t &id): Animation(id), cube(c), pos_x(1),
@@ -119,9 +120,9 @@ void Ball::updateEntry(const uint16_t &delta, Input &i, Menu &m)
     {
         Display::clear();
         Display::out_p(0, 0) << PSTR("Ball Animation");
-        Display::out_p(1, 1) << PSTR("Speed: ") << update_time;
-        Display::out_p(2, 1) << PSTR("Start");
-        Display::out_p(m_curMenuPos + 1, 0) << PSTR(">");
+        Display::out_p(1, 1) << p_strings::speed << update_time;
+        Display::out_p(2, 1) << p_strings::start;
+        Display::out_p(m_curMenuPos + 1, 0) << p_strings::right_arrow;
         m_changed = false;
     }
 

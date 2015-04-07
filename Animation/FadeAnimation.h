@@ -4,6 +4,7 @@
 #include "../Cube.h"
 #include "../Util/Random.h"
 #include "../Menu/MenuEntry.h"
+#include "../Util/PStrings.h"
 #include <avr/io.h>
 #define COLOR_STAY_TIME 5000
 #define FADE_DELAY 250
@@ -111,11 +112,11 @@ void FadeAnimation::updateEntry(const uint16_t &delta, Input &i,
     {
         Display::clear();
         Display::out_p(0, 0) << PSTR("Fade Animation");
-        Display::out_p(1, 1) << PSTR("Speed: ");
+        Display::out_p(1, 1) << p_strings::speed;
         Display::out << (float)(m_speed / 1000.0);
         Display::out_p << PSTR("s");
-        Display::out_p(2, 1) << PSTR("Start");
-        Display::out_p(1 + m_curMenuPos, 0)  << PSTR(">");
+        Display::out_p(2, 1) << p_strings::start;
+        Display::out_p(1 + m_curMenuPos, 0)  << p_strings::right_arrow;
         m_menuChanged = false;
     }
 

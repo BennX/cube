@@ -9,6 +9,7 @@
 #include "Menu.h"
 #include <math.h>
 #include <stdio.h>
+#include "../Util/PStrings.h"
 #define MIN( a, b ) (a < b) ? a : b
 // default constructor
 Menu::Menu(Input *i, Animator *a) : changed(true), cur_pos(0),
@@ -40,33 +41,28 @@ void Menu::update(const short &delta)
                 //Draw if pos = 0
                 for (uint8_t i = 0; i < 3 && i < m_list.size(); i++)
                 {
-                    Display::set_cursor(i, 1);
-                    Display::write_string_P(m_list[i]->name());
+                    Display::out_p(i, 1) << m_list[i]->name();
                 }
-                Display::set_cursor(cur_pos, 0);
-                Display::write_string_P(PSTR(">"));
+
+                Display::out_p(cur_pos, 0) << p_strings::right_arrow;
             }
             else if(cur_pos == m_list.size())
             {
                 //draw if last pos of list
                 for (uint8_t i = 0; i < 3; i++)
                 {
-                    Display::set_cursor(i, 1);
-                    Display::write_string_P(m_list[m_list.size() - (2 - i)]->name());
+                    Display::out_p(i, 1) << m_list[m_list.size() - (2 - i)]->name();
                 }
-                Display::set_cursor(2, 0);
-                Display::write_string_P(PSTR(">"));
+                Display::out_p(2, 0) << p_strings::right_arrow;
             }
             else
             {
                 //else draw -1 0 +1 of pos
                 for (uint8_t i = 0; i < 3; i++)
                 {
-                    Display::set_cursor(i, 1);
-                    Display::write_string_P(m_list[(cur_pos - 1) + i]->name());
+                    Display::out_p(i, 1) << m_list[(cur_pos - 1) + i]->name();
                 }
-                Display::set_cursor(1, 0);
-                Display::write_string_P(PSTR(">"));
+                Display::out_p(1, 0) << p_strings::right_arrow;
             }
 #ifdef DEBUG
             Display::out_p(0, 7) << PSTR("Free RAM");
