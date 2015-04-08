@@ -220,6 +220,7 @@ Display::Out &Display::Out::operator<<(const char string)
 Display::Out &Display::Out::operator()(const uint8_t &row, const uint8_t &colum)
 {
     Display::set_cursor(row, colum);
+    return *this;
 }
 
 /**

@@ -12,3 +12,6 @@ Release/Cube.lss
 *.d
 Debug/makedep.mk
 *.pub
+*.lss
+Size/makedep.mk
+Size/makedep.mk

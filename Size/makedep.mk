@@ -24,5 +24,7 @@ Menu\Menu.cpp
 
 Util\cpp_util.cpp
 
+Util\PStrings.cpp
+
 Util\Random.cpp
 
