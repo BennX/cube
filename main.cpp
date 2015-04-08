@@ -41,6 +41,7 @@ long long ms();
 
 int main()
 {
+    cli();
     Display::init();
     USART::init();//setup the usart0
     Display::out_p(0, 0) << PSTR("initialization");
@@ -70,6 +71,7 @@ int main()
     menu.addEntry(&color);
     menu.addEntry(&autoAnimation);
     Display::out_p(2, 0) << PSTR("Menu done");
+
     initCubeRoutine();
     sei();
 
