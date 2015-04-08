@@ -39,7 +39,8 @@ private:
     Animator *animator;
     //List with all menu entrys
     LinkedList<MenuEntry *> m_list;
-
+	
+	MenuEntry * m_current_animation;
     //did the status change? redraw
     bool changed;
     //curent menu position

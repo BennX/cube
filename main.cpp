@@ -17,13 +17,17 @@
 #include "Temperatur.h"
 #include "Input.h"
 
+#include "Util/GUID.h"
+#include "Util/cpp_util.h"
+
 #include "Animation/Animator.h"
 #include "Animation/FadeAnimation.h"
 #include "Animation/RainAnimation.h"
 #include "Animation/FontAnimation/FontAnimation.h"
 #include "Animation/SingleColor.h"
 #include "Animation/Ball.h"
-#include "Util/cpp_util.h"
+#include "Animation/AutoAnimation.h"
+
 #include "Menu/Menu.h"
 
 //global objects to access in interupts
@@ -42,17 +46,19 @@ int main()
     Display::out_p(0, 0) << PSTR("initialization");
 //init of the effects	//id at the end
     Animator animator;
-    FadeAnimation fade(&cube, 0);
-    RainAnimation rain(&cube, 1);
-    Ball ball(&cube, 2);
-    FontAnimation font(&cube, 3);
-    SingleColor color(&cube, 4);
+    FadeAnimation fade(&cube, GUID::get());
+    RainAnimation rain(&cube, GUID::get());
+    Ball ball(&cube, GUID::get());
+    FontAnimation font(&cube, GUID::get());
+    SingleColor color(&cube, GUID::get());
+    AutoAnimation autoAnimation(GUID::get(), &animator);
 
     animator.addAnimation(&fade);
     animator.addAnimation(&rain);
     animator.addAnimation(&ball);
     animator.addAnimation(&font);
     animator.addAnimation(&color);
+    animator.addAnimation(&autoAnimation);
 
     Display::out_p(1, 0) << PSTR("Animation done");
     //push the menu entrys
@@ -62,6 +68,7 @@ int main()
     menu.addEntry(&ball);
     menu.addEntry(&font);
     menu.addEntry(&color);
+    menu.addEntry(&autoAnimation);
     Display::out_p(2, 0) << PSTR("Menu done");
     initCubeRoutine();
     sei();

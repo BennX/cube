@@ -42,6 +42,7 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../Animation/Animator.cpp \
+../Animation/AutoAnimation.cpp \
 ../Animation/Ball.cpp \
 ../Animation/FontAnimation/Font.cpp \
 ../Animation/FontAnimation/FontAnimation.cpp \
@@ -52,6 +53,7 @@ C_SRCS +=  \
 ../Cube.cpp \
 ../Menu/Menu.cpp \
 ../Util/cpp_util.cpp \
+../Util/GUID.cpp \
 ../Util/PStrings.cpp \
 ../Util/Random.cpp
 
@@ -64,6 +66,7 @@ ASM_SRCS +=
 
 OBJS +=  \
 Animation/Animator.o \
+Animation/AutoAnimation.o \
 Animation/Ball.o \
 Animation/FontAnimation/Font.o \
 Animation/FontAnimation/FontAnimation.o \
@@ -74,11 +77,13 @@ main.o \
 Cube.o \
 Menu/Menu.o \
 Util/cpp_util.o \
+Util/GUID.o \
 Util/PStrings.o \
 Util/Random.o
 
 OBJS_AS_ARGS +=  \
 Animation/Animator.o \
+Animation/AutoAnimation.o \
 Animation/Ball.o \
 Animation/FontAnimation/Font.o \
 Animation/FontAnimation/FontAnimation.o \
@@ -89,11 +94,13 @@ main.o \
 Cube.o \
 Menu/Menu.o \
 Util/cpp_util.o \
+Util/GUID.o \
 Util/PStrings.o \
 Util/Random.o
 
 C_DEPS +=  \
 Animation/Animator.d \
+Animation/AutoAnimation.d \
 Animation/Ball.d \
 Animation/FontAnimation/Font.d \
 Animation/FontAnimation/FontAnimation.d \
@@ -104,11 +111,13 @@ main.d \
 Cube.d \
 Menu/Menu.d \
 Util/cpp_util.d \
+Util/GUID.d \
 Util/PStrings.d \
 Util/Random.d
 
 C_DEPS_AS_ARGS +=  \
 Animation/Animator.d \
+Animation/AutoAnimation.d \
 Animation/Ball.d \
 Animation/FontAnimation/Font.d \
 Animation/FontAnimation/FontAnimation.d \
@@ -119,6 +128,7 @@ main.d \
 Cube.d \
 Menu/Menu.d \
 Util/cpp_util.d \
+Util/GUID.d \
 Util/PStrings.d \
 Util/Random.d
 
@@ -136,6 +146,10 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 

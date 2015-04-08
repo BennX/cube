@@ -6,33 +6,55 @@
 * Created: 24.02.2015 11:57:51
 * Author: Benjamin
 */
-#ifndef Random
-#define Random
-#include "stdlib.h"
+#ifndef __RANDOM_H__
+#define __RANDOM_H__
 #include <avr/pgmspace.h>
-
-//struct shift_number
-//{
-//uint8_t n1, n2, n3;
-//};
-
-//throw this in progmem?!
-//static shift_number shifter[24] =
-//{
-//{1, 1, 2}, 	{1, 1, 3},	{1, 7, 3},	{1, 7, 6},	{1, 7, 7},	{2, 1, 1},
-//{2, 5, 5}, 	{3, 1, 1},	{3, 1, 5},	{3, 5, 4},	{3, 5, 5},	{3, 5, 7},
-//{3, 7, 1},	{4, 5, 3},	{5, 1, 3},	{5, 3, 6},	{5, 3, 7},	{5, 5, 2},
-//{5, 5, 3},	{6, 3, 5}, 	{6, 7, 1},	{7, 3, 5},	{7, 5, 3},	{7, 7, 1}
-//};
-
-const uint8_t shift[] PROGMEM =
+/**
+ * Put the variables in namespace so "not exedentaly used"
+ */
+namespace Random
 {
-    0x01, 0x01, 0x02, 	0x01, 0x01, 0x03,	0x01, 0x07, 0x03,	0x01, 0x07, 0x06,	0x01, 0x07, 0x07,	0x02, 0x01, 0x01,
-    0x02, 0x05, 0x05, 	0x03, 0x01, 0x01,	0x03, 0x01, 0x05,	0x03, 0x05, 0x04,	0x03, 0x05, 0x05,	0x03, 0x05, 0x07,
-    0x03, 0x07, 0x01,	0x04, 0x05, 0x03,	0x05, 0x01, 0x03,	0x05, 0x03, 0x06,	0x05, 0x03, 0x07,	0x05, 0x05, 0x02,
-    0x05, 0x05, 0x03,	0x06, 0x03, 0x05, 	0x06, 0x07, 0x01,	0x07, 0x03, 0x05,	0x07, 0x05, 0x03,	0x07, 0x07, 0x01
-};
-uint8_t rnd();
-uint8_t rnd(const uint8_t &max);
+    extern PROGMEM const uint8_t shift[];
+    extern uint8_t y8;
+    extern uint8_t cur_shift;
+    extern uint8_t request_count;
+}
 
+/**
+ * return random 8bit value
+ */
+extern uint8_t rnd();
+
+/**
+ * return random 8bit value with max
+ */
+extern uint8_t rnd(const uint8_t &max);
+
+/**
+ * Returns a 16bit value out of 2 rnd8 values
+ */
+extern uint16_t rnd16_8();
+
+namespace Random
+{
+    extern PROGMEM const uint8_t shift16[];
+    extern uint8_t cur_shift16;
+    extern uint16_t y16;
+    extern uint16_t request_count16;
+}
+
+/**
+ * return random 16bit value
+ */
+extern uint16_t rnd16();
+
+/**
+ * return random 16bit value with max
+ */
+extern uint16_t rnd16(const uint16_t &max);
+
+/**
+ * Returns a uint8_t but calculates by a 16bit rnd
+ */
+extern uint8_t rnd8_16();
 #endif

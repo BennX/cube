@@ -14,7 +14,8 @@
 // default constructor
 Menu::Menu(Input *i, Animator *a) : changed(true), cur_pos(0),
     m_cur_selected(0), m_cur_submenu(false), input(i), animator(a), clicked(false),
-    display_light_timer(0), displayIsOn(true), fading(false), fadeOn(true)
+    display_light_timer(0), displayIsOn(true), fading(false), fadeOn(true),
+    m_current_animation(0)
 {
 } //Menu
 
@@ -70,7 +71,9 @@ void Menu::update(const short &delta)
             Display::out << "b";
             Display::out(2, 7) << delta;
 #endif
-
+            Display::out_p(0, 8) << PSTR("Momentan");
+            if(m_current_animation != 0)
+                Display::out_p(1, 8) << m_current_animation->name();
             Display::on();
             changed = false;
             displayIsOn = true;
@@ -144,6 +147,7 @@ void Menu::update(const short &delta)
             if(!m_list[cur_pos]->subMenu())
             {
                 animator->operator[](cur_pos);
+                m_current_animation = m_list[cur_pos];
                 clicked = true;
             }
             else
@@ -152,6 +156,7 @@ void Menu::update(const short &delta)
                 m_cur_submenu = true;
                 clicked = true;
             }
+            changed = true;
         }
     }
 //last but not least draw the submenu if submenu
@@ -163,7 +168,9 @@ void Menu::update(const short &delta)
 
 void Menu::start(const uint8_t &animation)
 {
-    animator->operator[](cur_pos);
+    animator->operator[](animation);
+    m_current_animation = m_list[animation];
+    changed = true;
 }
 
 void Menu::leaveSubmenu()

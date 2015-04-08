@@ -15,8 +15,8 @@
 #include "Font.h"
 #include "../../Cube.h"
 
-#define TO_SHOW_STRING  "KRISTINA\n"
-#define LETTER_UPDATE_TIME 750
+#define TO_SHOW_STRING  "FAGGOT\n"
+#define LETTER_UPDATE_TIME 500
 class FontAnimation : public Animation, public MenuEntry
 {
 public:

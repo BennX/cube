@@ -204,6 +204,12 @@
     <Compile Include="Animation\Animator.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Animation\AutoAnimation.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Animation\AutoAnimation.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Animation\Ball.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -277,6 +283,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Util\cpp_util.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Util\GUID.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Util\GUID.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Util\LinkedList.h">

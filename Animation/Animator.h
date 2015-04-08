@@ -23,9 +23,13 @@ public:
      * Start the animation with the number
      */
     bool operator[] (const uint8_t &i);
+    //method to start a random animation but still update the old
+    bool operator ()(const uint8_t &toupdate);
 private:
     uint8_t cur_animation_number;
     Animation *cur_animation;
+	Animation *m_to_update;
+	bool m_autoAnimation;
     Animator( const Animator &c );
     Animator &operator=( const Animator &c );
 
