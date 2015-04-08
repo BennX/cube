@@ -52,7 +52,6 @@ C_SRCS +=  \
 ../Cube.cpp \
 ../Menu/Menu.cpp \
 ../Util/cpp_util.cpp \
-../Util/PStrings.cpp \
 ../Util/Random.cpp
 
 
@@ -74,7 +73,6 @@ main.o \
 Cube.o \
 Menu/Menu.o \
 Util/cpp_util.o \
-Util/PStrings.o \
 Util/Random.o
 
 OBJS_AS_ARGS +=  \
@@ -89,7 +87,6 @@ main.o \
 Cube.o \
 Menu/Menu.o \
 Util/cpp_util.o \
-Util/PStrings.o \
 Util/Random.o
 
 C_DEPS +=  \
@@ -104,7 +101,6 @@ main.d \
 Cube.d \
 Menu/Menu.d \
 Util/cpp_util.d \
-Util/PStrings.d \
 Util/Random.d
 
 C_DEPS_AS_ARGS +=  \
@@ -119,7 +115,6 @@ main.d \
 Cube.d \
 Menu/Menu.d \
 Util/cpp_util.d \
-Util/PStrings.d \
 Util/Random.d
 
 OUTPUT_FILE_PATH +=Cube.elf
@@ -136,8 +131,6 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-
-
 
 
 

@@ -13,10 +13,6 @@ SingleColor::SingleColor(Cube *c, const uint8_t &id): Animation(id), cube(c),
     m_changed(true), m_curMenuPos(0), m_selected(0), m_somethingSelected(false),
     m_menuChanged(true), m_clickdelay(0), m_clicked(true)
 {
-    //set to 0 else something can happen
-    m_color.r = 0;
-    m_color.g = 0;
-    m_color.b = 0;
 } //SingleColor
 
 // default destructor
