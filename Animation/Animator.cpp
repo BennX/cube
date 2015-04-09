@@ -53,8 +53,8 @@ bool Animator::operator[](const uint8_t &i)
 bool Animator::operator()(const uint8_t &toupdate)
 {
     m_to_update = animations[toupdate];//safe the old
-    //start a random new one
-    while((operator[](rnd(animations.size()))))
+    //start a random new one and check if its NOT the auto animation
+    while((operator[](rnd(animations.size()))) && m_to_update != cur_animation)
     {
     }
     m_autoAnimation = true;
