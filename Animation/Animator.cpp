@@ -9,7 +9,8 @@
 #include "Animator.h"
 #include "../Util/Random.h"
 // default constructor
-Animator::Animator(): cur_animation(0)
+Animator::Animator(): cur_animation_number(0), cur_animation(0), m_to_update(0),
+    m_autoAnimation(false)
 {
 } //Animator
 

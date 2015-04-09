@@ -73,6 +73,7 @@ int main()
     Display::out_p(2, 0) << PSTR("Menu done");
 
     initCubeRoutine();
+	_delay_ms(1);
     sei();
 
     //Test LED
