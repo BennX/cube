@@ -14,8 +14,10 @@
 #include "Cube.h"
 #include "Display.h"
 #include "USART.h"
-#include "Temperatur.h"
 #include "Input.h"
+
+#include "Sensors/Temperatur.h"
+#include "Sensors/Microphone.h"
 
 #include "Util/GUID.h"
 #include "Util/cpp_util.h"
@@ -44,6 +46,8 @@ int main()
     cli();
     Display::init();
     USART::init();//setup the usart0
+    Microphone::init();
+
     Display::out_p(0, 0) << PSTR("initialization");
 //init of the effects	//id at the end
     Animator animator;
@@ -73,7 +77,7 @@ int main()
     Display::out_p(2, 0) << PSTR("Menu done");
 
     initCubeRoutine();
-	_delay_ms(1);
+    _delay_ms(1);
     sei();
 
     //Test LED

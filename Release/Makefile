@@ -36,6 +36,7 @@ SUBDIRS :=  \
 ../Animation \
 ../Animation/FontAnimation \
 ../Menu \
+../Sensors \
 ../Util
 
 
@@ -52,6 +53,8 @@ C_SRCS +=  \
 ../main.cpp \
 ../Cube.cpp \
 ../Menu/Menu.cpp \
+../Sensors/Microphone.cpp \
+../Sensors/Temperatur.cpp \
 ../Util/cpp_util.cpp \
 ../Util/GUID.cpp \
 ../Util/PStrings.cpp \
@@ -76,6 +79,8 @@ Input.o \
 main.o \
 Cube.o \
 Menu/Menu.o \
+Sensors/Microphone.o \
+Sensors/Temperatur.o \
 Util/cpp_util.o \
 Util/GUID.o \
 Util/PStrings.o \
@@ -93,6 +98,8 @@ Input.o \
 main.o \
 Cube.o \
 Menu/Menu.o \
+Sensors/Microphone.o \
+Sensors/Temperatur.o \
 Util/cpp_util.o \
 Util/GUID.o \
 Util/PStrings.o \
@@ -110,6 +117,8 @@ Input.d \
 main.d \
 Cube.d \
 Menu/Menu.d \
+Sensors/Microphone.d \
+Sensors/Temperatur.d \
 Util/cpp_util.d \
 Util/GUID.d \
 Util/PStrings.d \
@@ -127,6 +136,8 @@ Input.d \
 main.d \
 Cube.d \
 Menu/Menu.d \
+Sensors/Microphone.d \
+Sensors/Temperatur.d \
 Util/cpp_util.d \
 Util/GUID.d \
 Util/PStrings.d \
@@ -146,6 +157,10 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 
@@ -199,6 +214,13 @@ Animation/FontAnimation/%.o: ../Animation/FontAnimation/%.cpp
 	
 
 Menu/%.o: ../Menu/%.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Sensors/%.o: ../Sensors/%.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

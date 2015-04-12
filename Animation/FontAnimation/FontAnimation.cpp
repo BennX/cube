@@ -46,7 +46,7 @@ void FontAnimation::update(const uint16_t &delta)
             cube->setRGB(l.pixel[i].x, l.pixel[i].y, 0, color);
         }
 
-        if(*cur_letter++ == '\n')
+        if(*(cur_letter++) == '\n')
             cur_letter -= strlen(TO_SHOW_STRING);
 
         color.r = rnd(MAX_COLOR);

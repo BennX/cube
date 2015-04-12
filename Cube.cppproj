@@ -270,10 +270,19 @@
     <Compile Include="Menu\MenuEntry.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SPI.h">
+    <Compile Include="Sensors\Microphone.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Temperatur.h">
+    <Compile Include="Sensors\Microphone.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\Temperatur.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\Temperatur.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SPI.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="USART.h">
@@ -311,6 +320,7 @@
     <Folder Include="Animation" />
     <Folder Include="Animation\FontAnimation" />
     <Folder Include="Menu" />
+    <Folder Include="Sensors" />
     <Folder Include="Util" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
