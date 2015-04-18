@@ -44,8 +44,9 @@ int16_t Microphone::sample()
 {
     //select chanel7 ADC7
     ADMUX |= (1 << MUX0) | (1 << MUX1) | (1 << MUX2);
-    ADCSRA |= (1 << ADSC); //start convention
-    //wait till tone
+	//not needed in freerun
+	// ADCSRA |= (1 << ADSC); //start convention
+    //wait till next is done
     while(ADCSRA & (1 << ADSC))
     {
     } //check till ADSC is 0

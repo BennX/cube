@@ -5,7 +5,6 @@
 *  Author: Benjamin
 */
 #define F_CPU 22118400  //redefine! Defined in compiler too but always doublecheck
-
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
@@ -31,6 +30,9 @@
 #include "Animation/AutoAnimation.h"
 
 #include "Menu/Menu.h"
+
+//load the static and const settings
+#include "settings.h"
 
 //global objects to access in interupts
 Cube cube; //also calls SPI::init()!

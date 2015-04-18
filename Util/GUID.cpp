@@ -7,12 +7,8 @@
 
 
 #include "GUID.h"
-namespace GUID
-{
-    uint8_t current_id = 0;
 
-    uint8_t get()
-    {
-        return current_id++;
-    }
+uint8_t GUID::get()
+{
+    return current_id++;
 }

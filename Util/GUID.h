@@ -9,9 +9,11 @@
 #ifndef __GUID_H__
 #define __GUID_H__
 #include <avr/io.h>
-namespace GUID
+class GUID
 {
-    extern uint8_t current_id;
-    extern uint8_t get();
-}
+public:
+    static uint8_t get();
+private:
+    static uint8_t current_id;
+};
 #endif //__GUID_H__
