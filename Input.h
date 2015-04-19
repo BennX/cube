@@ -11,33 +11,27 @@
 
 #include <avr/io.h>
 
-#define INC_PIN PINB
-#define INC_DDR DDRB
-#define INC_PORT PORTB
-#define INC_PHASE1_PIN PINB0
-#define INC_PHASE2_PIN PINB1
-#define INC_TASER_PIN PINB2
-
-#define PHASE1 !(INC_PIN & (1<<INC_PHASE2_PIN))
-#define PHASE2 !(INC_PIN & (1<<INC_PHASE1_PIN))
-
-#define BUTTON_PIN PINC
-#define BUTTON_DDR DDRC
-#define BUTTON_PORT PORTC
-#define BUTTON0 PINC2
-#define BUTTON1 PINC3
-#define BUTTON2 PINC4
-#define BUTTON3 PINC5
-
 class Input
 {
-//variables
-public:
-protected:
 private:
 //current difference of the incremental
     volatile int8_t enc_delta;
     int8_t last;
+
+    static volatile uint8_t *INC_PIN;
+    static volatile uint8_t *INC_DDR;
+    static volatile uint8_t *INC_PORT;
+    static const uint8_t INC_PHASE1_PIN;
+    static const uint8_t INC_PHASE2_PIN;
+    static const uint8_t INC_TASER_PIN;
+
+    static volatile uint8_t *BUTTON_PIN;
+    static volatile uint8_t *BUTTON_DDR;
+    static volatile uint8_t *BUTTON_PORT;
+    static const uint8_t BUTTON0;
+    static const uint8_t BUTTON1;
+    static const uint8_t BUTTON2;
+    static const uint8_t BUTTON3;
 
 //functions
 public:
@@ -49,7 +43,6 @@ public:
     bool isPressed();
     int8_t getIncDelta();
 
-protected:
 private:
     //no copy no assignement
     Input( const Input &c ) = delete;

@@ -54,5 +54,10 @@ private:
     static inline void write_byte(uint8_t bit);
     static inline uint8_t read_bit();
     static inline uint8_t read_byte();
+
+    static const volatile uint8_t m_port;
+    static const volatile uint8_t m_ddr;
+    static const volatile uint8_t m_pin;
+    static const volatile uint8_t m_pin_no;
 };
 #endif

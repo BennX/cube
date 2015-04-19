@@ -13,14 +13,6 @@
 #include "SPI.h"
 
 #define MAX_COLOR 30
-//einfügen!
-#define DDR_TO_STORAGE DDRC
-#define TO_STORAGE_PORT PORTC
-#define TO_STORAGE_PIN DDC6 //data direction C6
-
-#define DDR_DISABLE_LINE DDRC
-#define DISABLE_LINE_PORT PORTC
-#define DISABLE_LINE_PIN DDC7 //data direction C7
 
 struct RGB
 {
@@ -30,12 +22,12 @@ struct RGB
 class Cube
 {
 protected:
+
     uint8_t colors[5][MAX_COLOR][10];
     RGB cur_colors[5][5][5];
     //for SPI!
     uint8_t level;
     uint8_t cur_color_counter;
-
     //functions
 public:
     Cube();
@@ -55,11 +47,21 @@ private:
     //no copy!
     Cube( const Cube &c ) = delete;
     Cube &operator=( const Cube &c ) = delete;
+
+//static definitions for the cube object
+    static volatile uint8_t *m_to_storage_port;
+    static volatile uint8_t *m_to_storage_ddr;
+    static const uint8_t m_to_storage_pin_no;
+
+    static volatile uint8_t *m_disable_port;
+    static volatile uint8_t *m_disable_ddr;
+    static const uint8_t m_disable_pin_no;
 }; //Cube
 
 void Cube::render()
 {
-    DISABLE_LINE_PORT |= (1 << DISABLE_LINE_PIN); //set high to disable the register
+    // DISABLE_LINE_PORT |= (1 << DISABLE_LINE_PIN); //set high to disable the register
+    *m_disable_port |= (1 << m_disable_pin_no);
     //reverse shift out
     for(int8_t i = 9; i >= 0; i--)
     {
@@ -77,10 +79,10 @@ void Cube::render()
         }
     }
 
-    TO_STORAGE_PORT |= (1 << TO_STORAGE_PIN); //1 clock to storage
-    TO_STORAGE_PORT &= ~(1 << TO_STORAGE_PIN); //1 clock to storage
+    *m_to_storage_port |= (1 << m_to_storage_pin_no); //1 clock to storage
+    *m_to_storage_port &= ~(1 << m_to_storage_pin_no); //1 clock to storage
 
-    DISABLE_LINE_PORT &= ~(1 << DISABLE_LINE_PIN); //set low to enable the register
+    *m_disable_port &= ~(1 << m_disable_pin_no); //set low to enable the register
 }
 
 RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,

@@ -12,10 +12,7 @@
 #include "Animation.h"
 #include "../Menu/MenuEntry.h"
 #include "../Cube.h"
-#define BALL_UPDATE_TIME 2000.0f
-#define BALL_SIZE 4.5f
-#define BALL_MIN_UPDATE_TIME 200.0f
-#define BALL_SPEED_CHANGE_SPEED 25.0f
+
 #define CLICK_DELAY_BALL 1000
 class Ball : public Animation, public MenuEntry
 {
@@ -31,8 +28,13 @@ public:
         return PSTR("Ball");
     };
     bool subMenu();
-protected:
 private:
+//config stuff defined in settings
+    static const float START_UPDATE_TIME;
+    static const float MAX_SIZE;
+    static const float MIN_UPDATE_TIME;
+    static const float UPDATE_TIME_CHANGE;
+
     Cube *cube;
     RGB color;
 
@@ -50,8 +52,6 @@ private:
     void mov();
     Ball( const Ball &c );
     Ball &operator=( const Ball &c );
-
-
 }; //Ball
 
 #endif //__BALL_H__

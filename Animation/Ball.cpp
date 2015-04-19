@@ -14,7 +14,7 @@
 
 // default constructor
 Ball::Ball(Cube *c, const uint8_t &id): Animation(id), cube(c), pos_x(1),
-    pos_y(1), pos_z(1), extend(0.0f), toggle(true), update_time(BALL_UPDATE_TIME),
+    pos_y(1), pos_z(1), extend(0.0f), toggle(true), update_time(START_UPDATE_TIME),
     passed_time(0), m_changed(true), m_curMenuPos(0), m_speedSelected(false),
     m_clicked(true)
 {
@@ -32,7 +32,7 @@ void Ball::update(const uint16_t &delta)
 {
     passed_time += delta;
 
-    extend = BALL_SIZE * (-pow(passed_time / update_time - 1, 2) + 1);
+    extend = MAX_SIZE * (-pow(passed_time / update_time - 1, 2) + 1);
 
     if(extend <= 0)
     {
@@ -147,9 +147,9 @@ void Ball::updateEntry(const uint16_t &delta, Input &i, Menu &m)
     int8_t enc = i.getIncDelta();
     if(enc != 0 && m_speedSelected)
     {
-        update_time += enc * BALL_SPEED_CHANGE_SPEED;
-        if(update_time < BALL_MIN_UPDATE_TIME)
-            update_time = BALL_MIN_UPDATE_TIME;
+        update_time += enc * UPDATE_TIME_CHANGE;
+        if(update_time < MIN_UPDATE_TIME)
+            update_time = MIN_UPDATE_TIME;
         m_changed = true;
     }
 

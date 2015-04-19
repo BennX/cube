@@ -65,8 +65,16 @@ void Display::setDisplayLight(const uint8_t &value)
 
 void Display::clear()
 {
-    write_instruction(INSTRUCTION_CLEAR_DISPLAY);
-    _delay_us(500); //else it crashes
+    //go to 0 and write 3*16 times " " to clean.
+    //faster than calling the clean instruction!
+    set_cursor(0, 0);
+    for(uint8_t i = 0 ; i < 3; i++)
+    {
+        for(uint8_t j  = 0; j < 16; j++)
+        {
+            write_data(' ');
+        }
+    }
 }
 
 void Display::off()

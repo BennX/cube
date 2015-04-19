@@ -8,7 +8,7 @@
 
 namespace p_strings
 {
-    const char right_arrow[] = ">";
+    const char right_arrow[] = "~"; //right arrow after mapping
     const char procent[] = "%";
     const char start[] = "Start";
     const char speed[] = "Speed: ";

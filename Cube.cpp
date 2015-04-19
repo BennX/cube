@@ -23,8 +23,8 @@ Cube::Cube(): level(0), cur_color_counter(0)
     //memset(cur_colors, 0, 5*5*5*sizeof(RGB));
 
     //enabel output on ss and latch pins
-    DDR_TO_STORAGE |= (1 << TO_STORAGE_PIN);
-    DDR_DISABLE_LINE |= (1 << DISABLE_LINE_PIN);
+    *m_to_storage_ddr |= (1 << m_to_storage_pin_no);
+    *m_disable_ddr |= (1 << m_disable_pin_no);
 } //Cube
 
 // default destructor
