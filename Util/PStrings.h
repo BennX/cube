@@ -8,21 +8,25 @@
 #include <avr/pgmspace.h>
 #ifndef __STRINGS__
 #define __STRINGS__
-namespace p_strings
+
+
+class p_strings
 {
-//golbal
-    extern PROGMEM const char right_arrow[];
-    extern PROGMEM const char procent[];
-    extern PROGMEM const char start[];
-    extern PROGMEM const char speed[];
+public:
+    static PROGMEM const char right_arrow[];
+    static PROGMEM const char procent[];
+    static PROGMEM const char start[];
+    static PROGMEM const char speed[];
 
-//single color animation
-    extern PROGMEM const char rot[];
-    extern PROGMEM const char gruen[];
-    extern PROGMEM const char blau[];
+    //single color animation
+    static PROGMEM const char rot[];
+    static PROGMEM const char gruen[];
+    static PROGMEM const char blau[];
 
-//rain animation
-    extern PROGMEM const char tropfen[];
-    extern PROGMEM const char rate[];
-}
+    //rain animation
+    static PROGMEM const char tropfen[];
+    static PROGMEM const char rate[];
+};
+
+
 #endif

@@ -53,6 +53,8 @@ C_SRCS +=  \
 ../main.cpp \
 ../Cube.cpp \
 ../Menu/Menu.cpp \
+../Menu/Submenu.cpp \
+../Menu/Taster.cpp \
 ../Sensors/Microphone.cpp \
 ../Sensors/Temperatur.cpp \
 ../Util/cpp_util.cpp \
@@ -79,6 +81,8 @@ Input.o \
 main.o \
 Cube.o \
 Menu/Menu.o \
+Menu/Submenu.o \
+Menu/Taster.o \
 Sensors/Microphone.o \
 Sensors/Temperatur.o \
 Util/cpp_util.o \
@@ -98,6 +102,8 @@ Input.o \
 main.o \
 Cube.o \
 Menu/Menu.o \
+Menu/Submenu.o \
+Menu/Taster.o \
 Sensors/Microphone.o \
 Sensors/Temperatur.o \
 Util/cpp_util.o \
@@ -117,6 +123,8 @@ Input.d \
 main.d \
 Cube.d \
 Menu/Menu.d \
+Menu/Submenu.d \
+Menu/Taster.d \
 Sensors/Microphone.d \
 Sensors/Temperatur.d \
 Util/cpp_util.d \
@@ -136,6 +144,8 @@ Input.d \
 main.d \
 Cube.d \
 Menu/Menu.d \
+Menu/Submenu.d \
+Menu/Taster.d \
 Sensors/Microphone.d \
 Sensors/Temperatur.d \
 Util/cpp_util.d \
@@ -157,6 +167,10 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 

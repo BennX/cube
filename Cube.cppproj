@@ -270,6 +270,18 @@
     <Compile Include="Menu\MenuEntry.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Menu\Submenu.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Menu\Submenu.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Menu\Taster.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Menu\Taster.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Sensors\Microphone.cpp">
       <SubType>compile</SubType>
     </Compile>

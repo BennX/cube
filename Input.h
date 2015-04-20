@@ -17,7 +17,8 @@ private:
 //current difference of the incremental
     volatile int8_t enc_delta;
     int8_t last;
-
+	
+    //configurations
     static volatile uint8_t *INC_PIN;
     static volatile uint8_t *INC_DDR;
     static volatile uint8_t *INC_PORT;

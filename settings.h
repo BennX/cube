@@ -19,7 +19,7 @@ volatile uint8_t *Cube::m_disable_ddr = &DDRC;
 const uint8_t Cube::m_disable_pin_no = DDC7;
 
 //ball animation
-const float Ball::START_UPDATE_TIME = 2000.0f;
+const float Ball::START_UPDATE_TIME = 500.0f;
 const float Ball::MAX_SIZE = 4.5f;
 const float Ball::MIN_UPDATE_TIME = 200.0f;
 const float Ball::UPDATE_TIME_CHANGE = 25.0f;
@@ -39,3 +39,7 @@ const uint8_t Input::BUTTON0 = PINC2;
 const uint8_t Input::BUTTON1 = PINC3;
 const uint8_t Input::BUTTON2 = PINC4;
 const uint8_t Input::BUTTON3 = PINC5;
+
+//traster
+#include "Menu/Taster.h" // delete this!
+const uint16_t Taster::CLICK_DELAY_TASTER = 500;

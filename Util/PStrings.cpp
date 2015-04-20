@@ -6,19 +6,16 @@
  */
 #include "PStrings.h"
 
-namespace p_strings
-{
-    const char right_arrow[] = "~"; //right arrow after mapping
-    const char procent[] = "%";
-    const char start[] = "Start";
-    const char speed[] = "Speed: ";
+const char p_strings::right_arrow[] = {0x7e, 0x00}; //right arrow after mapping
+const char p_strings::procent[] = "%";
+const char p_strings::start[] = "Start";
+const char p_strings::speed[] = "Speed: ";
 
 //single color animation
-    const char rot[] = "Rot: ";
-    const char gruen[] = "Gruen: ";
-    const char blau[] = "Blau: ";
+const char p_strings::rot[] = "Rot: ";
+const char p_strings::gruen[] = "Gruen: ";
+const char p_strings::blau[] = "Blau: ";
 
 //rain animation
-    const char tropfen[] = "Tropfen: ";
-    const char rate[] = "Rate: ";
-}
+const char p_strings::tropfen[] = "Tropfen: ";
+const char p_strings::rate[] = "Rate: ";

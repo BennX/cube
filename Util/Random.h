@@ -12,6 +12,7 @@
 /**
  * Put the variables in namespace so "not exedentaly used"
  */
+
 namespace Random
 {
     extern PROGMEM const uint8_t shift[];
