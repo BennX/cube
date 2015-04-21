@@ -98,16 +98,6 @@ void FadeAnimation::update(const uint16_t &delta)
 void FadeAnimation::updateEntry(const uint16_t &delta, Input &i,
                                 Menu &m)
 {
-    if(m_clicked)
-    {
-        m_clickdelay += delta;
-        if(m_clickdelay > CLICK_DELAY_FADE)
-        {
-            m_clicked = false;
-            m_clickdelay = 0;
-        }
-    }
-
     if(m_menuChanged)
     {
         Display::clear();
@@ -120,20 +110,18 @@ void FadeAnimation::updateEntry(const uint16_t &delta, Input &i,
         m_menuChanged = false;
     }
 
-    if(!m_clicked)
+    bool click = i.clicked();
+    if(click && m_curMenuPos == 0)
     {
-        if(i.isPressed() && m_curMenuPos == 0)
-        {
-            m_speedSelected = !m_speedSelected;
-            m_clicked = true;
-        }
-        else if (i.isPressed() && m_curMenuPos == 1)
-        {
-            m.start(m_ID);
-            m.leaveSubmenu();
-            m_menuChanged = true;
-            m_clicked = true;
-        }
+        m_speedSelected = !m_speedSelected;
+        m_clicked = true;
+    }
+    else if (click && m_curMenuPos == 1)
+    {
+        m.start(m_ID);
+        m.leaveSubmenu();
+        m_menuChanged = true;
+        m_clicked = true;
     }
 
     int8_t enc = i.getIncDelta();

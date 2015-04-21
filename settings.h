@@ -40,6 +40,4 @@ const uint8_t Input::BUTTON1 = PINC3;
 const uint8_t Input::BUTTON2 = PINC4;
 const uint8_t Input::BUTTON3 = PINC5;
 
-//traster
-#include "Menu/Taster.h" // delete this!
-const uint16_t Taster::CLICK_DELAY_TASTER = 500;
+const uint16_t Input::INC_CLICK_DELAY = 500;

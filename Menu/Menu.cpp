@@ -131,30 +131,29 @@ void Menu::update(const short &delta)
             changed = true;
         }
 
-        if(clicked)
-        {
-            clicktimer += delta;
-            if(clicktimer > CLICK_DELAY)
-            {
-                clicked = false;
-                clicktimer = 0;
-            }
-        }
+        //if(clicked)
+        //{
+        //clicktimer += delta;
+        //if(clicktimer > CLICK_DELAY)
+        //{
+        //clicked = false;
+        //clicktimer = 0;
+        //}
+        //}
 
         //now check if click
-        if(!clicked && input->isPressed() && cur_pos <= m_list.size())
+
+        if(input->clicked() && cur_pos <= m_list.size())
         {
             if(!m_list[cur_pos]->subMenu())
             {
                 animator->operator[](cur_pos);
                 m_current_animation = m_list[cur_pos];
-                clicked = true;
             }
             else
             {
                 m_cur_selected = cur_pos;
                 m_cur_submenu = true;
-                clicked = true;
             }
             changed = true;
         }

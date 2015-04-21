@@ -10,7 +10,7 @@
 #define __SUBMENU_H__
 #include <avr/pgmspace.h>
 #include "../Util/LinkedList.h"
-#include "Taster.h"
+#include "../Input.h"
 class Submenu
 {
 //variables
@@ -18,7 +18,10 @@ private:
     struct SubmenuEntry;
     LinkedList<SubmenuEntry *> m_attribut_list;
     PGM_P m_submenu_name;
-    Taster m_incremental_taster;
+
+    //navigation stuff
+    int8_t m_cur_pos;
+    bool m_menu_changed;
 //functions
 public:
     Submenu(PGM_P name);
@@ -30,7 +33,7 @@ public:
     /**
      * Update and draw stuff
      */
-    void update(const uint16_t &delta);
+    void update(const uint16_t &delta,Input &i);
 private:
     Submenu( const Submenu &c );
     Submenu &operator=( const Submenu &c );

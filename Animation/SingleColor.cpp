@@ -44,16 +44,6 @@ void SingleColor::update(const uint16_t &delta)
 
 void SingleColor::updateEntry(const uint16_t &delta, Input &i, Menu &m)
 {
-    if(m_clicked)
-    {
-        m_clickdelay += delta;
-        if(m_clickdelay > CLICK_DELAY)
-        {
-            m_clicked = false;
-            m_clickdelay = 0;
-        }
-    }
-
     if(m_menuChanged)
     {
         Display::clear();
@@ -103,21 +93,19 @@ void SingleColor::updateEntry(const uint16_t &delta, Input &i, Menu &m)
         m_menuChanged = false;
     }
 
-    if(!m_clicked)
+    bool click = i.clicked();
+    if(click && m_curMenuPos != 3)
     {
-        if(i.isPressed() && m_curMenuPos != 3)
-        {
-            m_somethingSelected = !m_somethingSelected;
-            m_selected = m_curMenuPos;
-            m_clicked = true;
-        }
-        else if (i.isPressed() && m_curMenuPos == 3)
-        {
-            m.start(m_ID);
-            m.leaveSubmenu();
-            m_menuChanged = true;
-            m_clicked = true;
-        }
+        m_somethingSelected = !m_somethingSelected;
+        m_selected = m_curMenuPos;
+        m_clicked = true;
+    }
+    else if (click && m_curMenuPos == 3)
+    {
+        m.start(m_ID);
+        m.leaveSubmenu();
+        m_menuChanged = true;
+        m_clicked = true;
     }
 
     int8_t enc = i.getIncDelta();

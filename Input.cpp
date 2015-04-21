@@ -9,7 +9,8 @@
 #include "Input.h"
 #include <avr/interrupt.h>
 // default constructor
-Input::Input() : enc_delta(0), last(0)
+Input::Input() : m_enc_delta(0), m_last(0), m_inc_last(false),
+    m_inc_clicked(false), m_inc_click_timer(0)
 {
     // Button input
     *BUTTON_DDR &= ~((1 << BUTTON0) | (1 << BUTTON1) | (1 << BUTTON2) |
@@ -20,11 +21,11 @@ Input::Input() : enc_delta(0), last(0)
 
     //make the INC as inputs
     *INC_DDR &= ~((1 << INC_PHASE1_PIN) | (1 << INC_PHASE2_PIN) |
-                 (1 << INC_TASER_PIN));
+                  (1 << INC_TASER_PIN));
 
     //enable pullups
     *INC_PORT |= ((1 << INC_PHASE1_PIN) | (1 << INC_PHASE2_PIN) |
-                 (1 << INC_TASER_PIN));
+                  (1 << INC_TASER_PIN));
     //first init
     int8_t newv;
 
@@ -33,7 +34,7 @@ Input::Input() : enc_delta(0), last(0)
         newv = 3;
     if( !(*INC_PIN & (1 << INC_PHASE1_PIN)) )
         newv ^= 1;                   // convert gray to binary
-    last = newv;                   // power on state
+    m_last = newv;                   // power on state
 } //Input
 
 // default destructor
@@ -50,11 +51,38 @@ void Input::update()
     if( !(*INC_PIN & (1 << INC_PHASE1_PIN)) )
         newv ^= 1;                   // convert gray to binary
 
-    diff = last - newv;                // difference last - new
+    diff = m_last - newv;                // difference last - new
     if( diff & 1 )                // bit 0 = value (1)
     {
-        this->last = newv;                 // store new as next last
-        this->enc_delta += (diff & 2) - 1;        // bit 1 = direction (+/-)
+        this->m_last = newv;                 // store new as next last
+        this->m_enc_delta += (diff & 2) - 1;        // bit 1 = direction (+/-)
+    }
+
+    //check if "clicked
+    m_inc_click_timer += 1; //since we call this method every ms
+    if(!m_inc_clicked && m_inc_click_timer > INC_CLICK_DELAY)
+    {
+        if(!m_inc_last && isPressed())
+            m_inc_last = true;
+        if(m_inc_last && !isPressed())
+        {
+            m_inc_last = false;
+            m_inc_clicked = true;
+        }
+    }
+}
+
+bool Input::clicked()
+{
+    if(m_inc_clicked)
+    {
+        m_inc_click_timer = 0; //start the "delay" timer
+        m_inc_clicked = false;
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 
@@ -92,8 +120,8 @@ int8_t Input::getIncDelta()
     //reading doublestep encoder
     int8_t val;
     cli();
-    val = enc_delta;
-    enc_delta = val & 1;
+    val = m_enc_delta;
+    m_enc_delta = val & 1;
     sei();
     return val >> 1;
 }
