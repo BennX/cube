@@ -25,6 +25,19 @@ void Submenu::addEntry(PGM_P name, float *value, const float &min,
     m_attribut_list.add(new SubmenuEntry(name, value, min, max, update_value));
 }
 
+void Submenu::addEntry(PGM_P name, int *value, const float &min,
+                       const float &max, const float &update_value)
+{
+    m_attribut_list.add(new SubmenuEntry(name, value, min, max, update_value));
+}
+
+void Submenu::addEntry(PGM_P name, int8_t *value, const float &min,
+                       const float &max, const float &update_value)
+{
+    m_attribut_list.add(new SubmenuEntry(name, value, min, max, update_value));
+}
+
+
 void Submenu::update(const uint16_t &delta, Input &i, Menu &m)
 {
     if(m_menu_changed)
@@ -40,8 +53,8 @@ void Submenu::update(const uint16_t &delta, Input &i, Menu &m)
         {
             //1 attribut inside
             Display::out_p(0, 0) << m_submenu_name;
-            SubmenuEntry *entry = m_attribut_list[0];
-            Display::out_p(1, 1) << entry->m_name << *entry-> m_value;
+
+            drawEntry(1, 1, m_attribut_list[0]);
             Display::out_p(2, 1) << p_strings::start;
             Display::out_p(m_cur_pos + 1, 0) << p_strings::right_arrow;//draw arrow
         }
@@ -51,33 +64,26 @@ void Submenu::update(const uint16_t &delta, Input &i, Menu &m)
             //just 1 or 2 elements inside
             if(m_cur_pos < 1)
             {
-                //at the start
+                //first entry
                 Display::out_p(0, 0) << m_submenu_name; //draw title
-                //draw elements
-                Display::out_p(1, 1) << m_attribut_list[m_attribut_list.size() - 1]->m_name <<
-                                     *m_attribut_list[m_attribut_list.size() - 1]->m_value;
-                Display::out_p(2, 1) << m_attribut_list[m_attribut_list.size()]->m_name <<
-                                     *m_attribut_list[m_attribut_list.size()]->m_value;
+                drawEntry(1, 1, m_attribut_list[0]);
+                drawEntry(2, 1, m_attribut_list[1]);
                 Display::out_p(1, 0) << p_strings::right_arrow;
             }
             else  if(m_cur_pos == m_attribut_list.size() + 1)
             {
-                //last pos so draw the last 2 elements +start
-                Display::out_p(0, 1) << m_attribut_list[m_attribut_list.size() - 1]->m_name <<
-                                     *m_attribut_list[m_attribut_list.size() - 1]->m_value;
-                Display::out_p(1, 1) << m_attribut_list[m_attribut_list.size()]->m_name <<
-                                     *m_attribut_list[m_attribut_list.size()]->m_value;
+                //last pos so draw the last 2 elements +start and position is start
+                drawEntry(0, 1, m_attribut_list[m_attribut_list.size() - 1]);
+                drawEntry(1, 1, m_attribut_list[m_attribut_list.size()]);
                 Display::out_p(2, 1) << p_strings::start;
                 //since curpos = last => we are at start
                 Display::out_p(2, 0) << p_strings::right_arrow;
             }
             else if(m_cur_pos == m_attribut_list.size())
             {
-                //last pos so draw the last 2 elements +start
-                Display::out_p(0, 1) << m_attribut_list[m_attribut_list.size() - 1]->m_name <<
-                                     *m_attribut_list[m_attribut_list.size() - 1]->m_value;
-                Display::out_p(1, 1) << m_attribut_list[m_attribut_list.size()]->m_name <<
-                                     *m_attribut_list[m_attribut_list.size()]->m_value;
+                //last pos so draw the last 2 elements +start position is middle
+                drawEntry(0, 1, m_attribut_list[m_attribut_list.size() - 1]);
+                drawEntry(1, 1, m_attribut_list[m_attribut_list.size()]);
                 Display::out_p(2, 1) << p_strings::start;
                 //since curpos = last => we are at start
                 Display::out_p(1, 0) << p_strings::right_arrow;
@@ -85,12 +91,9 @@ void Submenu::update(const uint16_t &delta, Input &i, Menu &m)
             else
             {
                 //in the middle of the list
-                Display::out_p(0, 1) << m_attribut_list[m_cur_pos - 1]->m_name <<
-                                     *m_attribut_list[m_cur_pos - 1]->m_value;
-                Display::out_p(1, 1) << m_attribut_list[m_cur_pos]->m_name <<
-                                     *m_attribut_list[m_cur_pos]->m_value;
-                Display::out_p(2, 1) << m_attribut_list[m_cur_pos + 1]->m_name <<
-                                     *m_attribut_list[m_cur_pos + 1]->m_value;
+                drawEntry(0, 1, m_attribut_list[m_cur_pos - 1]);
+                drawEntry(1, 1, m_attribut_list[m_cur_pos]);
+                drawEntry(2, 1, m_attribut_list[m_cur_pos + 1]);
                 Display::out_p(1, 0) << p_strings::right_arrow;
             }
         }
@@ -130,11 +133,47 @@ void Submenu::update(const uint16_t &delta, Input &i, Menu &m)
     {
         //something selected manipulate this
         SubmenuEntry *entry = m_attribut_list[m_selected_entry_no];
-        if(*entry->m_value + (enc * entry->m_update_value) <= entry->m_max
-                && *entry->m_value + (enc * entry->m_update_value ) >= entry->m_min)
+        switch(entry->m_value.type)
         {
-            *entry->m_value += (enc * entry->m_update_value);
+            case INT:
+                if(*entry->m_value.data.i + (enc * entry->m_update_value) <= entry->m_max
+                        && *entry->m_value.data.i + (enc * entry->m_update_value ) >= entry->m_min)
+                {
+                    *entry->m_value.data.i += (enc * entry->m_update_value);
+                }
+                break;
+            case FLOAT:
+                if(*entry->m_value.data.f + (enc * entry->m_update_value) <= entry->m_max
+                        && *entry->m_value.data.f + (enc * entry->m_update_value ) >= entry->m_min)
+                {
+                    *entry->m_value.data.f += (enc * entry->m_update_value);
+                }
+                break;
+            case INT8:
+                if(*entry->m_value.data.i8 + (enc * entry->m_update_value) <= entry->m_max
+                        && *entry->m_value.data.i8 + (enc * entry->m_update_value ) >= entry->m_min)
+                {
+                    *entry->m_value.data.i8 += (enc * entry->m_update_value);
+                }
+                break;
         }
         m_menu_changed = true;
+    }
+}
+
+void Submenu::drawEntry(const uint8_t &x, const uint8_t &y, SubmenuEntry *e)
+{
+
+    switch(e->m_value.type)
+    {
+        case INT:
+            Display::out_p(x, y) << e->m_name << *e->m_value.data.i;
+            break;
+        case FLOAT:
+            Display::out_p(x, y) << e->m_name << *e->m_value.data.f;
+            break;
+        case INT8:
+            Display::out_p(x, y) << e->m_name << *e->m_value.data.i8;
+            break;
     }
 }

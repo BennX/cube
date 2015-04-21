@@ -22,9 +22,9 @@ Ball::Ball(Cube *c, const uint8_t &id): Animation(id), cube(c), pos_x(1),
     color.b = rnd(MAX_COLOR);
 	
     //add the manipulators to the submenu
-    m_submenu.addEntry(p_strings::speed, &update_time, MIN_UPDATE_TIME, 64000,
+    m_submenu.addEntry(p_strings::speed, &update_time, MIN_UPDATE_TIME, 5000.0f,
                        UPDATE_TIME_CHANGE);
-    m_submenu.addEntry(p_strings::size, &m_max_size, 0, MAX_SIZE, 0.1);
+    m_submenu.addEntry(p_strings::size, &m_max_size, 0, MAX_SIZE, 0.1f);
 } //Ball
 
 // default destructor

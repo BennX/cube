@@ -83,40 +83,6 @@ void Menu::update(const short &delta)
                 fading = true;
             }
         }
-        /**
-            //fade on
-            if(displayIsOn && fadeOn && DISPLAY_FADE_ON_TIME - display_light_timer > 0)
-            {
-                Display::setDisplayLight(255.0 / DISPLAY_FADE_ON_TIME * display_light_timer);
-            }
-            else if(displayIsOn && fadeOn)
-            {
-                Display::setDisplayLight(255);
-                fadeOn = false;
-                fading = false;
-            }
-
-            //fade off
-            if(displayIsOn && (display_light_timer > DISPLAY_LIGHT_OF_TIMER))
-            {
-                if(255.0 / DISPLAY_FADE_OUT_TIME * (DISPLAY_FADE_OUT_TIME -
-                                                    (display_light_timer -
-                                                     DISPLAY_LIGHT_OF_TIMER))  < 1)
-                {
-                    Display::setDisplayLight(0);
-                    Display::off();
-                    displayIsOn = false;
-                    fadeOn = true; // enable on fade
-                }
-                else
-                {
-                    Display::setDisplayLight(255.0 / DISPLAY_FADE_OUT_TIME *
-                                             (DISPLAY_FADE_OUT_TIME -
-                                              (display_light_timer -
-                                               DISPLAY_LIGHT_OF_TIMER)));
-                }
-            }
-        	*/
 
         //check if cursor move
         int8_t enc = input->getIncDelta();

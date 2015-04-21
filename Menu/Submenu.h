@@ -37,6 +37,12 @@ public:
      */
     void addEntry(PGM_P name, float *value, const float &min, const float &max,
                   const float &update_value);
+    void addEntry(PGM_P name, int *value, const float &min, const float &max,
+                  const float &update_value);
+    void addEntry(PGM_P name, int8_t *value, const float &min, const float &max,
+                  const float &update_value);
+
+    void drawEntry(const uint8_t &x, const uint8_t &y, SubmenuEntry *e);
     /**
      * Update and draw stuff
      */
@@ -44,18 +50,65 @@ public:
 private:
     Submenu( const Submenu &c );
     Submenu &operator=( const Submenu &c );
- 
+
+    enum Type
+    {
+        FLOAT,
+        INT,
+        INT8,
+    };
+    union Data
+    {
+        float *f;
+        int *i;
+        int8_t *i8;
+        int16_t *i16;
+    };
     struct SubmenuEntry
     {
+        struct WeakType
+        {
+            Type type;
+            Data data;
+
+            WeakType(int *i): type(INT)
+            {
+                data.i = i;
+            }
+
+            WeakType(int8_t *i): type(INT8)
+            {
+                data.i8 = i;
+            }
+
+            WeakType(float *f): type(FLOAT)
+            {
+                data.f = f;
+            }
+        };
+
         PGM_P m_name;
-        float *m_value;
+        WeakType m_value;
         float m_min;
         float m_max;
         float m_update_value;
         SubmenuEntry(PGM_P name, float *value, const float &min,
-                     const float &max, const float &update_value): m_name(name),
-            m_value(value), m_min(min), m_max(max), m_update_value(update_value) {}
-    };
-}; //Submenu
+                     const float &max, const float &update_value): m_name(name), m_value(value),
+            m_min(min), m_max(max), m_update_value(update_value)
+        {
+        }
 
+        SubmenuEntry(PGM_P name, int *value, const float &min,
+                     const float &max, const float &update_value): m_name(name), m_value(value),
+            m_min(min), m_max(max), m_update_value(update_value)
+        {
+        }
+
+        SubmenuEntry(PGM_P name, int8_t *value, const float &min,
+                     const float &max, const float &update_value): m_name(name), m_value(value),
+            m_min(min), m_max(max), m_update_value(update_value)
+        {
+        }
+    };
+};
 #endif //__SUBMENU_H__

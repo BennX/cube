@@ -4,6 +4,8 @@
 #include "../Util/Random.h"
 #include "../Menu/MenuEntry.h"
 #include "../Util/PStrings.h"
+#include "../Menu/Submenu.h"
+
 //the maximum of active raindrops
 #define MAX_RAINDROPS 30
 #define SPAWN_RATE 20 //its percent so 20% chance to spawn a not active raindrop
@@ -25,12 +27,7 @@ private:
     int16_t m_raindropSpeed;
     int8_t m_spawnrate;
     //menu stuff
-    bool m_clicked;
-    bool m_menuChanged;
-    bool m_somethingSelected;
-    uint16_t m_clickdelay;
-    int8_t m_curMenuPos;
-    int8_t m_selected;
+    Submenu m_submenu;
 public:
     RainAnimation(Cube *c, const uint8_t &id);
     void update(const uint16_t &delta);
@@ -46,14 +43,17 @@ public:
 
 RainAnimation::RainAnimation(Cube *c, const uint8_t &id) : Animation(id),
     cube(c), time_taken(0), m_raindropCount(MAX_RAINDROPS),
-    m_raindropSpeed(UPDATE_TIME_RAINDROP), m_menuChanged(true), m_clickdelay(0),
-    m_clicked(true), m_curMenuPos(0), m_selected(0), m_somethingSelected(false),
-    m_spawnrate(SPAWN_RATE)
+    m_raindropSpeed(UPDATE_TIME_RAINDROP),
+    m_spawnrate(SPAWN_RATE), m_submenu(PSTR("Rain Animation"), id)
 {
     for (int i = 0; i < MAX_RAINDROPS; i++)
     {
         raindrops[i].active = false;
     }
+    m_submenu.addEntry(p_strings::tropfen, &m_raindropCount, 0, MAX_RAINDROPS, 1);
+    m_submenu.addEntry(p_strings::speed, &m_raindropSpeed, 0, 2000,
+                       RAINDROP_SPEED_MULTIPL);
+    m_submenu.addEntry(p_strings::rate, &m_spawnrate, 0, 100, 1);
 }
 
 void RainAnimation::update(const uint16_t &delta)
@@ -105,6 +105,8 @@ void RainAnimation::update(const uint16_t &delta)
 
 void RainAnimation::updateEntry(const uint16_t &delta, Input &i, Menu &m)
 {
+    m_submenu.update(time_taken, i, m);
+    /*
     if(m_menuChanged)
     {
         Display::clear();
@@ -191,6 +193,7 @@ void RainAnimation::updateEntry(const uint16_t &delta, Input &i, Menu &m)
         if(temp != m_curMenuPos)
             m_menuChanged = true;
     }
+    */
 };
 
 bool RainAnimation::subMenu()
