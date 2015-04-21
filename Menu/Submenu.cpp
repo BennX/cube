@@ -9,8 +9,8 @@
 #include "../Display.h"
 #include "../Util/PStrings.h"
 // default constructor
-Submenu::Submenu(PGM_P name) : m_submenu_name(name), m_cur_pos(0),
-    m_menu_changed(false)
+Submenu::Submenu(PGM_P name, const uint8_t &id) : m_ID(id),
+    m_submenu_name(name), m_cur_pos(0), m_menu_changed(true)
 {
 } //Submenu
 
@@ -20,15 +20,16 @@ Submenu::~Submenu()
 } //~Submenu
 
 void Submenu::addEntry(PGM_P name, float *value, const float &min,
-                       const float &max)
+                       const float &max, const float &update_value)
 {
-    m_attribut_list.add(new SubmenuEntry(name, value, min, max));
+    m_attribut_list.add(new SubmenuEntry(name, value, min, max, update_value));
 }
 
-void Submenu::update(const uint16_t &delta, Input &i)
+void Submenu::update(const uint16_t &delta, Input &i, Menu &m)
 {
     if(m_menu_changed)
     {
+        m_menu_changed = false;
         Display::clear();
 
         if(m_attribut_list.size() < 0)
@@ -40,7 +41,7 @@ void Submenu::update(const uint16_t &delta, Input &i)
             //1 attribut inside
             Display::out_p(0, 0) << m_submenu_name;
             SubmenuEntry *entry = m_attribut_list[0];
-            Display::out_p(1, 1) << entry->m_name << entry-> m_value;
+            Display::out_p(1, 1) << entry->m_name << *entry-> m_value;
             Display::out_p(2, 1) << p_strings::start;
             Display::out_p(m_cur_pos + 1, 0) << p_strings::right_arrow;//draw arrow
         }
@@ -53,38 +54,69 @@ void Submenu::update(const uint16_t &delta, Input &i)
                 //at the start
                 Display::out_p(0, 0) << m_submenu_name; //draw title
                 //draw elements
-                Display::out_p(1, 1) << m_attribut_list[m_attribut_list.size() - 1] <<
-                                     m_attribut_list[m_attribut_list.size() - 1]->m_value;
-                Display::out_p(2, 1) << m_attribut_list[m_attribut_list.size()] <<
-                                     m_attribut_list[m_attribut_list.size()]->m_value;
+                Display::out_p(1, 1) << m_attribut_list[m_attribut_list.size() - 1]->m_name <<
+                                     *m_attribut_list[m_attribut_list.size() - 1]->m_value;
+                Display::out_p(2, 1) << m_attribut_list[m_attribut_list.size()]->m_name <<
+                                     *m_attribut_list[m_attribut_list.size()]->m_value;
                 Display::out_p(1, 0) << p_strings::right_arrow;
             }
             else  if(m_cur_pos == m_attribut_list.size() + 1)
             {
                 //last pos so draw the last 2 elements +start
-                Display::out_p(0, 1) << m_attribut_list[m_attribut_list.size() - 1] <<
-                                     m_attribut_list[m_attribut_list.size() - 1]->m_value;
-                Display::out_p(1, 1) << m_attribut_list[m_attribut_list.size()] <<
-                                     m_attribut_list[m_attribut_list.size()]->m_value;
+                Display::out_p(0, 1) << m_attribut_list[m_attribut_list.size() - 1]->m_name <<
+                                     *m_attribut_list[m_attribut_list.size() - 1]->m_value;
+                Display::out_p(1, 1) << m_attribut_list[m_attribut_list.size()]->m_name <<
+                                     *m_attribut_list[m_attribut_list.size()]->m_value;
                 Display::out_p(2, 1) << p_strings::start;
                 //since curpos = last => we are at start
                 Display::out_p(2, 0) << p_strings::right_arrow;
             }
+            else if(m_cur_pos == m_attribut_list.size())
+            {
+                //last pos so draw the last 2 elements +start
+                Display::out_p(0, 1) << m_attribut_list[m_attribut_list.size() - 1]->m_name <<
+                                     *m_attribut_list[m_attribut_list.size() - 1]->m_value;
+                Display::out_p(1, 1) << m_attribut_list[m_attribut_list.size()]->m_name <<
+                                     *m_attribut_list[m_attribut_list.size()]->m_value;
+                Display::out_p(2, 1) << p_strings::start;
+                //since curpos = last => we are at start
+                Display::out_p(1, 0) << p_strings::right_arrow;
+            }
             else
             {
                 //in the middle of the list
-                Display::out_p(0, 1) << m_attribut_list[m_cur_pos - 1] <<
-                                     m_attribut_list[m_cur_pos - 1]->m_value;
-                Display::out_p(1, 1) << m_attribut_list[m_cur_pos] <<
-                                     m_attribut_list[m_cur_pos]->m_value;
-                Display::out_p(2, 1) << m_attribut_list[m_cur_pos + 1] <<
-                                     m_attribut_list[m_cur_pos + 1]->m_value;
+                Display::out_p(0, 1) << m_attribut_list[m_cur_pos - 1]->m_name <<
+                                     *m_attribut_list[m_cur_pos - 1]->m_value;
+                Display::out_p(1, 1) << m_attribut_list[m_cur_pos]->m_name <<
+                                     *m_attribut_list[m_cur_pos]->m_value;
+                Display::out_p(2, 1) << m_attribut_list[m_cur_pos + 1]->m_name <<
+                                     *m_attribut_list[m_cur_pos + 1]->m_value;
+                Display::out_p(1, 0) << p_strings::right_arrow;
             }
         }
     }
-    //now update the position:
+
+    //now check manipulation
+    if(i.clicked())
+    {
+        if(m_cur_pos == (m_attribut_list.size() + 1))
+        {
+            // clicked start
+            m.start(m_ID);
+            m.leaveSubmenu();
+            m_menu_changed = true;
+        }
+        else
+        {
+            //not start selected
+            m_seleced_entry = !m_seleced_entry;
+            m_selected_entry_no = m_cur_pos;
+        }
+    }
+
+    //now update the position or the entry
     int8_t enc = i.getIncDelta();
-    if (enc != 0)
+    if (enc != 0 && !m_seleced_entry)
     {
         m_cur_pos += enc;
         if(m_cur_pos <= 0)
@@ -92,6 +124,17 @@ void Submenu::update(const uint16_t &delta, Input &i)
         else if (m_cur_pos > m_attribut_list.size())
             m_cur_pos = (m_attribut_list.size() + 1);
         //redraw next round
+        m_menu_changed = true;
+    }
+    else if(enc != 0)
+    {
+        //something selected manipulate this
+        SubmenuEntry *entry = m_attribut_list[m_selected_entry_no];
+        if(*entry->m_value + (enc * entry->m_update_value) <= entry->m_max
+                && *entry->m_value + (enc * entry->m_update_value ) >= entry->m_min)
+        {
+            *entry->m_value += (enc * entry->m_update_value);
+        }
         m_menu_changed = true;
     }
 }

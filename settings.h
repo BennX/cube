@@ -21,7 +21,7 @@ const uint8_t Cube::m_disable_pin_no = DDC7;
 //ball animation
 const float Ball::START_UPDATE_TIME = 500.0f;
 const float Ball::MAX_SIZE = 4.5f;
-const float Ball::MIN_UPDATE_TIME = 200.0f;
+const float Ball::MIN_UPDATE_TIME = 50.0f;
 const float Ball::UPDATE_TIME_CHANGE = 25.0f;
 
 //input def

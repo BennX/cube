@@ -19,3 +19,6 @@ const char p_strings::blau[] = "Blau: ";
 //rain animation
 const char p_strings::tropfen[] = "Tropfen: ";
 const char p_strings::rate[] = "Rate: ";
+
+//ball animation
+const char p_strings::size[] = "Size: ";

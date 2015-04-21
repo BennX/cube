@@ -12,7 +12,7 @@
 #include "Animation.h"
 #include "../Menu/MenuEntry.h"
 #include "../Cube.h"
-
+#include "../Menu/Submenu.h"
 #define CLICK_DELAY_BALL 1000
 class Ball : public Animation, public MenuEntry
 {
@@ -39,16 +39,13 @@ private:
     RGB color;
 
     uint8_t pos_x, pos_y, pos_z;
-    bool toggle;
     float extend;
     float update_time;
     uint16_t passed_time;
+    float m_max_size;
 
 //menu stuff;
-    bool m_changed, m_speedSelected, m_clicked;
-    int8_t m_curMenuPos;
-    uint16_t m_clickdelay;
-
+    Submenu m_submenu;
     void mov();
     Ball( const Ball &c );
     Ball &operator=( const Ball &c );

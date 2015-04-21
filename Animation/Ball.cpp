@@ -14,13 +14,17 @@
 
 // default constructor
 Ball::Ball(Cube *c, const uint8_t &id): Animation(id), cube(c), pos_x(1),
-    pos_y(1), pos_z(1), extend(0.0f), toggle(true), update_time(START_UPDATE_TIME),
-    passed_time(0), m_changed(true), m_curMenuPos(0), m_speedSelected(false),
-    m_clicked(true)
+    pos_y(1), pos_z(1), extend(0.0f), update_time(START_UPDATE_TIME),
+    passed_time(0), m_max_size(MAX_SIZE), m_submenu(PSTR("Ball Animation"), id)
 {
     color.r = rnd(MAX_COLOR);
     color.g = rnd(MAX_COLOR);
     color.b = rnd(MAX_COLOR);
+	
+    //add the manipulators to the submenu
+    m_submenu.addEntry(p_strings::speed, &update_time, MIN_UPDATE_TIME, 64000,
+                       UPDATE_TIME_CHANGE);
+    m_submenu.addEntry(p_strings::size, &m_max_size, 0, MAX_SIZE, 0.1);
 } //Ball
 
 // default destructor
@@ -32,7 +36,7 @@ void Ball::update(const uint16_t &delta)
 {
     passed_time += delta;
 
-    extend = MAX_SIZE * (-pow(passed_time / update_time - 1, 2) + 1);
+    extend = m_max_size * (-pow(passed_time / update_time - 1, 2) + 1);
 
     if(extend <= 0)
     {
@@ -108,54 +112,7 @@ void Ball::mov()
 
 void Ball::updateEntry(const uint16_t &delta, Input &i, Menu &m)
 {
-
-    if(m_changed)
-    {
-        Display::clear();
-        Display::out_p(0, 0) << PSTR("Ball Animation");
-        Display::out_p(1, 1) << p_strings::speed << update_time;
-        Display::out_p(2, 1) << p_strings::start;
-        Display::out_p(m_curMenuPos + 1, 0) << p_strings::right_arrow;
-        m_changed = false;
-    }
-
-    bool click = i.clicked();
-    if(click && m_curMenuPos == 0)
-    {
-        m_speedSelected = !m_speedSelected;
-        m_clicked = true;
-    }
-    else if (click && m_curMenuPos == 1)
-    {
-        m.start(m_ID);
-        m.leaveSubmenu();
-        m_changed = true;
-        m_clicked = true;
-    }
-
-
-    int8_t enc = i.getIncDelta();
-    if(enc != 0 && m_speedSelected)
-    {
-        update_time += enc * UPDATE_TIME_CHANGE;
-        if(update_time < MIN_UPDATE_TIME)
-            update_time = MIN_UPDATE_TIME;
-        m_changed = true;
-    }
-
-    else if(enc != 0)
-    {
-        m_curMenuPos += enc;
-        if(m_curMenuPos < 0)
-        {
-            m_curMenuPos = 0;
-        }
-        else if(m_curMenuPos > 1)
-        {
-            m_curMenuPos = 1;
-        }
-        m_changed = true;
-    }
+    m_submenu.update(delta, i, m);
 }
 
 bool Ball::subMenu()

@@ -26,6 +26,9 @@ public:
     //rain animation
     static PROGMEM const char tropfen[];
     static PROGMEM const char rate[];
+	
+	//Ball animation
+	static PROGMEM const char size[];
 };
 
 
