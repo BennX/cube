@@ -10,7 +10,8 @@
 #include "../Util/PStrings.h"
 // default constructor
 Submenu::Submenu(PGM_P name, const uint8_t &id) : m_ID(id),
-    m_submenu_name(name), m_cur_pos(0), m_menu_changed(true)
+    m_submenu_name(name), m_cur_pos(0), m_menu_changed(true),
+    m_selected_entry_no(0), m_seleced_entry(false)
 {
 } //Submenu
 
