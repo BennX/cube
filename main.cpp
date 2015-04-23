@@ -89,12 +89,26 @@ int main()
 
     long long start = 1; //long long since ms is a long long
     uint16_t delta = 0; // delta value always positiv
+    uint16_t timer = 0;
     while(true) //loop start
     {
         start = ms();
         animator.update(delta);
         menu.update(delta);
         delta = ms() - start;
+        timer += delta;
+
+        if(timer > 100)
+        {
+            Display::out_p(2, 10) << PSTR("      ");
+            int32_t median = abs(Microphone::sample() - 512);
+            for (uint8_t i = 0; i < 255; i++)
+            {
+                median += abs(Microphone::sample() - 512);
+            }
+            Display::out(2, 10) << (int)(median / 256);
+            timer = 0;
+        }
     }
 }
 
