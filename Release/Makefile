@@ -35,6 +35,7 @@ LINKER_SCRIPT_DEP:=
 SUBDIRS :=  \
 ../Animation \
 ../Animation/FontAnimation \
+../Animation/Wall \
 ../Menu \
 ../Sensors \
 ../Util
@@ -48,6 +49,7 @@ C_SRCS +=  \
 ../Animation/FontAnimation/Font.cpp \
 ../Animation/FontAnimation/FontAnimation.cpp \
 ../Animation/SingleColor.cpp \
+../Animation/Wall/Wall.cpp \
 ../Display.cpp \
 ../Input.cpp \
 ../main.cpp \
@@ -75,6 +77,7 @@ Animation/Ball.o \
 Animation/FontAnimation/Font.o \
 Animation/FontAnimation/FontAnimation.o \
 Animation/SingleColor.o \
+Animation/Wall/Wall.o \
 Display.o \
 Input.o \
 main.o \
@@ -95,6 +98,7 @@ Animation/Ball.o \
 Animation/FontAnimation/Font.o \
 Animation/FontAnimation/FontAnimation.o \
 Animation/SingleColor.o \
+Animation/Wall/Wall.o \
 Display.o \
 Input.o \
 main.o \
@@ -115,6 +119,7 @@ Animation/Ball.d \
 Animation/FontAnimation/Font.d \
 Animation/FontAnimation/FontAnimation.d \
 Animation/SingleColor.d \
+Animation/Wall/Wall.d \
 Display.d \
 Input.d \
 main.d \
@@ -135,6 +140,7 @@ Animation/Ball.d \
 Animation/FontAnimation/Font.d \
 Animation/FontAnimation/FontAnimation.d \
 Animation/SingleColor.d \
+Animation/Wall/Wall.d \
 Display.d \
 Input.d \
 main.d \
@@ -199,6 +205,8 @@ LINKER_SCRIPT_DEP+=
 
 
 
+
+
 Animation/%.o: ../Animation/%.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
@@ -207,6 +215,13 @@ Animation/%.o: ../Animation/%.cpp
 	
 
 Animation/FontAnimation/%.o: ../Animation/FontAnimation/%.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Animation/Wall/%.o: ../Animation/Wall/%.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

@@ -28,6 +28,7 @@
 #include "Animation/SingleColor.h"
 #include "Animation/Ball.h"
 #include "Animation/AutoAnimation.h"
+#include "Animation/Wall/Wall.h"
 
 #include "Menu/Menu.h"
 
@@ -59,6 +60,7 @@ int main()
     FontAnimation font(&cube, GUID::get());
     SingleColor color(&cube, GUID::get());
     AutoAnimation autoAnimation(GUID::get(), &animator);
+    //Wall wall(cube, GUID::get());
 
     animator.addAnimation(&fade);
     animator.addAnimation(&rain);

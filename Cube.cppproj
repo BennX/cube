@@ -240,6 +240,12 @@
     <Compile Include="Animation\SingleColor.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Animation\Wall\Wall.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Animation\Wall\Wall.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Display.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -328,6 +334,7 @@
   <ItemGroup>
     <Folder Include="Animation" />
     <Folder Include="Animation\FontAnimation" />
+    <Folder Include="Animation\Wall" />
     <Folder Include="Menu" />
     <Folder Include="Sensors" />
     <Folder Include="Util" />

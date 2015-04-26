@@ -41,3 +41,8 @@ const uint8_t Input::BUTTON2 = PINC4;
 const uint8_t Input::BUTTON3 = PINC5;
 
 const uint16_t Input::INC_CLICK_DELAY = 500;
+
+
+//Wall animation
+
+const uint16_t Wall::START_UPDATE_TIME = 500;
