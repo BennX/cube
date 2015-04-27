@@ -282,6 +282,12 @@
     <Compile Include="Menu\Submenu.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="RGB.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="RGB.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Sensors\Microphone.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -335,7 +341,7 @@
     <Folder Include="Animation" />
     <Folder Include="Animation\FontAnimation" />
     <Folder Include="Animation\Wall" />
-    <Folder Include="Menu" />
+    <Folder Include="Menu\" />
     <Folder Include="Sensors" />
     <Folder Include="Util" />
   </ItemGroup>

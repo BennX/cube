@@ -5,8 +5,14 @@
  *  Author: Benjamin
  */
 #include <avr/io.h>
+
+//RGB
+const uint8_t RGB::MAX_COLOR_RGB = 30;
+
+//GUID generator
 uint8_t GUID::current_id = 0;
 
+//TEMPERATUR
 const volatile uint8_t Temperatur::m_port = PORTC;
 
 //Cube definitions. Use ptr for the port etc. else get a cpy.....
@@ -45,3 +51,4 @@ const uint16_t Input::INC_CLICK_DELAY = 500;
 //Wall animation
 const uint16_t Wall::START_UPDATE_TIME = 100;
 const uint8_t Wall::START_PROBABILITY = 70;
+

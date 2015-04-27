@@ -36,7 +36,7 @@ SUBDIRS :=  \
 ../Animation \
 ../Animation/FontAnimation \
 ../Animation/Wall \
-../Menu \
+../Menu/ \
 ../Sensors \
 ../Util
 
@@ -56,6 +56,7 @@ C_SRCS +=  \
 ../Cube.cpp \
 ../Menu/Menu.cpp \
 ../Menu/Submenu.cpp \
+../RGB.cpp \
 ../Sensors/Microphone.cpp \
 ../Sensors/Temperatur.cpp \
 ../Util/cpp_util.cpp \
@@ -84,6 +85,7 @@ main.o \
 Cube.o \
 Menu/Menu.o \
 Menu/Submenu.o \
+RGB.o \
 Sensors/Microphone.o \
 Sensors/Temperatur.o \
 Util/cpp_util.o \
@@ -105,6 +107,7 @@ main.o \
 Cube.o \
 Menu/Menu.o \
 Menu/Submenu.o \
+RGB.o \
 Sensors/Microphone.o \
 Sensors/Temperatur.o \
 Util/cpp_util.o \
@@ -126,6 +129,7 @@ main.d \
 Cube.d \
 Menu/Menu.d \
 Menu/Submenu.d \
+RGB.d \
 Sensors/Microphone.d \
 Sensors/Temperatur.d \
 Util/cpp_util.d \
@@ -147,6 +151,7 @@ main.d \
 Cube.d \
 Menu/Menu.d \
 Menu/Submenu.d \
+RGB.d \
 Sensors/Microphone.d \
 Sensors/Temperatur.d \
 Util/cpp_util.d \
@@ -168,6 +173,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

@@ -9,21 +9,12 @@
 #include "Wall.h"
 #include "../../Util/Random.h"
 #include "../../Util/PStrings.h"
-
-
 // default constructor
 Wall::Wall(Cube &c, const uint8_t &id) : Animation(id), m_cube(c),
     m_submenu(PSTR("Rain Animation"), id), m_direction(0), m_position(0),
     m_timer(0), m_updatetime(START_UPDATE_TIME), m_probability(START_PROBABILITY),
     m_doneCounter(0), m_directionToggle(true)
 {
-    m_color.r = rnd(MAX_COLOR);
-    m_color.g = rnd(MAX_COLOR);
-    m_color.b = rnd(MAX_COLOR);
-
-    m_targetColor.r = rnd(MAX_COLOR);
-    m_targetColor.g = rnd(MAX_COLOR);
-    m_targetColor.b = rnd(MAX_COLOR);
     m_submenu.addEntry(p_strings::rate, &m_probability, 0, 100, 1);
     m_submenu.addEntry(p_strings::speed, &m_updatetime, 0, 25000, 1);
     setDotsToDirection();
@@ -317,9 +308,8 @@ void Wall::setColor(const uint8_t &x, const uint8_t &y, const uint8_t &z,
                     const float &v)
 {
     RGB newColor;
-    newColor.r = v * m_color.r + (1 - v) * m_targetColor.r;
-    newColor.g = v * m_color.g + (1 - v) * m_targetColor.g;
-    newColor.b = v * m_color.b + (1 - v) * m_targetColor.b;
+    newColor = v * m_color + (1 - v) * m_targetColor;
+
     m_cube.setRGB(x, y, z, newColor);
 }
 
@@ -405,9 +395,7 @@ void Wall::setDotsToDirection()
 
     m_color = m_targetColor;
 
-    m_targetColor.r = rnd(MAX_COLOR);
-    m_targetColor.g = rnd(MAX_COLOR);
-    m_targetColor.b = rnd(MAX_COLOR);
+    m_targetColor.random();
     for(uint8_t i = 0; i < 25; i++)
     {
         m_cube.setRGB(m_dots[i].m_x, m_dots[i].m_y, m_dots[i].m_z, m_color);

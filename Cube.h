@@ -11,13 +11,9 @@
 
 #include <avr/io.h>
 #include "SPI.h"
+#include "RGB.h"
 
 #define MAX_COLOR 30
-
-struct RGB
-{
-    uint8_t r, g, b;
-};
 
 class Cube
 {
@@ -33,9 +29,9 @@ public:
     Cube();
     ~Cube();
     RGB setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
-                      const uint8_t &r, const uint8_t &g, const uint8_t &b);
+               const uint8_t &r, const uint8_t &g, const uint8_t &b);
     RGB setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
-                      const RGB &color);
+               const RGB &color);
     uint8_t getR(const uint8_t &x, const uint8_t &y, const uint8_t &z);
     uint8_t getG(const uint8_t &x, const uint8_t &y, const uint8_t &z);
     uint8_t getB(const uint8_t &x, const uint8_t &y, const uint8_t &z);
