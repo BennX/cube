@@ -62,9 +62,9 @@ void Wall::update(const uint16_t &delta)
                             m_doneCounter++;
                             if(m_doneCounter == 25)
                             {
-                                m_cube.off();
                                 if(!m_directionToggle)
                                 {
+                                    m_cube.off();
                                     m_direction = rnd(6);
                                     m_directionToggle = true;
                                 }
@@ -104,9 +104,9 @@ void Wall::update(const uint16_t &delta)
                             m_doneCounter++;
                             if(m_doneCounter == 25)
                             {
-                                m_cube.off();
                                 if(!m_directionToggle)
                                 {
+                                    m_cube.off();
                                     m_direction = rnd(6);
                                     m_directionToggle = true;
                                 }
@@ -147,9 +147,9 @@ void Wall::update(const uint16_t &delta)
                             m_doneCounter++;
                             if(m_doneCounter == 25)
                             {
-                                m_cube.off();
                                 if(!m_directionToggle)
                                 {
+                                    m_cube.off();
                                     m_direction = rnd(6);
                                     m_directionToggle = true;
                                 }
@@ -188,9 +188,9 @@ void Wall::update(const uint16_t &delta)
                             m_doneCounter++;
                             if(m_doneCounter == 25)
                             {
-                                m_cube.off();
                                 if(!m_directionToggle)
                                 {
+                                    m_cube.off();
                                     m_direction = rnd(6);
                                     m_directionToggle = true;
                                 }
@@ -231,9 +231,9 @@ void Wall::update(const uint16_t &delta)
                             m_doneCounter++;
                             if(m_doneCounter == 25)
                             {
-                                m_cube.off();
                                 if(!m_directionToggle)
                                 {
+                                    m_cube.off();
                                     m_direction = rnd(6);
                                     m_directionToggle = true;
                                 }
@@ -273,9 +273,9 @@ void Wall::update(const uint16_t &delta)
                             m_doneCounter++;
                             if(m_doneCounter == 25)
                             {
-                                m_cube.off();
                                 if(!m_directionToggle)
                                 {
+                                    m_cube.off();
                                     m_direction = rnd(6);
                                     m_directionToggle = true;
                                 }
@@ -403,9 +403,7 @@ void Wall::setDotsToDirection()
             break;
     }
 
-    m_color.r = rnd(MAX_COLOR);
-    m_color.g = rnd(MAX_COLOR);
-    m_color.b = rnd(MAX_COLOR);
+    m_color = m_targetColor;
 
     m_targetColor.r = rnd(MAX_COLOR);
     m_targetColor.g = rnd(MAX_COLOR);
