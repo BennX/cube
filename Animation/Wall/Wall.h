@@ -31,6 +31,11 @@ public:
     bool subMenu();
 
 private:
+    struct Dot
+    {
+        uint8_t m_x, m_y, m_z;
+    };
+
     //variables
     Cube &m_cube;
     Submenu m_submenu;
@@ -43,17 +48,28 @@ private:
     //the regular update timer
     uint16_t m_timer;
     //the value with the update time since it can be changed by the menu
-    uint16_t m_updatetime;
+    int16_t m_updatetime;
+    //current probability to start moving
+    int8_t m_probability;
+    uint8_t m_doneCounter;
+
+    bool m_directionToggle;
 
     RGB m_color; //current color
     RGB m_targetColor; // color when arived at target
 
+    Dot m_dots[25];
+
     //static settings
     static const uint16_t START_UPDATE_TIME;
-
+    static const uint8_t START_PROBABILITY;
 
     Wall( const Wall &c );
     Wall &operator=( const Wall &c );
+
+    void setDotsToDirection();
+    void setColor(const uint8_t &x, const uint8_t &y, const uint8_t &z,
+                  const float &v);
 }; //Wall
 
 #endif //__WALL_H__

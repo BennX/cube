@@ -54,14 +54,15 @@ int main()
     Display::out_p(0, 0) << PSTR("initialization");
 //init of the effects	//id at the end
     Animator animator;
+    Wall wall(cube, GUID::get());
     FadeAnimation fade(&cube, GUID::get());
     RainAnimation rain(&cube, GUID::get());
     Ball ball(&cube, GUID::get());
     FontAnimation font(&cube, GUID::get());
     SingleColor color(&cube, GUID::get());
     AutoAnimation autoAnimation(GUID::get(), &animator);
-    //Wall wall(cube, GUID::get());
 
+    animator.addAnimation(&wall);
     animator.addAnimation(&fade);
     animator.addAnimation(&rain);
     animator.addAnimation(&ball);
@@ -69,9 +70,11 @@ int main()
     animator.addAnimation(&color);
     animator.addAnimation(&autoAnimation);
 
+
     Display::out_p(1, 0) << PSTR("Animation done");
     //push the menu entrys
     Menu menu(&input, &animator);
+    menu.addEntry(&wall);
     menu.addEntry(&fade);
     menu.addEntry(&rain);
     menu.addEntry(&ball);
@@ -99,18 +102,19 @@ int main()
         menu.update(delta);
         delta = ms() - start;
         timer += delta;
-
-        if(timer > 100)
-        {
-            Display::out_p(2, 10) << PSTR("      ");
-            int32_t median = abs(Microphone::sample() - 512);
-            for (uint8_t i = 0; i < 255; i++)
-            {
-                median += abs(Microphone::sample() - 512);
-            }
-            Display::out(2, 10) << (int)(median / 256);
-            timer = 0;
-        }
+        /*
+                if(timer > 100)
+                {
+                    Display::out_p(2, 10) << PSTR("      ");
+                    int32_t median = abs(Microphone::sample() - 512);
+                    for (uint8_t i = 0; i < 255; i++)
+                    {
+                        median += abs(Microphone::sample() - 512);
+                    }
+                    Display::out(2, 10) << (int)(median / 256);
+                    timer = 0;
+                }
+        		*/
     }
 }
 
@@ -148,7 +152,7 @@ ISR(TIMER1_COMPA_vect)
     cube.render();
 
     counter++;
-    if(counter % 16 == 0) // & 8 geht nicht!
+    if(counter % 10 == 0) //10khz
     {
         // 1khz routine here no need to clean counter
         millis++;
