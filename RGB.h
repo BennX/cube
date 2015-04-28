@@ -31,9 +31,13 @@ public:
     RGB &operator=( const RGB &other );
 
     RGB &operator+(const RGB &other);
+    RGB &operator+=(const RGB &other);
     RGB &operator-(const RGB &other);
+    RGB &operator-=(const RGB &other);
     RGB &operator*(const RGB &other);
+    RGB &operator*=(const RGB &other);
     RGB &operator/(const RGB &other);
+    RGB &operator/=(const RGB &other);
 
     /**
      * Adds the value to all!
@@ -48,12 +52,16 @@ public:
     */
     RGB &operator* (const uint8_t &i);
     RGB &operator* (const float &f);
+    RGB &operator*=(const uint8_t &i);
+    RGB &operator*=(const float &f);
 
     /**
     * div the value to all!
     */
     RGB &operator/(const uint8_t &i);
     RGB &operator/(const float &f);
+    RGB &operator/=(const uint8_t &i);
+    RGB &operator/=(const float &f);
 
     void random();
 

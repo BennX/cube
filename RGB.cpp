@@ -55,48 +55,60 @@ RGB &RGB::operator=( const RGB &other)
 
 RGB &RGB::operator+( const RGB &other)
 {
-    r += other.r;
-    r %= MAX_COLOR_RGB;
-    g += other.g;
-    g %= MAX_COLOR_RGB;
-    b += other.b;
-    b %= MAX_COLOR_RGB;
+    *this += other;
+    return *this;
+}
+
+RGB &RGB::operator+=( const RGB &other)
+{
+    r = (r + other.r) % MAX_COLOR_RGB;
+    g = (g + other.g) % MAX_COLOR_RGB;
+    b = (b + other.b) % MAX_COLOR_RGB;
     //per convention return "yourself"
     return *this;
 }
 
 RGB &RGB::operator-( const RGB &other)
 {
-    r -= other.r;
-    r %= MAX_COLOR_RGB;
-    g -= other.g;
-    g %= MAX_COLOR_RGB;
-    b -= other.b;
-    b %= MAX_COLOR_RGB;
+    *this -= other;
+    return *this;
+}
+
+RGB &RGB::operator-=( const RGB &other)
+{
+    r = (r - other.r) % MAX_COLOR_RGB;
+    g = (g - other.g) % MAX_COLOR_RGB;
+    b = (b - other.b) % MAX_COLOR_RGB;
     //per convention return "yourself"
     return *this;
 }
 
 RGB &RGB::operator*( const RGB &other)
 {
-    r *= other.r;
-    r %= MAX_COLOR_RGB;
-    g *= other.g;
-    g %= MAX_COLOR_RGB;
-    b *= other.b;
-    b %= MAX_COLOR_RGB;
+    *this *= other;
+    return *this;
+}
+
+RGB &RGB::operator*=( const RGB &other)
+{
+    r = (r * other.r) % MAX_COLOR_RGB;
+    g = (g * other.g) % MAX_COLOR_RGB;
+    b = (b * other.b) % MAX_COLOR_RGB;
     //per convention return "yourself"
     return *this;
 }
 
 RGB &RGB::operator/( const RGB &other)
 {
-    r /= other.r;
-    r %= MAX_COLOR_RGB;
-    g /= other.g;
-    g %= MAX_COLOR_RGB;
-    b /= other.b;
-    b %= MAX_COLOR_RGB;
+    *this /= other;
+    return *this;
+}
+
+RGB &RGB::operator/=( const RGB &other)
+{
+    r = (r / other.r) % MAX_COLOR_RGB;
+    g = (g / other.g) % MAX_COLOR_RGB;
+    b = (b / other.b) % MAX_COLOR_RGB;
     //per convention return "yourself"
     return *this;
 }
@@ -131,6 +143,13 @@ RGB &RGB::operator-( const uint8_t &i)
 
 RGB &RGB::operator*(const uint8_t &i)
 {
+    *this *= i;
+    //per convention return "yourself"
+    return *this;
+}
+
+RGB &RGB::operator*=(const uint8_t &i)
+{
     r = (r * i) % MAX_COLOR_RGB;
     g = (g * i) % MAX_COLOR_RGB;
     b = (b * i) % MAX_COLOR_RGB;
@@ -138,7 +157,7 @@ RGB &RGB::operator*(const uint8_t &i)
     return *this;
 }
 
-RGB &RGB::operator*(const float &f)
+RGB &RGB::operator*=(const float &f)
 {
     r = ((uint8_t)(r * f)) % MAX_COLOR_RGB;
     g = ((uint8_t)(g * f)) % MAX_COLOR_RGB;
@@ -146,7 +165,20 @@ RGB &RGB::operator*(const float &f)
     return *this;
 }
 
+RGB &RGB::operator*(const float &f)
+{
+    *this *= f;
+    return *this;
+}
+
 RGB &RGB::operator/( const uint8_t &i)
+{
+    *this /= i;
+    //per convention return "yourself"
+    return *this;
+}
+
+RGB &RGB::operator/=( const uint8_t &i)
 {
     r = (r / i) % MAX_COLOR_RGB;
     g = (g / i) % MAX_COLOR_RGB;
@@ -156,6 +188,13 @@ RGB &RGB::operator/( const uint8_t &i)
 }
 
 RGB &RGB::operator/( const float &f)
+{
+    *this /= f;
+    //per convention return "yourself"
+    return *this;
+}
+
+RGB &RGB::operator/=( const float &f)
 {
     r = ((uint8_t)(r / f)) % MAX_COLOR_RGB;
     g = ((uint8_t)(g / f)) % MAX_COLOR_RGB;

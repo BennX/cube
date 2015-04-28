@@ -308,8 +308,7 @@ void Wall::setColor(const uint8_t &x, const uint8_t &y, const uint8_t &z,
                     const float &v)
 {
     RGB newColor;
-    newColor = v * m_color + (1 - v) * m_targetColor;
-
+    newColor = v * m_color + (1 - v) * m_targetColor; //lipschitz stetig
     m_cube.setRGB(x, y, z, newColor);
 }
 
