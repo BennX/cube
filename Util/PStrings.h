@@ -29,7 +29,7 @@ public:
 	
 	//Ball animation
 	static PROGMEM const char size[];
-	
+	static PROGMEM const char rnd[];
 };
 
 

@@ -32,6 +32,7 @@ private:
 //config stuff defined in settings
     static const float START_UPDATE_TIME;
     static const float MAX_SIZE;
+	static const float MAX_SIZE_RND;
     static const float MIN_UPDATE_TIME;
     static const float UPDATE_TIME_CHANGE;
 
@@ -43,6 +44,8 @@ private:
     float update_time;
     uint16_t passed_time;
     float m_max_size;
+	float m_max_size_rnd;
+	float m_max_size_rnd_max;
 
 //menu stuff;
     Submenu m_submenu;

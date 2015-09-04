@@ -29,6 +29,7 @@ const float Ball::START_UPDATE_TIME = 500.0f;
 const float Ball::MAX_SIZE = 4.5f;
 const float Ball::MIN_UPDATE_TIME = 50.0f;
 const float Ball::UPDATE_TIME_CHANGE = 25.0f;
+const float Ball::MAX_SIZE_RND = 3.0f;
 
 //input def
 volatile uint8_t *Input::INC_PIN = &PINB;

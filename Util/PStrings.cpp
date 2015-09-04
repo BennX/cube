@@ -22,4 +22,5 @@ const char p_strings::rate[] = "Rate: ";
 
 //ball animation
 const char p_strings::size[] = "Size: ";
+const char p_strings::rnd[] = "Random: ";
 

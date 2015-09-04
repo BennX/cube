@@ -28,11 +28,7 @@ uint8_t rnd()
     if(request_count == 255)
     {
         request_count = 0;
-        cur_shift++;
-        if (cur_shift == 24)
-        {
-            cur_shift = 0;
-        }
+        cur_shift = rnd16(24); //generate next random with rand 16
     }
     //shift something around 3 cycles per pgm_read_byte
     y8 ^= (y8 << pgm_read_byte(&(shift[cur_shift * 3])));
