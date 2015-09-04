@@ -96,6 +96,7 @@ public:
     static void off();
     static void on();
     static bool isActive();
+	static void update(const short &delta);
     //the out shifter
     static Out out;
     static Out_p out_p;
@@ -108,6 +109,10 @@ private:
     Display() {};
     Display( const Display &c );
     Display &operator=( const Display &c );
+	static short m_timer;
+	static short m_timerFade;
+	static short m_offtime;
+	static short m_fadeInTime;
 }; //Display
 
 #endif //__DISPLAY_H__

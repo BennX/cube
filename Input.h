@@ -13,36 +13,11 @@
 
 class Input
 {
-private:
-//current difference of the incremental
-    volatile int8_t m_enc_delta;
-    int8_t m_last;
-    bool m_inc_last;
-    bool m_inc_clicked;
-    uint16_t m_inc_click_timer;
-
-    //configurations
-    static volatile uint8_t *INC_PIN;
-    static volatile uint8_t *INC_DDR;
-    static volatile uint8_t *INC_PORT;
-    static const uint8_t INC_PHASE1_PIN;
-    static const uint8_t INC_PHASE2_PIN;
-    static const uint8_t INC_TASER_PIN;
-
-    static volatile uint8_t *BUTTON_PIN;
-    static volatile uint8_t *BUTTON_DDR;
-    static volatile uint8_t *BUTTON_PORT;
-    static const uint8_t BUTTON0;
-    static const uint8_t BUTTON1;
-    static const uint8_t BUTTON2;
-    static const uint8_t BUTTON3;
-
-    static const uint16_t INC_CLICK_DELAY;
-
-//functions
 public:
-    Input();
-    ~Input();
+    static Input& getInstance()
+    {
+        return m_instance;
+    }
 
     void update();
 
@@ -71,12 +46,38 @@ public:
      * also reset the delta to "0"
      */
     int8_t getIncDelta();
-
 private:
+    static Input m_instance;
+
+    Input();
+    ~Input();
     //no copy no assignement
     Input( const Input &c ) = delete;
     Input &operator=( const Input &c ) = delete;
+//current difference of the incremental
+    volatile int8_t m_enc_delta;
+    int8_t m_last;
+    bool m_inc_last;
+    bool m_inc_clicked;
+    uint16_t m_inc_click_timer;
 
+    //configurations
+    static volatile uint8_t *INC_PIN;
+    static volatile uint8_t *INC_DDR;
+    static volatile uint8_t *INC_PORT;
+    static const uint8_t INC_PHASE1_PIN;
+    static const uint8_t INC_PHASE2_PIN;
+    static const uint8_t INC_TASER_PIN;
+
+    static volatile uint8_t *BUTTON_PIN;
+    static volatile uint8_t *BUTTON_DDR;
+    static volatile uint8_t *BUTTON_PORT;
+    static const uint8_t BUTTON0;
+    static const uint8_t BUTTON1;
+    static const uint8_t BUTTON2;
+    static const uint8_t BUTTON3;
+
+    static const uint16_t INC_CLICK_DELAY;
 }; //Input
 
 #endif //__INPUT_H__

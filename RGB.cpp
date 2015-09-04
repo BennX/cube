@@ -21,12 +21,13 @@ RGB::RGB(const uint8_t &r, const uint8_t &g, const uint8_t &b)
 
 RGB::RGB(const uint32_t &hex)
 {
-    this->r = (hex & 0xFF000000);
-    r %= MAX_COLOR_RGB;
-    this->g = (hex & 0x00FF0000);
-    g %= MAX_COLOR_RGB;
-    this->b = (hex & 0x0000FF00);
+
+    this->b = (hex & 0xFF);
     b %= MAX_COLOR_RGB;
+    this->g = ((hex >> 8) & 0xFF);
+    g %= MAX_COLOR_RGB;
+    this->r = ((hex >> 8) & 0xFF);
+    r %= MAX_COLOR_RGB;
 } //RGB
 
 // default destructor

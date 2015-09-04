@@ -13,13 +13,13 @@
 class FadeAnimation : public Animation, public MenuEntry
 {
 private:
-    Cube *cube;
+    Cube &cube;
     uint8_t counter, r, g, b;
     int8_t m_curMenuPos;
     uint16_t timer, m_speed, m_clickdelay;
     bool m_speedSelected, m_menuChanged, m_clicked;
 public:
-    FadeAnimation(Cube *c, const uint8_t &id): Animation(id), cube(c), counter(0),
+    FadeAnimation(Cube &c, const uint8_t &id): Animation(id), cube(c), counter(0),
         r(rnd()), g(rnd()),
         b(rnd()), timer(0), m_curMenuPos(0), m_speed(COLOR_STAY_TIME),
         m_speedSelected(false), m_menuChanged(true), m_clickdelay(0),
@@ -61,33 +61,33 @@ void FadeAnimation::update(const uint16_t &delta)
             for (int y = 0; y < 5; y++)
             {
                 //speed it up
-                uint8_t curR = cube->getR(x, y, z);
-                uint8_t curG = cube->getG(x, y, z);
-                uint8_t curB = cube->getB(x, y, z);
+                uint8_t curR = cube.getR(x, y, z);
+                uint8_t curG = cube.getG(x, y, z);
+                uint8_t curB = cube.getB(x, y, z);
 
                 if (curR < r)
                 {
-                    cube->setRGB(x, y, z, curR + 1, curG, curB);
+                    cube.setRGB(x, y, z, curR + 1, curG, curB);
                 }
                 if (curR > r)
                 {
-                    cube->setRGB(x, y, z, curR - 1, curG, curB);
+                    cube.setRGB(x, y, z, curR - 1, curG, curB);
                 }
                 if (curG < g)
                 {
-                    cube->setRGB(x, y, z, curR, curG + 1, curB);
+                    cube.setRGB(x, y, z, curR, curG + 1, curB);
                 }
                 if (curG > g)
                 {
-                    cube->setRGB(x, y, z, curR, curG - 1, curB);
+                    cube.setRGB(x, y, z, curR, curG - 1, curB);
                 }
                 if (curB < b)
                 {
-                    cube->setRGB(x, y, z, curR, curG, curB + 1);
+                    cube.setRGB(x, y, z, curR, curG, curB + 1);
                 }
                 if (curB > b)
                 {
-                    cube->setRGB(x, y, z, curR, curG, curB - 1);
+                    cube.setRGB(x, y, z, curR, curG, curB - 1);
                 }
             }
         }

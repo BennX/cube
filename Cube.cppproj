@@ -336,6 +336,9 @@
     <Compile Include="Util\Random.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Util\shared_ptr.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Animation" />

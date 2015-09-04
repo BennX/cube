@@ -17,7 +17,7 @@
 class Ball : public Animation, public MenuEntry
 {
 public:
-    Ball(Cube *c, const uint8_t &id);
+    Ball(Cube &c, const uint8_t &id);
     ~Ball();
     void update(const uint16_t &delta);
 
@@ -35,7 +35,7 @@ private:
     static const float MIN_UPDATE_TIME;
     static const float UPDATE_TIME_CHANGE;
 
-    Cube *cube;
+    Cube &cube;
     RGB color;
 
     uint8_t pos_x, pos_y, pos_z;

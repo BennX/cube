@@ -14,6 +14,8 @@
 bool Display::m_active = false;
 Display::Out Display::out;
 Display::Out_p Display::out_p;
+short Display::m_timer = 0;
+short Display::m_timerFade = 0;
 
 void Display::init()
 {
@@ -59,7 +61,7 @@ void Display::init()
 
 void Display::setDisplayLight(const uint8_t &value)
 {
-    if(value >= 0)
+    if(value >= 0 && value <= 255)
         OCR0B = value;
 }
 
@@ -79,12 +81,14 @@ void Display::clear()
 
 void Display::off()
 {
+    setDisplayLight(0);
     write_instruction(INSTRUCTION_DISPLAY_OFF);
     m_active = false;
 }
 
 void Display::on()
 {
+    setDisplayLight(255);
     write_instruction(INSTRUCTION_DISPLAY_ON);
     m_active = true;
 }
@@ -155,6 +159,13 @@ void Display::set_cursor(const uint8_t &row,
 
 void Display::write_string(const char *string)
 {
+
+    if(!m_active)
+    {
+        Display::on();
+    }
+    m_timer = 0; //also reset the timer
+    m_timerFade = 0;
     LCD_PORT |= (1 << PIN_RS);
     while (*string)
     {
@@ -165,6 +176,12 @@ void Display::write_string(const char *string)
 
 void Display::write_string_P(const char *string)
 {
+    if(!m_active)
+    {
+        Display::on();
+    }
+    m_timer = 0; //also reset the timer
+    m_timerFade = 0;
     LCD_PORT |= (1 << PIN_RS);
 
     while (1)
@@ -284,3 +301,23 @@ Display::Out_p &Display::Out_p::operator()(const uint8_t &row,
     Display::set_cursor(row, colum);
     return *this;
 };
+
+void Display::update(const short &delta)
+{
+    if(m_active)
+    {
+        m_timer +=delta;
+        if(m_timer >= m_offtime)
+        {
+
+            m_timerFade +=delta;
+
+            setDisplayLight(255 * (1.0-(float)m_timerFade/(float)m_fadeInTime));
+
+            if (m_timerFade >= m_fadeInTime)
+            {
+                Display::off();
+            }
+        }
+    }
+}

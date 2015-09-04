@@ -6,19 +6,15 @@
 */
 
 #include "Cube.h"
+#include <string.h>
+
+Cube Cube::m_instance;
+
 // default constructor
 Cube::Cube(): level(0), cur_color_counter(0)
 {
     SPI::init();//init the spi
-    for(uint8_t i = 0; i < MAX_COLOR; i++)
-    {
-        //maxbe reverse
-        colors[0][i][0] = 0x04;//
-        colors[1][i][0] = 0x03;//
-        colors[2][i][0] = 0x02;//
-        colors[3][i][0] = 0x01;//
-        colors[4][i][0] = 0x00;//
-    }
+    off();
     //set all 0 with a string function
     //memset(cur_colors, 0, 5*5*5*sizeof(RGB));
 
@@ -34,15 +30,15 @@ Cube::~Cube()
 
 void Cube::off()
 {
-    for(uint8_t x = 0; x < 5; x++)
+    memset(m_colors,0,sizeof(m_colors));
+    for(uint8_t i = 0; i < MAX_COLOR; i++)
     {
-        for(uint8_t y = 0; y < 5; y++)
-        {
-            for(uint8_t z = 0; z < 5; z++)
-            {
-                setRGB(x, y, z, 0, 0, 0);
-            }
-        }
+        //maxbe reverse
+        m_colors[0][i][0] = 0x04;//
+        m_colors[1][i][0] = 0x03;//
+        m_colors[2][i][0] = 0x02;//
+        m_colors[3][i][0] = 0x01;//
+        m_colors[4][i][0] = 0x00;//
     }
 }
 
@@ -58,11 +54,11 @@ RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
 RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
                  const uint8_t &r, const uint8_t &g, const uint8_t &b)
 {
-    RGB ret = cur_colors[x][y][z];//save old value to return
+    RGB ret = m_cur_colors[x][y][z];//save old value to return
     //change value to new one
-    cur_colors[x][y][z].r = r;
-    cur_colors[x][y][z].g = g;
-    cur_colors[x][y][z].b = b;
+    m_cur_colors[x][y][z].r = r;
+    m_cur_colors[x][y][z].g = g;
+    m_cur_colors[x][y][z].b = b;
 
     //update colors
     uint8_t pos = x * 3 + z * 15 + 5;
@@ -80,28 +76,28 @@ RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
     {
         if(i < r)
         {
-            colors[y][i][rbyte] |= 1 << rbit; //set all to 1 till r
+            m_colors[y][i][rbyte] |= 1 << rbit; //set all to 1 till r
         }
         else
         {
             //bitwise not = ~ ! (invert with &)
-            colors[y][i][rbyte] &= ~(1 << rbit);//set all other to 0
+            m_colors[y][i][rbyte] &= ~(1 << rbit);//set all other to 0
         }
         if(i < g)
         {
-            colors[y][i][gbyte] |= 1 << gbit; //set all to 1 till r
+            m_colors[y][i][gbyte] |= 1 << gbit; //set all to 1 till r
         }
         else
         {
-            colors[y][i][gbyte] &= ~(1 << gbit);//set all other to 0
+            m_colors[y][i][gbyte] &= ~(1 << gbit);//set all other to 0
         }
         if(i < b)
         {
-            colors[y][i][bbyte] |= 1 << bbit; //set all to 1 till r
+            m_colors[y][i][bbyte] |= 1 << bbit; //set all to 1 till r
         }
         else
         {
-            colors[y][i][bbyte] &= ~(1 << bbit);//set all other to 0
+            m_colors[y][i][bbyte] &= ~(1 << bbit);//set all other to 0
         }
     }
     return ret;
@@ -109,20 +105,20 @@ RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
 
 uint8_t Cube::getR(const uint8_t &x, const uint8_t &y, const uint8_t &z)
 {
-    return cur_colors[x][y][z].r;
+    return m_cur_colors[x][y][z].r;
 }
 
 uint8_t Cube::getG(const uint8_t &x, const uint8_t &y, const uint8_t &z)
 {
-    return cur_colors[x][y][z].g;
+    return m_cur_colors[x][y][z].g;
 }
 
 uint8_t  Cube::getB(const uint8_t &x, const uint8_t &y, const uint8_t &z)
 {
-    return cur_colors[x][y][z].b;
+    return m_cur_colors[x][y][z].b;
 }
 
 RGB  Cube::getRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z)
 {
-    return cur_colors[x][y][z];
+    return m_cur_colors[x][y][z];
 }

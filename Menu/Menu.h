@@ -24,7 +24,7 @@ class Menu
 {
 //functions
 public:
-    Menu(Input *i, Animator *a);
+    Menu(Input &i, Animator &a);
     ~Menu();
     void start(const uint8_t &animation);
     void leaveSubmenu();
@@ -34,9 +34,9 @@ public:
 private:
     Menu( const Menu &c );
     Menu &operator=( const Menu &c );
-    Input *input;
+    Input &input;
     //the animator class
-    Animator *animator;
+    Animator &animator;
     //List with all menu entrys
     LinkedList<MenuEntry *> m_list;
 	

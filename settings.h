@@ -52,3 +52,6 @@ const uint16_t Input::INC_CLICK_DELAY = 500;
 const uint16_t Wall::START_UPDATE_TIME = 100;
 const uint8_t Wall::START_PROBABILITY = 70;
 
+//DISPLAY 
+short Display::m_offtime = 5000; //after 5 seconds
+short Display::m_fadeInTime = 2000; // half second

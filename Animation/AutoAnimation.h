@@ -11,6 +11,7 @@
 #include "Animation.h"
 #include "Animator.h"
 #include "../Menu/MenuEntry.h"
+#include "../Menu/Submenu.h"
 #define DEFAULT_AUTO_SWITCH_SPEED 5000
 class AutoAnimation : public Animation, public MenuEntry
 {
@@ -29,7 +30,9 @@ private:
 	
     Animator *m_animator;
     uint16_t m_timer;
-    uint16_t m_switchSpeed;
+    int m_switchSpeed;
+	
+	Submenu m_submenu;
 
 }; //AutoAnimation
 

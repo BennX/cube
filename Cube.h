@@ -19,15 +19,19 @@ class Cube
 {
 protected:
 
-    uint8_t colors[5][MAX_COLOR][10];
-    RGB cur_colors[5][5][5];
+    uint8_t m_colors[5][MAX_COLOR][10];
+    RGB m_cur_colors[5][5][5];
     //for SPI!
     uint8_t level;
     uint8_t cur_color_counter;
     //functions
 public:
-    Cube();
-    ~Cube();
+
+    static Cube &getInstance()
+    {
+        return m_instance;
+    }
+
     RGB setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
                const uint8_t &r, const uint8_t &g, const uint8_t &b);
     RGB setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
@@ -40,9 +44,14 @@ public:
     inline void render();
 
 private:
+    Cube();
+    ~Cube();
+
     //no copy!
     Cube( const Cube &c ) = delete;
     Cube &operator=( const Cube &c ) = delete;
+
+    static Cube m_instance;
 
 //static definitions for the cube object
     static volatile uint8_t *m_to_storage_port;
@@ -61,7 +70,7 @@ void Cube::render()
     //reverse shift out
     for(int8_t i = 9; i >= 0; i--)
     {
-        SPI::transmit(colors[level][cur_color_counter][i]);
+        SPI::transmit(m_colors[level][cur_color_counter][i]);
     }
 
     cur_color_counter++;

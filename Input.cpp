@@ -8,6 +8,7 @@
 
 #include "Input.h"
 #include <avr/interrupt.h>
+Input Input::m_instance;
 // default constructor
 Input::Input() : m_enc_delta(0), m_last(0), m_inc_last(false),
     m_inc_clicked(false), m_inc_click_timer(0)
@@ -95,22 +96,22 @@ bool Input::isPressed(const uint8_t &i)
 {
     switch(i)
     {
-        case 0:
-            if(!(*BUTTON_PIN & 1 << BUTTON0))
-                return true;
-            break;
-        case 1:
-            if(!(*BUTTON_PIN & 1 << BUTTON1))
-                return true;
-            break;
-        case 2:
-            if(!(*BUTTON_PIN & 1 << BUTTON2))
-                return true;
-            break;
-        case 3:
-            if(!(*BUTTON_PIN & 1 << BUTTON3))
-                return true;
-            break;
+    case 0:
+        if(!(*BUTTON_PIN & 1 << BUTTON0))
+            return true;
+        break;
+    case 1:
+        if(!(*BUTTON_PIN & 1 << BUTTON1))
+            return true;
+        break;
+    case 2:
+        if(!(*BUTTON_PIN & 1 << BUTTON2))
+            return true;
+        break;
+    case 3:
+        if(!(*BUTTON_PIN & 1 << BUTTON3))
+            return true;
+        break;
     }
     return false;
 }

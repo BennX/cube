@@ -13,7 +13,7 @@
 
 
 // default constructor
-Ball::Ball(Cube *c, const uint8_t &id): Animation(id), cube(c), pos_x(1),
+Ball::Ball(Cube &c, const uint8_t &id): Animation(id), cube(c), pos_x(1),
     pos_y(1), pos_z(1), extend(0.0f), update_time(START_UPDATE_TIME),
     passed_time(0), m_max_size(MAX_SIZE), m_submenu(PSTR("Ball Animation"), id)
 {
@@ -57,11 +57,11 @@ void Ball::update(const uint16_t &delta)
                 if(sqrt(pow(sqrt(pow(pos_x - x, 2) + pow(pos_y - y,
                                  2) + pow(pos_z - z, 2)) - extend, 2)) < 0.5f)
                 {
-                    cube->setRGB(x, y, z, color);
+                    cube.setRGB(x, y, z, color);
                 }
                 else
                 {
-                    cube->setRGB(x, y, z, 0, 0, 0);
+                    cube.setRGB(x, y, z, 0, 0, 0);
                 }
             }
         }

@@ -12,7 +12,7 @@
 #include "../Util/PStrings.h"
 #define MIN( a, b ) (a < b) ? a : b
 // default constructor
-Menu::Menu(Input *i, Animator *a) : changed(true), cur_pos(0),
+Menu::Menu(Input &i, Animator &a) : changed(true), cur_pos(0),
     m_cur_selected(0), m_cur_submenu(false), input(i), animator(a), clicked(false),
     display_light_timer(0), displayIsOn(true), fading(false), fadeOn(true),
     m_current_animation(0)
@@ -85,7 +85,7 @@ void Menu::update(const short &delta)
         }
 
         //check if cursor move
-        int8_t enc = input->getIncDelta();
+        int8_t enc = input.getIncDelta();
         if (enc != 0)
         {
             cur_pos += enc;
@@ -109,11 +109,11 @@ void Menu::update(const short &delta)
 
         //now check if click
 
-        if(input->clicked() && cur_pos <= m_list.size())
+        if(input.clicked() && cur_pos <= m_list.size())
         {
             if(!m_list[cur_pos]->subMenu())
             {
-                animator->operator[](cur_pos);
+                animator[cur_pos];
                 m_current_animation = m_list[cur_pos];
             }
             else
@@ -127,13 +127,13 @@ void Menu::update(const short &delta)
 //last but not least draw the submenu if submenu
     else
     {
-        m_list[m_cur_selected]->updateEntry(delta, *input, *this);
+        m_list[m_cur_selected]->updateEntry(delta, input, *this);
     }
 }
 
 void Menu::start(const uint8_t &animation)
 {
-    animator->operator[](animation);
+    animator[animation];
     m_current_animation = m_list[animation];
     changed = true;
 }
