@@ -35,6 +35,7 @@ LINKER_SCRIPT_DEP:=
 SUBDIRS :=  \
 ../Animation \
 ../Animation/FontAnimation \
+../Animation/colorFade \
 ../Animation/Wall \
 ../Menu/ \
 ../Sensors \
@@ -46,6 +47,7 @@ C_SRCS +=  \
 ../Animation/Animator.cpp \
 ../Animation/AutoAnimation.cpp \
 ../Animation/Ball.cpp \
+../Animation/colorFade/RandomColorFade.cpp \
 ../Animation/FontAnimation/Font.cpp \
 ../Animation/FontAnimation/FontAnimation.cpp \
 ../Animation/SingleColor.cpp \
@@ -75,6 +77,7 @@ OBJS +=  \
 Animation/Animator.o \
 Animation/AutoAnimation.o \
 Animation/Ball.o \
+Animation/colorFade/RandomColorFade.o \
 Animation/FontAnimation/Font.o \
 Animation/FontAnimation/FontAnimation.o \
 Animation/SingleColor.o \
@@ -97,6 +100,7 @@ OBJS_AS_ARGS +=  \
 Animation/Animator.o \
 Animation/AutoAnimation.o \
 Animation/Ball.o \
+Animation/colorFade/RandomColorFade.o \
 Animation/FontAnimation/Font.o \
 Animation/FontAnimation/FontAnimation.o \
 Animation/SingleColor.o \
@@ -119,6 +123,7 @@ C_DEPS +=  \
 Animation/Animator.d \
 Animation/AutoAnimation.d \
 Animation/Ball.d \
+Animation/colorFade/RandomColorFade.d \
 Animation/FontAnimation/Font.d \
 Animation/FontAnimation/FontAnimation.d \
 Animation/SingleColor.d \
@@ -141,6 +146,7 @@ C_DEPS_AS_ARGS +=  \
 Animation/Animator.d \
 Animation/AutoAnimation.d \
 Animation/Ball.d \
+Animation/colorFade/RandomColorFade.d \
 Animation/FontAnimation/Font.d \
 Animation/FontAnimation/FontAnimation.d \
 Animation/SingleColor.d \
@@ -214,7 +220,16 @@ LINKER_SCRIPT_DEP+=
 
 
 
+
+
 Animation/%.o: ../Animation/%.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
+	$(QUOTE)D:\Program Files (x86)\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Animation/colorFade/%.o: ../Animation/colorFade/%.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
 	$(QUOTE)D:\Program Files (x86)\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

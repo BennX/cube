@@ -136,27 +136,27 @@ void Submenu::update(const uint16_t &delta, Input &i, Menu &m)
         SubmenuEntry *entry = m_attribut_list[m_selected_entry_no];
         switch(entry->m_value.type)
         {
-            case INT:
-                if(*entry->m_value.data.i + (enc * entry->m_update_value) <= entry->m_max
-                        && *entry->m_value.data.i + (enc * entry->m_update_value ) >= entry->m_min)
-                {
-                    *entry->m_value.data.i += (enc * entry->m_update_value);
-                }
-                break;
-            case FLOAT:
-                if(*entry->m_value.data.f + (enc * entry->m_update_value) <= entry->m_max
-                        && *entry->m_value.data.f + (enc * entry->m_update_value ) >= entry->m_min)
-                {
-                    *entry->m_value.data.f += (enc * entry->m_update_value);
-                }
-                break;
-            case INT8:
-                if(*entry->m_value.data.i8 + (enc * entry->m_update_value) <= entry->m_max
-                        && *entry->m_value.data.i8 + (enc * entry->m_update_value ) >= entry->m_min)
-                {
-                    *entry->m_value.data.i8 += (enc * entry->m_update_value);
-                }
-                break;
+        case INT:
+            if(*entry->m_value.data.i + (enc * entry->m_update_value) <= entry->m_max
+                    && *entry->m_value.data.i + (enc * entry->m_update_value ) >= entry->m_min)
+            {
+                *entry->m_value.data.i += (enc * entry->m_update_value);
+            }
+            break;
+        case FLOAT:
+            if(*entry->m_value.data.f + (enc * entry->m_update_value) <= entry->m_max
+                    && *entry->m_value.data.f + (enc * entry->m_update_value ) >= entry->m_min)
+            {
+                *entry->m_value.data.f += (enc * entry->m_update_value);
+            }
+            break;
+        case INT8:
+            if(*entry->m_value.data.i8 + (enc * entry->m_update_value) <= entry->m_max
+                    && *entry->m_value.data.i8 + (enc * entry->m_update_value ) >= entry->m_min)
+            {
+                *entry->m_value.data.i8 += (enc * entry->m_update_value);
+            }
+            break;
         }
         m_menu_changed = true;
     }
@@ -167,14 +167,19 @@ void Submenu::drawEntry(const uint8_t &x, const uint8_t &y, SubmenuEntry *e)
 
     switch(e->m_value.type)
     {
-        case INT:
-            Display::out_p(x, y) << e->m_name << *e->m_value.data.i;
-            break;
-        case FLOAT:
-            Display::out_p(x, y) << e->m_name << *e->m_value.data.f;
-            break;
-        case INT8:
-            Display::out_p(x, y) << e->m_name << *e->m_value.data.i8;
-            break;
+    case INT:
+        Display::out_p(x, y) << e->m_name << *e->m_value.data.i;
+        break;
+    case FLOAT:
+        Display::out_p(x, y) << e->m_name << *e->m_value.data.f;
+        break;
+    case INT8:
+        Display::out_p(x, y) << e->m_name << *e->m_value.data.i8;
+        break;
     }
+}
+
+void Submenu::updateEntry(const uint16_t &delta, Input &i,Menu &m)
+{
+    this->update(delta,i,m);
 }

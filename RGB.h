@@ -27,40 +27,55 @@ public:
     explicit RGB(const uint32_t &hex);
     //copy constructor
     RGB( const RGB &c );
-    //assignment
-    RGB &operator=( const RGB &other );
 
-    RGB &operator+(const RGB &other);
+    //assignment
+    RGB &operator=( const RGB &other);
+
+    //compare
+    bool operator==(const RGB &other) const;
+
+
+    RGB operator+(const RGB &other) const;
     RGB &operator+=(const RGB &other);
-    RGB &operator-(const RGB &other);
+
+    RGB operator-(const RGB &other) const;
     RGB &operator-=(const RGB &other);
-    RGB &operator*(const RGB &other);
+
+    RGB operator*(const RGB &other)const;
     RGB &operator*=(const RGB &other);
-    RGB &operator/(const RGB &other);
+
+    RGB operator/(const RGB &other)const;
     RGB &operator/=(const RGB &other);
+
 
     /**
      * Adds the value to all!
      */
-    RGB &operator+(const uint8_t &i);
+    RGB operator+(const uint8_t &i)const;
+    RGB &operator+=(const uint8_t &i);
     /**
     * subs the value to all!
     */
-    RGB &operator-(const uint8_t &i);
+    RGB operator-(const uint8_t &i) const;
+    RGB &operator-=(const uint8_t &i);
+
     /**
     * mult the value to all!
     */
-    RGB &operator* (const uint8_t &i);
-    RGB &operator* (const float &f);
-    RGB &operator*=(const uint8_t &i);
+    RGB operator* (const float &f) const;
     RGB &operator*=(const float &f);
+
+    RGB operator*(const uint8_t &i) const;
+    RGB &operator*=(const uint8_t &i);
+
 
     /**
     * div the value to all!
     */
-    RGB &operator/(const uint8_t &i);
-    RGB &operator/(const float &f);
+    RGB operator/(const uint8_t &i) const;
     RGB &operator/=(const uint8_t &i);
+
+    RGB operator/(const float &f) const;
     RGB &operator/=(const float &f);
 
     void random();

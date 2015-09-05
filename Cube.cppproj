@@ -216,6 +216,12 @@
     <Compile Include="Animation\Ball.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Animation\colorFade\RandomColorFade.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Animation\colorFade\RandomColorFade.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Animation\FadeAnimation.h">
       <SubType>compile</SubType>
     </Compile>
@@ -343,6 +349,7 @@
   <ItemGroup>
     <Folder Include="Animation" />
     <Folder Include="Animation\FontAnimation" />
+    <Folder Include="Animation\colorFade" />
     <Folder Include="Animation\Wall" />
     <Folder Include="Menu\" />
     <Folder Include="Sensors" />

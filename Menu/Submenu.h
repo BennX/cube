@@ -12,7 +12,7 @@
 #include "../Util/LinkedList.h"
 #include "../Input.h"
 #include "Menu.h"
-class Submenu
+class Submenu : public MenuEntry
 {
 //variables
 private:
@@ -47,6 +47,19 @@ public:
      * Update and draw stuff
      */
     void update(const uint16_t &delta, Input &i, Menu &m);
+
+    //MenuEntry Stuff
+    bool subMenu()
+    {
+        return true;
+    };
+
+    void updateEntry(const uint16_t &delta, Input &i,Menu &m);
+    PGM_P name()
+    {
+        return m_submenu_name;
+    };
+
 private:
     Submenu( const Submenu &c );
     Submenu &operator=( const Submenu &c );

@@ -29,6 +29,7 @@
 #include "Animation/Ball.h"
 #include "Animation/AutoAnimation.h"
 #include "Animation/Wall/Wall.h"
+#include "Animation/colorFade//RandomColorFade.h"
 
 #include "Menu/Menu.h"
 
@@ -50,7 +51,7 @@ int main()
 //init the cube
     Cube &cube = Cube::getInstance();
     Input &input = Input::getInstance();
-	
+
 //init the effects
     Animator animator;
     Wall wall(cube, GUID::get());
@@ -59,7 +60,9 @@ int main()
     Ball ball(cube, GUID::get());
     //FontAnimation font(&cube, GUID::get());
     //SingleColor color(&cube, GUID::get());
+    RandomColorFade randomColorFade(GUID::get());
     AutoAnimation autoAnimation(GUID::get(), &animator);
+
 
     animator.addAnimation(&wall);
     animator.addAnimation(&fade);
@@ -67,6 +70,7 @@ int main()
     animator.addAnimation(&ball);
     //animator.addAnimation(&font);
     //animator.addAnimation(&color);
+    animator.addAnimation(&randomColorFade);
     animator.addAnimation(&autoAnimation);
 
 
@@ -79,7 +83,9 @@ int main()
     menu.addEntry(&ball);
     //menu.addEntry(&font);
     //menu.addEntry(&color);
+    menu.addEntry(&randomColorFade);
     menu.addEntry(&autoAnimation);
+
     Display::out_p(2, 0) << PSTR("Menu done");
 
     initCubeRoutine();
@@ -99,7 +105,7 @@ int main()
         start = ms();
         animator.update(delta);
         menu.update(delta);
-		Display::update(delta);
+        Display::update(delta);
         delta = ms() - start;
         timer += delta;
         /*
@@ -134,8 +140,8 @@ void initCubeRoutine()
     TCCR1B |= (1 << CS00) | (1 << WGM12); //kein prescaler
     TIMSK1 |= (1 << OCIE1A); //compare interupt on A
     //OCR1A = 0x0ACD;//2765  = 8khz
-    OCR1A = 2212; // 10khz
-    //OCR1A = 1843;// 12khz
+    //OCR1A = 2212; // 10khz
+    OCR1A = 1843;// 12khz
     //OCR1A = 1580; // 14khz
     //OCR1A = 1382; // 16khz
 }
