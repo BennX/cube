@@ -216,10 +216,16 @@
     <Compile Include="Animation\Ball.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Animation\colorFade\RandomColorFade.cpp">
+    <Compile Include="Animation\colorFade\RandomFade.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Animation\colorFade\RandomColorFade.h">
+    <Compile Include="Animation\colorFade\RandomFade.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Animation\colorFade\TwoBalls.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Animation\colorFade\TwoBalls.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Animation\FadeAnimation.h">
@@ -253,6 +259,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Display.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="graphic\Vector.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="graphic\Vector.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Input.cpp">
@@ -352,6 +364,7 @@
     <Folder Include="Animation\colorFade" />
     <Folder Include="Animation\Wall" />
     <Folder Include="Menu\" />
+    <Folder Include="graphic" />
     <Folder Include="Sensors" />
     <Folder Include="Util" />
   </ItemGroup>

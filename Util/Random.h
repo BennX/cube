@@ -27,6 +27,12 @@ namespace Random
 extern uint8_t rnd();
 
 /**
+ * Return a random float between 0 and 1
+ */
+extern float rndF();
+
+
+/**
  * return random 8bit value with max
  */
 extern uint8_t rnd(const uint8_t &max);

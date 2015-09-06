@@ -36,7 +36,12 @@ uint8_t rnd()
     return y8 ^= (y8 << pgm_read_byte(&(shift[(cur_shift * 3 + 2)])));
 }
 
-uint8_t rnd(const uint8_t &max)
+float rndF()
+{
+    return (float)rnd() / 255.0f;
+}
+
+uint8_t rnd(const uint8_t& max)
 {
     return rnd() % max;
 }
@@ -75,7 +80,7 @@ uint16_t rnd16()
     return y16 ^= (y16 << pgm_read_byte(&(shift16[cur_shift16 + 2])));
 }
 
-uint16_t rnd16(const uint16_t &max)
+uint16_t rnd16(const uint16_t& max)
 {
     return rnd16() % max;
 }

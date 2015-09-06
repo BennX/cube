@@ -29,7 +29,8 @@
 #include "Animation/Ball.h"
 #include "Animation/AutoAnimation.h"
 #include "Animation/Wall/Wall.h"
-#include "Animation/colorFade//RandomColorFade.h"
+#include "Animation/colorFade/Twoballs.h"
+#include "Animation/colorFade/RandomFade.h"
 
 #include "Menu/Menu.h"
 
@@ -49,8 +50,8 @@ int main()
     Microphone::init();
     Display::out_p(0, 0) << PSTR("initialization");
 //init the cube
-    Cube &cube = Cube::getInstance();
-    Input &input = Input::getInstance();
+    Cube& cube = Cube::getInstance();
+    Input& input = Input::getInstance();
 
 //init the effects
     Animator animator;
@@ -60,9 +61,9 @@ int main()
     Ball ball(cube, GUID::get());
     //FontAnimation font(&cube, GUID::get());
     //SingleColor color(&cube, GUID::get());
-    RandomColorFade randomColorFade(GUID::get());
+    TwoBalls twoBalls(GUID::get());
+    RandomFade rFade(GUID::get());
     AutoAnimation autoAnimation(GUID::get(), &animator);
-
 
     animator.addAnimation(&wall);
     animator.addAnimation(&fade);
@@ -70,7 +71,8 @@ int main()
     animator.addAnimation(&ball);
     //animator.addAnimation(&font);
     //animator.addAnimation(&color);
-    animator.addAnimation(&randomColorFade);
+    animator.addAnimation(&twoBalls);
+    animator.addAnimation(&rFade);
     animator.addAnimation(&autoAnimation);
 
 
@@ -83,7 +85,8 @@ int main()
     menu.addEntry(&ball);
     //menu.addEntry(&font);
     //menu.addEntry(&color);
-    menu.addEntry(&randomColorFade);
+    menu.addEntry(&twoBalls);
+    menu.addEntry(&rFade);
     menu.addEntry(&autoAnimation);
 
     Display::out_p(2, 0) << PSTR("Menu done");

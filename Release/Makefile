@@ -38,6 +38,7 @@ SUBDIRS :=  \
 ../Animation/colorFade \
 ../Animation/Wall \
 ../Menu/ \
+../graphic \
 ../Sensors \
 ../Util
 
@@ -47,12 +48,14 @@ C_SRCS +=  \
 ../Animation/Animator.cpp \
 ../Animation/AutoAnimation.cpp \
 ../Animation/Ball.cpp \
-../Animation/colorFade/RandomColorFade.cpp \
+../Animation/colorFade/RandomFade.cpp \
+../Animation/colorFade/TwoBalls.cpp \
 ../Animation/FontAnimation/Font.cpp \
 ../Animation/FontAnimation/FontAnimation.cpp \
 ../Animation/SingleColor.cpp \
 ../Animation/Wall/Wall.cpp \
 ../Display.cpp \
+../graphic/Vector.cpp \
 ../Input.cpp \
 ../main.cpp \
 ../Cube.cpp \
@@ -77,12 +80,14 @@ OBJS +=  \
 Animation/Animator.o \
 Animation/AutoAnimation.o \
 Animation/Ball.o \
-Animation/colorFade/RandomColorFade.o \
+Animation/colorFade/RandomFade.o \
+Animation/colorFade/TwoBalls.o \
 Animation/FontAnimation/Font.o \
 Animation/FontAnimation/FontAnimation.o \
 Animation/SingleColor.o \
 Animation/Wall/Wall.o \
 Display.o \
+graphic/Vector.o \
 Input.o \
 main.o \
 Cube.o \
@@ -100,12 +105,14 @@ OBJS_AS_ARGS +=  \
 Animation/Animator.o \
 Animation/AutoAnimation.o \
 Animation/Ball.o \
-Animation/colorFade/RandomColorFade.o \
+Animation/colorFade/RandomFade.o \
+Animation/colorFade/TwoBalls.o \
 Animation/FontAnimation/Font.o \
 Animation/FontAnimation/FontAnimation.o \
 Animation/SingleColor.o \
 Animation/Wall/Wall.o \
 Display.o \
+graphic/Vector.o \
 Input.o \
 main.o \
 Cube.o \
@@ -123,12 +130,14 @@ C_DEPS +=  \
 Animation/Animator.d \
 Animation/AutoAnimation.d \
 Animation/Ball.d \
-Animation/colorFade/RandomColorFade.d \
+Animation/colorFade/RandomFade.d \
+Animation/colorFade/TwoBalls.d \
 Animation/FontAnimation/Font.d \
 Animation/FontAnimation/FontAnimation.d \
 Animation/SingleColor.d \
 Animation/Wall/Wall.d \
 Display.d \
+graphic/Vector.d \
 Input.d \
 main.d \
 Cube.d \
@@ -146,12 +155,14 @@ C_DEPS_AS_ARGS +=  \
 Animation/Animator.d \
 Animation/AutoAnimation.d \
 Animation/Ball.d \
-Animation/colorFade/RandomColorFade.d \
+Animation/colorFade/RandomFade.d \
+Animation/colorFade/TwoBalls.d \
 Animation/FontAnimation/Font.d \
 Animation/FontAnimation/FontAnimation.d \
 Animation/SingleColor.d \
 Animation/Wall/Wall.d \
 Display.d \
+graphic/Vector.d \
 Input.d \
 main.d \
 Cube.d \
@@ -179,6 +190,10 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 
@@ -251,6 +266,13 @@ Animation/Wall/%.o: ../Animation/Wall/%.cpp
 	
 
 ./%.o: .././%.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
+	$(QUOTE)D:\Program Files (x86)\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+graphic/%.o: ../graphic/%.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 4.8.1
 	$(QUOTE)D:\Program Files (x86)\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=atmega1284p -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
