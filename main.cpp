@@ -37,6 +37,8 @@
 //load the static and const settings
 #include "settings.h"
 
+//sensors
+
 //declare some functions here
 void initCubeRoutine();
 void toggleInfoLED();
@@ -44,6 +46,7 @@ long long ms();
 
 int main()
 {
+
     cli();
     Display::init();
     USART::init();//setup the usart0

@@ -267,6 +267,9 @@
     <Compile Include="graphic\Vector.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="graphic\Vector.hpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Input.cpp">
       <SubType>compile</SubType>
     </Compile>

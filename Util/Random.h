@@ -35,7 +35,7 @@ extern float rndF();
 /**
  * return random 8bit value with max
  */
-extern uint8_t rnd(const uint8_t &max);
+extern uint8_t rnd(const uint8_t& max);
 
 /**
  * Returns a 16bit value out of 2 rnd8 values
@@ -58,7 +58,7 @@ extern uint16_t rnd16();
 /**
  * return random 16bit value with max
  */
-extern uint16_t rnd16(const uint16_t &max);
+extern uint16_t rnd16(const uint16_t& max);
 
 /**
  * Returns a uint8_t but calculates by a 16bit rnd

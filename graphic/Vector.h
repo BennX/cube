@@ -15,25 +15,32 @@ public:
 
     Vector();
     Vector(const Vector& c);   //copy ctor
-    Vector& operator=(const Vector& c);
+    inline Vector& operator=(const Vector& c);
     Vector(const float& x, const float& y, const float& z);
 
     ~Vector();
 
-    Vector& nor();
-    Vector cross(const Vector& other) const;
-    float dot(const Vector& other) const;
+    inline Vector& nor();
+    inline Vector cross(const Vector& other) const;
+    inline float dot(const Vector& other) const;
+    inline float norm() const;
 
-    Vector& rnd();
+    //calculates the distance to the other
+    inline float dist(const Vector& other) const;
 
-    Vector& operator+=(const Vector& other);
-    Vector operator+(const Vector& other) const;
+    inline Vector& rnd();
+    inline Vector& rnd(const float& f);
 
-    Vector& operator-=(const Vector& other);
-    Vector operator-(const Vector& other) const;
+    inline Vector& operator+=(const Vector& other);
+    inline Vector operator+(const Vector& other) const;
 
-    Vector& operator*=(const float& f);
-    Vector operator*(const float& other) const;
+    inline Vector& operator-=(const Vector& other);
+    inline Vector operator-(const Vector& other) const;
+
+    inline Vector& operator*=(const float& f);
+    inline Vector operator*(const float& other) const;
 }; //Vector
 
+//include the inlines
+#include "Vector.hpp"
 #endif //__VECTOR_H__

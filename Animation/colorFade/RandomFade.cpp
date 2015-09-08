@@ -9,19 +9,9 @@
 RandomFade::RandomFade(const uint8_t& id): Submenu(PSTR("Random Fade"), id), Animation(id), m_done(false),
     m_changeSpeed(10), m_stayTime(5), m_moveSpeed(1000.0f)
 {
-    m_color0.random();
-    m_color1.random();
-    m_color0Target.random();
-    m_color1Target.random();
-    //set them fixed at first
-    m_p0.rnd() *= 4.0;
-    m_p1.rnd() *= 4.0;
-    m_direction0.rnd();
-    m_direction1.rnd();
-
     Submenu::addEntry(p_strings::speed, &m_changeSpeed, 0, 500, 10);
     Submenu::addEntry(PSTR("Stay: "), &m_stayTime, 0, 60, 1);
-    Submenu::addEntry(p_strings::speed, &m_moveSpeed, 25.0f, 4000.0f, 25.0f);
+    Submenu::addEntry(p_strings::speed, &m_moveSpeed, 50.0f, 4000.0f, 25.0f);
 } //RandomColorFade
 
 // default destructor
@@ -31,6 +21,27 @@ RandomFade::~RandomFade()
 
 void RandomFade::update(const uint16_t& delta)
 {
+    if(!m_done)
+    {
+        //init on runtime to always have a different effect
+        m_color0.random();
+        m_color1.random();
+        m_color0Target.random();
+        m_color1Target.random();
+
+        //random start position
+        m_p0.rnd(4.0f);
+        m_p1.rnd(4.0f);
+
+        //call random till they have minimum of 0.5 as speed
+        //so nothing moves "TOO slow"
+        while(m_direction0.rnd().norm() < 0.5f)
+            ;
+        while(m_direction1.rnd().norm() < 0.5f)
+            ;
+        m_done = true;
+    }
+
     //retarget
     if(m_color0 == m_color0Target)
     {
@@ -76,44 +87,43 @@ void RandomFade::update(const uint16_t& delta)
                     // if its between these 2 points
                     //colorize it depending on the distance
 
+                    Vector curPos(x, y, z);
+
                     //calculate the vectors between the points
-                    Vector p0p1(m_p1 - m_p0);
-                    Vector p1p0(m_p0 - m_p1);
-                    //calculate the normal of the "imagin" plane
-                    Vector planNormalp0p1(p0p1);
-                    planNormalp0p1 *= -1;
-                    planNormalp0p1.nor();
-                    Vector planNormalp1p0(p1p0);
-                    planNormalp1p0 *= -1;
-                    planNormalp1p0.nor();
+                    Vector linep0p1(m_p1 - m_p0);
+
+                    //calc plannorms since they are the same just invert one.
+                    Vector planeNormp1p0(linep0p1);
+                    planeNormp1p0.nor();
+                    Vector planeNormp0p1(planeNormp1p0);
+                    planeNormp0p1 *= -1;
 
                     //calc the vector to the point we check
-                    Vector vectorToPos0(Vector(x, y, z) - m_p0);
-                    Vector vectorToPos1(Vector(x, y, z) - m_p1);
+                    Vector vectorToPos0(curPos - m_p0);
+                    Vector vectorToPos1(curPos - m_p1);
 
                     //dot it with the normals of the "planes"
-                    float dotPos0Planp0p1 = vectorToPos0.dot(planNormalp0p1);
-                    float dotPos1Planp1p0 = vectorToPos1.dot(planNormalp1p0);
+                    float dotPos0Planp0p1 = vectorToPos0.dot(planeNormp0p1);
+                    float dotPos1Planp1p0 = vectorToPos1.dot(planeNormp1p0);
 
                     if(dotPos0Planp0p1 < 0 && dotPos1Planp1p0 > 0)
                     {
                         //behind p1 seen from p0!
-                        Cube::getInstance().setRGB(x, y, z, m_color1);
+                        Cube::getInstance().setRGB(curPos, m_color1);
                     }
                     else if(dotPos1Planp1p0 < 0 && dotPos0Planp0p1 > 0)
                     {
                         //behind p0 seen from p1
-                        Cube::getInstance().setRGB(x, y, z, m_color0);
+                        Cube::getInstance().setRGB(curPos, m_color0);
                     }
                     else
                     {
                         //between
-                        float distanceToP0 = sqrt(pow((float)x - m_p0.x, 2) + pow((float)y - m_p0.y, 2) + pow((float)z - m_p0.z, 2));
-                        float distanceToP1 = sqrt(pow((float)x - m_p1.x, 2) + pow((float)y - m_p1.y, 2) + pow((float)z - m_p1.z, 2));
-                        //float relative =sqrt(pow((float)m_p1.x-m_p0.x,2)+pow((float)m_p1.y-m_p0.y,2)+pow((float)m_p1.z-m_p0.z,2));
+                        float distanceToP0 = curPos.dist(m_p0);
+                        float distanceToP1 = curPos.dist(m_p1);
                         float relative = distanceToP0 + distanceToP1;
                         RGB dotCol = m_color0 * (1.0f - (distanceToP0 / relative)) + m_color1 * (1.0f - (distanceToP1 / relative));
-                        Cube::getInstance().setRGB(x, y, z, dotCol);
+                        Cube::getInstance().setRGB(curPos, dotCol);
                     }
                 }
             }

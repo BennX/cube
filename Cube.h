@@ -12,7 +12,7 @@
 #include <avr/io.h>
 #include "SPI.h"
 #include "RGB.h"
-
+#include "graphic/Vector.h"
 #define MAX_COLOR 30
 
 class Cube
@@ -36,6 +36,7 @@ public:
                const uint8_t &r, const uint8_t &g, const uint8_t &b);
     RGB setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
                const RGB &color);
+	RGB setRGB(const Vector &v, const RGB &rgb);
     uint8_t getR(const uint8_t &x, const uint8_t &y, const uint8_t &z);
     uint8_t getG(const uint8_t &x, const uint8_t &y, const uint8_t &z);
     uint8_t getB(const uint8_t &x, const uint8_t &y, const uint8_t &z);

@@ -30,7 +30,7 @@ Cube::~Cube()
 
 void Cube::off()
 {
-    memset(m_colors,0,sizeof(m_colors));
+    memset(m_colors, 0, sizeof(m_colors));
     for(uint8_t i = 0; i < MAX_COLOR; i++)
     {
         //maxbe reverse
@@ -42,8 +42,8 @@ void Cube::off()
     }
 }
 
-RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
-                 const RGB &color)
+RGB Cube::setRGB(const uint8_t& x, const uint8_t& y, const uint8_t& z,
+                 const RGB& color)
 {
     return setRGB(x, y, z, color.r, color.g, color.b);
 }
@@ -51,8 +51,8 @@ RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
 /************************************************************************/
 /* Take care it has no bounds checking!                                 */
 /************************************************************************/
-RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
-                 const uint8_t &r, const uint8_t &g, const uint8_t &b)
+RGB Cube::setRGB(const uint8_t& x, const uint8_t& y, const uint8_t& z,
+                 const uint8_t& r, const uint8_t& g, const uint8_t& b)
 {
     RGB ret = m_cur_colors[x][y][z];//save old value to return
     //change value to new one
@@ -103,22 +103,27 @@ RGB Cube::setRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z,
     return ret;
 }
 
-uint8_t Cube::getR(const uint8_t &x, const uint8_t &y, const uint8_t &z)
+RGB Cube::setRGB(const Vector& v, const RGB& rgb)
+{
+    return setRGB(v.x, v.y, v.z, rgb);
+}
+
+uint8_t Cube::getR(const uint8_t& x, const uint8_t& y, const uint8_t& z)
 {
     return m_cur_colors[x][y][z].r;
 }
 
-uint8_t Cube::getG(const uint8_t &x, const uint8_t &y, const uint8_t &z)
+uint8_t Cube::getG(const uint8_t& x, const uint8_t& y, const uint8_t& z)
 {
     return m_cur_colors[x][y][z].g;
 }
 
-uint8_t  Cube::getB(const uint8_t &x, const uint8_t &y, const uint8_t &z)
+uint8_t  Cube::getB(const uint8_t& x, const uint8_t& y, const uint8_t& z)
 {
     return m_cur_colors[x][y][z].b;
 }
 
-RGB  Cube::getRGB(const uint8_t &x, const uint8_t &y, const uint8_t &z)
+RGB  Cube::getRGB(const uint8_t& x, const uint8_t& y, const uint8_t& z)
 {
     return m_cur_colors[x][y][z];
 }

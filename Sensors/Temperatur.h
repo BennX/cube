@@ -40,14 +40,14 @@ public:
     /**
      * Automatically convert into a string length of 5 with 3 digits after the dot
      */
-    static inline void get(char *buffer);
+    static void get(char *buffer);
     /**
      * Returns the temperature double.
      * Interupt safe access to the temperature sensor.
      * No interupts while getting and so on!
      * While converting interupts are fine
      */
-    static inline double get();
+    static double get();
 private:
     static inline uint8_t reset();
     static inline void write_bit(uint8_t bit);

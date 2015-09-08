@@ -5,11 +5,11 @@
  *  Author: Benjamin
  */
 #include "Random.h"
-
+#include "../Sensors/Temperatur.h"
 using namespace Random;
 namespace Random
 {
-    uint8_t y8 = 13;
+    uint8_t y8 = Temperatur::get();
     uint8_t cur_shift = 0;
     uint8_t request_count = 0;
 
