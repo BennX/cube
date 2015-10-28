@@ -65,7 +65,7 @@ void Menu::update(const short &delta)
                 }
                 Display::out_p(1, 0) << p_strings::right_arrow;
             }
-#ifdef DEBUG
+#ifndef DEBUG
             Display::out_p(0, 7) << PSTR("Free RAM");
             Display::out(1, 7) << freeRam();
             Display::out << "b";
