@@ -54,6 +54,7 @@ C_SRCS +=  \
 ../Animation/FontAnimation/FontAnimation.cpp \
 ../Animation/SingleColor.cpp \
 ../Animation/Wall/Wall.cpp \
+../CubeProxy.cpp \
 ../Display.cpp \
 ../graphic/Vector.cpp \
 ../Input.cpp \
@@ -86,6 +87,7 @@ Animation/FontAnimation/Font.o \
 Animation/FontAnimation/FontAnimation.o \
 Animation/SingleColor.o \
 Animation/Wall/Wall.o \
+CubeProxy.o \
 Display.o \
 graphic/Vector.o \
 Input.o \
@@ -111,6 +113,7 @@ Animation/FontAnimation/Font.o \
 Animation/FontAnimation/FontAnimation.o \
 Animation/SingleColor.o \
 Animation/Wall/Wall.o \
+CubeProxy.o \
 Display.o \
 graphic/Vector.o \
 Input.o \
@@ -136,6 +139,7 @@ Animation/FontAnimation/Font.d \
 Animation/FontAnimation/FontAnimation.d \
 Animation/SingleColor.d \
 Animation/Wall/Wall.d \
+CubeProxy.d \
 Display.d \
 graphic/Vector.d \
 Input.d \
@@ -161,6 +165,7 @@ Animation/FontAnimation/Font.d \
 Animation/FontAnimation/FontAnimation.d \
 Animation/SingleColor.d \
 Animation/Wall/Wall.d \
+CubeProxy.d \
 Display.d \
 graphic/Vector.d \
 Input.d \
@@ -190,6 +195,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

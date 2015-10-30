@@ -59,7 +59,7 @@ void Display::init()
     m_active = true;
 }
 
-void Display::setDisplayLight(const uint8_t &value)
+void Display::setDisplayLight(const uint8_t& value)
 {
     if(value >= 0 && value <= 255)
         OCR0B = value;
@@ -98,7 +98,7 @@ bool Display::isActive()
     return m_active;
 }
 
-void Display::write(const unsigned char &data)
+void Display::write(const unsigned char& data)
 {
     cli();
     char port_buffer = LCD_PORT;
@@ -135,14 +135,14 @@ void Display::write(const unsigned char &data)
     return;
 }
 
-void Display::write_instruction(const unsigned char &instruction)
+void Display::write_instruction(const unsigned char& instruction)
 {
     //RS low = instruction
     LCD_PORT &= ~(1 << PIN_RS);
     write(instruction);
 }
 
-void Display::write_data(const unsigned char &data)
+void Display::write_data(const unsigned char& data)
 {
     //RS high = data
     LCD_PORT |= (1 << PIN_RS);
@@ -150,14 +150,14 @@ void Display::write_data(const unsigned char &data)
 }
 
 
-void Display::set_cursor(const uint8_t &row,
-                         const uint8_t &column)
+void Display::set_cursor(const uint8_t& row,
+                         const uint8_t& column)
 {
     write_instruction(CHARACTER_BUFFER_BASE_ADDRESS + row * CHARACTERS_PER_ROW +
                       column);
 }
 
-void Display::write_string(const char *string)
+void Display::write_string(const char* string)
 {
 
     if(!m_active)
@@ -174,7 +174,7 @@ void Display::write_string(const char *string)
     }
 }
 
-void Display::write_string_P(const char *string)
+void Display::write_string_P(const char* string)
 {
     if(!m_active)
     {
@@ -197,13 +197,13 @@ void Display::write_string_P(const char *string)
 /**
  * Regular out
  */
-Display::Out &Display::Out::operator<<(const char *string)
+Display::Out& Display::Out::operator<<(const char* string)
 {
     Display::write_string(string);
     return *this;
 }
 
-Display::Out &Display::Out::operator<<(const int &i)
+Display::Out& Display::Out::operator<<(const int& i)
 {
     char buf[10];
     itoa(i, buf, 10);
@@ -211,7 +211,7 @@ Display::Out &Display::Out::operator<<(const int &i)
     return *this;
 }
 
-Display::Out &Display::Out::operator<<(const unsigned int &i)
+Display::Out& Display::Out::operator<<(const unsigned int& i)
 {
     char buf[10];
     itoa(i, buf, 10);
@@ -219,15 +219,15 @@ Display::Out &Display::Out::operator<<(const unsigned int &i)
     return *this;
 }
 
-Display::Out &Display::Out::operator<<(const double &d)
+Display::Out& Display::Out::operator<<(const double& d)
 {
     char buf[10];
-    sprintf(buf, "%.2f", d);
+    dtostrf(d, 7, 2, buf);
     Display::write_string(buf);
     return *this;
 }
 
-Display::Out &Display::Out::operator<<(const bool &b)
+Display::Out& Display::Out::operator<<(const bool& b)
 {
     if(b)
         Display::write_string_P(PSTR("true"));
@@ -236,13 +236,13 @@ Display::Out &Display::Out::operator<<(const bool &b)
     return *this;
 }
 
-Display::Out &Display::Out::operator<<(const char string)
+Display::Out& Display::Out::operator<<(const char string)
 {
     Display::write_data(string);
     return *this;
 }
 
-Display::Out &Display::Out::operator()(const uint8_t &row, const uint8_t &colum)
+Display::Out& Display::Out::operator()(const uint8_t& row, const uint8_t& colum)
 {
     Display::set_cursor(row, colum);
     return *this;
@@ -251,13 +251,13 @@ Display::Out &Display::Out::operator()(const uint8_t &row, const uint8_t &colum)
 /**
  * PSTR
  */
-Display::Out_p &Display::Out_p::operator<<(const char *string)
+Display::Out_p& Display::Out_p::operator<<(const char* string)
 {
     Display::write_string_P(string);
     return *this;
 }
 
-Display::Out_p &Display::Out_p::operator<<(const int &i)
+Display::Out_p& Display::Out_p::operator<<(const int& i)
 {
     char buf[10];
     itoa(i, buf, 10);
@@ -265,7 +265,7 @@ Display::Out_p &Display::Out_p::operator<<(const int &i)
     return *this;
 }
 
-Display::Out_p &Display::Out_p::operator<<(const unsigned int &i)
+Display::Out_p& Display::Out_p::operator<<(const unsigned int& i)
 {
     char buf[10];
     itoa(i, buf, 10);
@@ -273,15 +273,15 @@ Display::Out_p &Display::Out_p::operator<<(const unsigned int &i)
     return *this;
 }
 
-Display::Out_p &Display::Out_p::operator<<(const double &d)
+Display::Out_p& Display::Out_p::operator<<(const double& d)
 {
     char buf[10];
-    sprintf(buf, "%.2f", d);
+    dtostrf(d, 7, 2, buf);
     Display::write_string(buf);
     return *this;
 }
 
-Display::Out_p &Display::Out_p::operator<<(const bool &b)
+Display::Out_p& Display::Out_p::operator<<(const bool& b)
 {
     if(b)
         Display::write_string_P(PSTR("true"));
@@ -289,30 +289,30 @@ Display::Out_p &Display::Out_p::operator<<(const bool &b)
         Display::write_string_P(PSTR("false"));
     return *this;
 }
-Display::Out_p &Display::Out_p::operator<<(const char string)
+Display::Out_p& Display::Out_p::operator<<(const char string)
 {
     Display::write_data(string);
     return *this;
 };
 
-Display::Out_p &Display::Out_p::operator()(const uint8_t &row,
-        const uint8_t &colum)
+Display::Out_p& Display::Out_p::operator()(const uint8_t& row,
+        const uint8_t& colum)
 {
     Display::set_cursor(row, colum);
     return *this;
 };
 
-void Display::update(const short &delta)
+void Display::update(const short& delta)
 {
     if(m_active)
     {
-        m_timer +=delta;
+        m_timer += delta;
         if(m_timer >= m_offtime)
         {
 
-            m_timerFade +=delta;
+            m_timerFade += delta;
 
-            setDisplayLight(255 * (1.0-(float)m_timerFade/(float)m_fadeInTime));
+            setDisplayLight(255 * (1.0 - (float)m_timerFade / (float)m_fadeInTime));
 
             if (m_timerFade >= m_fadeInTime)
             {

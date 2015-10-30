@@ -13,13 +13,13 @@
 class FadeAnimation : public Animation, public MenuEntry
 {
 private:
-    Cube &cube;
+    Cube& cube;
     uint8_t counter, r, g, b;
     int8_t m_curMenuPos;
     uint16_t timer, m_speed, m_clickdelay;
     bool m_speedSelected, m_menuChanged, m_clicked;
 public:
-    FadeAnimation(Cube &c, const uint8_t &id): Animation(id), cube(c), counter(0),
+    FadeAnimation(Cube& c, const uint8_t& id): Animation(id), cube(c), counter(0),
         r(rnd()), g(rnd()),
         b(rnd()), timer(0), m_curMenuPos(0), m_speed(COLOR_STAY_TIME),
         m_speedSelected(false), m_menuChanged(true), m_clickdelay(0),
@@ -27,9 +27,9 @@ public:
     ~FadeAnimation() {};
 
     //animation
-    void update(const uint16_t &delta);
+    void update(const uint16_t& delta);
     //menu entry
-    void updateEntry(const uint16_t &delta, Input &i, Menu &m);
+    void updateEntry(const uint16_t& delta, Input& i, Menu& m);
     PGM_P name()
     {
         return PSTR("Fade");
@@ -37,7 +37,7 @@ public:
     bool subMenu();
 };
 
-void FadeAnimation::update(const uint16_t &delta)
+void FadeAnimation::update(const uint16_t& delta)
 {
     if(counter <= MAX_COLOR)
         counter++;
@@ -61,9 +61,10 @@ void FadeAnimation::update(const uint16_t &delta)
             for (int y = 0; y < 5; y++)
             {
                 //speed it up
-                uint8_t curR = cube.getR(x, y, z);
-                uint8_t curG = cube.getG(x, y, z);
-                uint8_t curB = cube.getB(x, y, z);
+                RGB col = cube.getRGB(x, y, z);
+                uint8_t curR = col.r;
+                uint8_t curG = col.g;
+                uint8_t curB = col.b;
 
                 if (curR < r)
                 {
@@ -95,8 +96,8 @@ void FadeAnimation::update(const uint16_t &delta)
     //_delay_ms(50);
 }
 
-void FadeAnimation::updateEntry(const uint16_t &delta, Input &i,
-                                Menu &m)
+void FadeAnimation::updateEntry(const uint16_t& delta, Input& i,
+                                Menu& m)
 {
     if(m_menuChanged)
     {

@@ -58,7 +58,7 @@ int main()
 
 //init the effects
     Animator animator;
-	RandomFade rFade(GUID::get());
+    RandomFade rFade(GUID::get());
     Wall wall(cube, GUID::get());
     FadeAnimation fade(cube, GUID::get());
     RainAnimation rain(cube, GUID::get());
@@ -82,7 +82,7 @@ int main()
     Display::out_p(1, 0) << PSTR("Animation done");
     //push the menu entrys
     Menu menu(input, animator);
-	menu.addEntry(&rFade);
+    menu.addEntry(&rFade);
     menu.addEntry(&wall);
     menu.addEntry(&fade);
     menu.addEntry(&rain);
@@ -97,9 +97,9 @@ int main()
     initCubeRoutine();
     _delay_ms(1);
     sei();
-	// so now everything is init 
-	//make some "nice color to show thats up!
-	showCubeColors();
+    // so now everything is init
+    //make some "nice color to show thats up!
+    showCubeColors();
 
     //Test LED
     DDRB |= (1 << DDB3); //PB3
@@ -167,7 +167,7 @@ ISR(TIMER1_COMPA_vect)
     Cube::getInstance().render();
 
     counter++;
-    if(counter % 10 == 0) //10khz
+    if(counter % 12 == 0) //12khz
     {
         // 1khz routine here no need to clean counter
         millis++;
@@ -177,17 +177,18 @@ ISR(TIMER1_COMPA_vect)
 
 void showCubeColors()
 {
-	Cube& cub = Cube::getInstance();
+    Cube& cub = Cube::getInstance();
     for(uint8_t z = 0; z < 5; z++)
         for(uint8_t y = 0; y < 5; y++)
-            for(uint8_t x = 0; x < 5; x++){
-                cub.setRGB(x, y, z, x / 4.0 * MAX_COLOR, y / 4.0 * MAX_COLOR, z / 4.0 * MAX_COLOR);
-			}
-			
-	Display::clear();
-	Display::out_p(0,0) << PSTR("Show");
-	Display::out_p(1,0) << PSTR("Colors");
-	Display::out_p(2,0) << PSTR("Click 4 continue");
-	while(!Input::getInstance().clicked())
-		;//nop for the first click ;)
+            for(uint8_t x = 0; x < 5; x++)
+            {
+                cub(x, y, z) = RGB(x / 4.0 * MAX_COLOR, y / 4.0 * MAX_COLOR, z / 4.0 * MAX_COLOR);
+            }
+
+    Display::clear();
+    Display::out_p(0, 0) << PSTR("Show");
+    Display::out_p(1, 0) << PSTR("Colors");
+    Display::out_p(2, 0) << PSTR("Click 4 continue");
+    while(!Input::getInstance().clicked())
+        ;//nop for the first click ;)
 }
